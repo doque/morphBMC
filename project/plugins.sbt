@@ -1,8 +1,6 @@
 // Comment to get more information during initialization
 logLevel := Level.Warn
 
-resolvers := Seq("typesafe" at "http://repo.typesafe.com/typesafe/releases/")
-
 // The Typesafe repository
 resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
 
