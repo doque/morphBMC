@@ -1,0 +1,19 @@
+td.parameter {
+  vertical-align: middle !important;
+  background-color: #f9f9f9;
+  text-align: center;
+  font-weight: bold;
+}
+td.value {
+  font-size: .8em !important;
+  white-space: nowrap;
+}
+td.value.x {
+	text-align: center;
+}
+td.value.y {
+	text-align: right;
+}
+td.warning, td.success, td.danger {
+	text-align: center;
+}

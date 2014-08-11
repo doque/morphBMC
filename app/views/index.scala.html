@@ -1,7 +1,39 @@
-@(message: String)
+@(problem: Problem)
 
-@main("Welcome to Play") {
+@main("Wicked Problems") {
 
-    @play20.welcome(message, style = "Java")
+		<table class="table table-bordered table-condensed" style="width: 400px; margin: 0 auto;">
+			<tr>    
+				@* colspan="2" is fixed here *@
+				<td colspan="2" style="border-left-color: white !important; border-bottom-color: white !important; border-top-color: white !important"></td>
+				@for(param <- problem.getParameters) {
+					<td class="parameter" colspan="@param.getAttributes().length"><div><span>@param.name</span></div></td>
+				}
+			</tr>
+					
+			<tr>
+				<td colspan="2" style="border-left-color: white !important"></td>
+				@for(param <- problem.getParameters) {
+					@for(attr <- param.getAttributes) {
+						<td class="value x">@attr.value</td>
+					}
+				}
+			</tr>
+
+			@* actual rows representing all attribute <-> attribute mappings *@
+			@for(param <- problem.getParameters) {
+				<tr>
+					<td rowspan="@param.getAttributes().length" class="parameter">@param.name</td>
+					@for(attr <- param.getAttributes) {
+						<td class="value y">@attr.value</td>
+						@* empty cells, one for each possible attribute within problem *@
+							@for(a <- problem.getAllAttributes) {
+								<td class="mapping"></td>
+							}
+						@* each attribute gets their own row *@
+						</tr><tr>
+					}
+			}
+	</table>
 
 }
