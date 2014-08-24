@@ -5,32 +5,40 @@ import models.Parameter;
 import models.Problem;
 import play.mvc.Controller;
 import play.mvc.Result;
-
 import views.html.*;
 
 public class Application extends Controller {
 
+	/**
+	 * First step: Define problem parameters
+	 * 
+	 * @return
+	 */
+	public static Result define() {
+		return ok(define.render());
+	}
+
 	public static Result index() {
 
 		Problem p = new Problem();
-		Parameter kosten = new Parameter().setName("Kosten");
-		Parameter distanz = new Parameter().setName("Distanz");
-		Parameter urlaubsziel = new Parameter().setName("Urlaubsziel");
+		Parameter kosten = new Parameter().setId(1).setName("Kosten");
+		Parameter distanz = new Parameter().setId(2).setName("Distanz");
+		Parameter urlaubsziel = new Parameter().setId(3).setName("Urlaubsziel");
 
 		// Kosten
-		kosten.addAttribute(new Attribute("0-100 EUR"))
-				.addAttribute(new Attribute("100-500 EUR"))
-				.addAttribute(new Attribute("500+ EUR"));
+		kosten.addAttribute(new Attribute("0-100 EUR").setId(10))
+				.addAttribute(new Attribute("100-500 EUR").setId(11))
+				.addAttribute(new Attribute("500+ EUR").setId(12));
 
 		// Distanz
-		distanz.addAttribute(new Attribute("0-200 km"))
-				.addAttribute(new Attribute("200-500 km"))
-				.addAttribute(new Attribute("500+ km"));
+		distanz.addAttribute(new Attribute("0-200 km").setId(13))
+				.addAttribute(new Attribute("200-500 km").setId(14))
+				.addAttribute(new Attribute("500+ km")).setId(15);
 
 		// Urlaubsziel
-		urlaubsziel.addAttribute(new Attribute("Wanderurlaub"))
-				.addAttribute(new Attribute("Städtetrip"))
-				.addAttribute(new Attribute("Strandurlaub"));
+		urlaubsziel.addAttribute(new Attribute("Wanderurlaub").setId(16))
+				.addAttribute(new Attribute("Städtetrip").setId(17))
+				.addAttribute(new Attribute("Strandurlaub").setId(18));
 
 		p.addParameter(kosten).addParameter(distanz).addParameter(urlaubsziel);
 

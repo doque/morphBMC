@@ -17,3 +17,106 @@ td.value.y {
 td.warning, td.success, td.danger {
 	text-align: center;
 }
+#board {
+	min-height: 500px;
+	height: 95%; 
+	-webkit-box-align: start;
+	-webkit-align-items: flex-start;
+	align-items: flex-start;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-moz-box-orient: horizontal;
+	-webkit-box-orient: horizontal;
+	-ms-flex-direction: row;
+	-webkit-flex-direction: row;
+	flex-direction: row;
+	overflow-x: auto;
+	overflow-y: hidden;
+	background: 
+}
+.parameter {
+	background-color: #f7f7f9;
+	border: 1px solid #e1e1e8;
+	border-radius: 4px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-moz-box-orient: vertical;
+	-webkit-box-orient: vertical;
+	-ms-flex-direction: column;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+	-moz-box-flex: 0;
+	-webkit-box-flex: 0;
+	-ms-flex: 0 0 260px;
+	-webkit-flex: 0 0 260px;
+	flex: 0 0 260px;
+	margin: 0 5px;
+	max-height: 100%;
+	padding: 4px 0;
+	position: relative;
+	-webkit-transform: translate3d(0,0,0);
+	width: 260px;
+}
+.parameter .add {
+	background-color: #2f6f9f;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+	color: #939393;
+	display: block;
+	-moz-box-flex: 0;
+	-webkit-box-flex: 0;
+	-ms-flex: 0 0 auto;
+	-webkit-flex: 0 0 auto;
+	flex: 0 0 auto;
+	margin: 5px -1px;
+	padding: 7px 10px ;
+	position: relative;
+	text-decoration: none;
+	color: #fff;
+}
+.parameter .options {
+	cursor: pointer;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+.parameter.parameter-add {
+	opacity: 0.3;
+	width: 160px;
+	-ms-flex: 0 0 160px;
+	-webkit-flex: 0 0 160px;
+	flex: 0 0 160px;
+}
+.parameter.parameter-add:hover {
+	opacity: 1;
+}
+.parameter .options .dropdown-menu {
+	right: 0;
+	left: auto;
+}
+.attributes {
+	list-style: none;
+	margin: 0;
+	padding: 0 3px;
+}
+.attributes li {
+	padding: 5px;
+	margin: 5px 0;
+	border: 1px solid #2f6f9f;
+	background-color: rgba(79, 159, 207, 0.08);
+}
+.parameter h5 {
+	padding: 3px 8px;
+	margin: 0;
+}

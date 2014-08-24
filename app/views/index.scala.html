@@ -2,7 +2,7 @@
 
 @main("Wicked Problems") {
 
-		<table class="table table-bordered table-condensed" style="width: 400px; margin: 0 auto;">
+		<table class="table table-bordered table-condensed" style="width: 600px; margin: 0 auto;">
 			<tr>    
 				@* colspan="2" is fixed here *@
 				<td colspan="2" style="border-left-color: white !important; border-bottom-color: white !important; border-top-color: white !important"></td>
@@ -23,15 +23,18 @@
 			@* actual rows representing all attribute <-> attribute mappings *@
 			@for(param <- problem.getParameters) {
 				<tr>
+
+					<!-- param id in array speichern -->
 					<td rowspan="@param.getAttributes().length" class="parameter">@param.name</td>
 					@for(attr <- param.getAttributes) {
-						<td class="value y">@attr.value</td>
+						<td data-paramid="@param.id" data-y-attrid="@attr.id" class="value y">@attr.value</td>
 						@* empty cells, one for each possible attribute within problem *@
-							@for(a <- problem.getAllAttributes) {
-								<td class="mapping"></td>
-							}
+						@for(a <- problem.getAllAttributes) {
+							<td data-paramid="@param.id" data-x-attrid="@a.id" data-y-attrid="@attr.id" class="mapping@if(a.id == attr.id){ active}"></td>
+						}
 						@* each attribute gets their own row *@
 						</tr><tr>
+						<!-- hier die param id .next() en -->
 					}
 			}
 	</table>

@@ -4,10 +4,16 @@ import java.util.ArrayList;
 
 public class Problem {
 
-	public ArrayList<Parameter> parameters;
+	public long id;
+	protected ArrayList<Parameter> parameters;
 
-	public ArrayList<Parameter> getParameters() {
-		return parameters;
+	public Problem() {
+		this.parameters = new ArrayList<Parameter>();
+	}
+
+	public Problem addParameter(Parameter parameter) {
+		this.parameters.add(parameter);
+		return this;
 	}
 
 	/*
@@ -26,17 +32,16 @@ public class Problem {
 		return attributes;
 	}
 
+	public ArrayList<Parameter> getParameters() {
+		return parameters;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public void setParameters(ArrayList<Parameter> parameters) {
 		this.parameters = parameters;
-	}
-
-	public Problem addParameter(Parameter parameter) {
-		this.parameters.add(parameter);
-		return this;
-	}
-
-	public Problem() {
-		this.parameters = new ArrayList<Parameter>();
 	}
 
 }
