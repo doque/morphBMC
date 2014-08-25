@@ -1,0 +1,28 @@
+<div id="board">
+	<div class="parameter" ng-repeat="parameter in parameters">
+		<h5>{{ parameter.name }}</h5>
+		<a class="add">Add Attribute</a>
+		<ul class="attributes">
+			<li ng-repeat="attribute in parameter.attributes">{{ attribute.name }}</li>
+		</ul>
+		
+		<div class="options">
+			<span data-toggle="dropdown" class="glyphicon glyphicon-collapse-down"></span>
+			<ul class="dropdown-menu" role="menu">
+				<li><a href="#">Rename</a></li>
+				<li><a href="#">Remove</a></li>
+				<li><a href="#">Something else here</a></li>
+				<li class="divider"></li>
+				<li><a href="#">Separated link</a></li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="parameter parameter-add">
+		<input type="text" class="input" ng-model="parameter.name" ng-show="plusClicked==true">
+		<a ng-click="addParameter()" ng-show="plusClicked==true && parameter.name.length > 0">Absenden</a>
+		<h5 ng-hide="plusClicked==true" ng-click="plusClicked=true">
+			<span class="glyphicon glyphicon-plus-sign"></span> Add a Parameter
+		</h5>
+	</div>
+</div>

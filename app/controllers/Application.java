@@ -16,7 +16,7 @@ public class Application extends Controller {
 	 */
 
 	public static Result index() {
-		return ok(define.render());
+		return ok(index.render());
 	}
 
 	public static Result define() {
