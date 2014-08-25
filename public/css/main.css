@@ -82,6 +82,8 @@ td.warning, td.success, td.danger {
 	margin: 5px -1px;
 	padding: 7px 10px ;
 	position: relative;
+}
+.parameter .add a {
 	text-decoration: none;
 	color: #fff;
 }

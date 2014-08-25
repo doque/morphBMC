@@ -1,21 +1,44 @@
 morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope, $http) {
 
-	
+	$scope.addAttribute = function(parameter) {
+
+		if (parameter.attribute.name.length === 0) {
+			parameter.addingAttribute = false;
+			return;
+		}
+
+		$http.post("/api/parameters/"+parameter.id+"/attributes", {
+			"name": parameter.attribute.name
+		}).success(function(data) {
+			parameter.attributes.unshift(data.attribute);
+			parameter.addingAttribute = false;
+			parameter.attribute.name = "";
+		});
+	};
+
 
 	$scope.addParameter = function() {
+
+		// sanity check
+		if ($scope.parameter.name.length === 0) {
+			// no value given
+			$scope.addingParameter = false;
+			return;
+		}
+
 		$http.post("/api/parameters", {
 			"name": $scope.parameter.name
 		}).success(function(data) {
-			$scope.plusClicked = false;
+			$scope.addingParameter = false;
 			// reset input field model
-			$scope.parameter = {};
+			$scope.parameter.name = "";
 			$scope.parameters.push(data.parameter);
 		});
 	};
 
 	$scope.parameters = [
 		{
-			id: 0,
+			id: 20,
 			userid: "abc",
 			name: "Distance",
 			attributes: [
@@ -32,7 +55,7 @@ morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope,
 			]
 		}, 
 		{
-			id: 0,
+			id: 100,
 			userid: "def",
 			name: "Kosten",
 			attributes: [

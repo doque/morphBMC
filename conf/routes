@@ -16,7 +16,8 @@ GET     /not-authorized             securesocial.controllers.ProviderController.
 
 
 # REST endpoints
-POST 	/api/parameters				controllers.Parameter.addParameter
+POST 	/api/parameters					controllers.Parameter.addParameter
+POST	/api/parameters/:id/attributes	controllers.Parameter.addAttribute(id:Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

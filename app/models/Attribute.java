@@ -3,10 +3,13 @@ package models;
 public class Attribute {
 
 	public long id;
-	public String value;
+	public String name;
 
-	public Attribute(String value) {
-		this.setValue(value);
+	public Attribute() {
+	}
+
+	public Attribute(String name) {
+		this.setName(name);
 	}
 
 	public Attribute setId(long id) {
@@ -14,8 +17,8 @@ public class Attribute {
 		return this;
 	}
 
-	public Attribute setValue(String value) {
-		this.value = value;
+	public Attribute setName(String name) {
+		this.name = name;
 		return this;
 	}
 

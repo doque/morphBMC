@@ -15,7 +15,7 @@
 				<td colspan="2" style="border-left-color: white !important"></td>
 				@for(param <- problem.getParameters) {
 					@for(attr <- param.getAttributes) {
-						<td class="value x">@attr.value</td>
+						<td class="value x">@attr.name</td>
 					}
 				}
 			</tr>
@@ -27,7 +27,7 @@
 					<!-- param id in array speichern -->
 					<td rowspan="@param.getAttributes().length" class="parameter">@param.name</td>
 					@for(attr <- param.getAttributes) {
-						<td data-paramid="@param.id" data-y-attrid="@attr.id" class="value y">@attr.value</td>
+						<td data-paramid="@param.id" data-y-attrid="@attr.id" class="value y">@attr.name</td>
 						@* empty cells, one for each possible attribute within problem *@
 						@for(a <- problem.getAllAttributes) {
 							<td data-paramid="@param.id" data-x-attrid="@a.id" data-y-attrid="@attr.id" class="mapping@if(a.id == attr.id){ active}"></td>
