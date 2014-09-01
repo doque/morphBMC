@@ -25,6 +25,10 @@ public class Application extends Controller {
 		p.setProviderId(user.identityId().providerId());
 		p.save();
 
+		// this sucks, set it to client-session only and maybe enable multiple
+		// sessions
+		ctx().args.put("problemId", p.getId());
+
 		return ok(views.html.index.render(p));
 	}
 }

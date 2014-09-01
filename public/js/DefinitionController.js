@@ -1,5 +1,7 @@
 morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope, $http) {
 
+	$scope.problemId = null;
+
 	$scope.addAttribute = function(parameter) {
 
 		if (parameter.attribute.name.length === 0) {
@@ -36,6 +38,9 @@ morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope,
 		});
 	};
 
+	// grab from json
+
+	
 	$scope.parameters = [
 		{
 			id: 20,

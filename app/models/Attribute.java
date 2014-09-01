@@ -24,9 +24,6 @@ public class Attribute extends Model {
 	@ManyToOne
 	Parameter parameter;
 
-	@ManyToOne
-	Compatibility compatibility;
-
 	String userId;
 	String providerId;
 

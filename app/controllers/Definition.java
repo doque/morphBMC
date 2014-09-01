@@ -20,7 +20,6 @@ public class Definition extends Controller {
 	public static Result addParameter() {
 		// incoming parameter
 		Parameter p = Form.form(Parameter.class).bindFromRequest().get();
-
 		// add user info
 		Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
 		p.setUserId(user.identityId().userId());
@@ -48,6 +47,7 @@ public class Definition extends Controller {
 
 		Parameter p = Parameter.find.byId(parameterId);
 		p.getAttributes().add(attr);
+		p.save();
 
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("attribute", attr);
