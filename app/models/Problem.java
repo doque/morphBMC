@@ -1,47 +1,77 @@
 package models;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class Problem {
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-	public long id;
-	protected ArrayList<Parameter> parameters;
+import play.data.validation.Constraints.Required;
+import play.db.ebean.Model;
 
-	public Problem() {
-		this.parameters = new ArrayList<Parameter>();
-	}
+@SuppressWarnings("serial")
+@Entity
+@Table(name = "problems")
+public class Problem extends Model {
 
-	public Problem addParameter(Parameter parameter) {
-		this.parameters.add(parameter);
-		return this;
-	}
+	@Id
+	@GeneratedValue
+	long id;
 
-	/*
-	 * returns all possible attributes within a problem shortcut to iterating
-	 * each parameter
-	 * 
-	 * used for rendering empty table cells.
-	 */
-	public ArrayList<Attribute> getAllAttributes() {
-		ArrayList<Attribute> attributes = new ArrayList<Attribute>();
-		for (Parameter p : getParameters()) {
-			for (Attribute attr : p.getAttributes()) {
-				attributes.add(attr);
-			}
-		}
-		return attributes;
-	}
+	String userId;
+	String providerId;
 
-	public ArrayList<Parameter> getParameters() {
+	@Required
+	String name;
+
+	@GeneratedValue
+	@OneToMany(cascade = CascadeType.ALL)
+	List<Parameter> parameters;
+
+	public List<Parameter> getParameters() {
 		return parameters;
+	}
+
+	public void setParameters(List<Parameter> parameters) {
+		this.parameters = parameters;
+	}
+
+	public long getId() {
+		return id;
 	}
 
 	public void setId(long id) {
 		this.id = id;
 	}
 
-	public void setParameters(ArrayList<Parameter> parameters) {
-		this.parameters = parameters;
+	public String getUserId() {
+		return userId;
 	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getProviderId() {
+		return providerId;
+	}
+
+	public void setProviderId(String providerId) {
+		this.providerId = providerId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public static Finder<Long, Problem> find = new Finder<Long, Problem>(
+			Long.class, Problem.class);
 
 }

@@ -1,25 +1,68 @@
 package models;
 
-public class Attribute {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-	public long id;
-	public String name;
+import play.data.validation.Constraints.Required;
+import play.db.ebean.Model;
 
-	public Attribute() {
+@SuppressWarnings("serial")
+@Entity
+@Table(name = "attributes")
+public class Attribute extends Model {
+
+	@Id
+	@GeneratedValue
+	long id;
+
+	@Required
+	String name;
+
+	@ManyToOne
+	Parameter parameter;
+
+	@ManyToOne
+	Compatibility compatibility;
+
+	String userId;
+	String providerId;
+
+	public long getId() {
+		return id;
 	}
 
-	public Attribute(String name) {
-		this.setName(name);
-	}
-
-	public Attribute setId(long id) {
+	public void setId(long id) {
 		this.id = id;
-		return this;
 	}
 
-	public Attribute setName(String name) {
-		this.name = name;
-		return this;
+	public String getUserId() {
+		return userId;
 	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getProviderId() {
+		return providerId;
+	}
+
+	public void setProviderId(String providerId) {
+		this.providerId = providerId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public static Finder<Long, Attribute> find = new Finder<Long, Attribute>(
+			Long.class, Attribute.class);
 
 }

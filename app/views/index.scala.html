@@ -1,13 +1,16 @@
+@(problem: Problem)
+
 <!doctype html>
 <html lang="en" ng-app="morphBMC">
 	<head>
 		<meta charset="UTF-8">
 		<title>Logged in{{ title }}</title>
 		<link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">
-		<link rel="stylesheet" href="/assets/app/bower_components/bootstrap/dist/css/bootstrap.min.css"">
+		<link rel="stylesheet" href="/assets/app/bower_components/bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/assets/css/main.css">
 	</head>
 	<body>
+		<h5>@problem.getId() - @problem.getName()</h5>
 		<div ng-view class="container-fluid" style="margin-top: 20px;">
 			
 		</div>
