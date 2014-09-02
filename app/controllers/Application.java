@@ -3,8 +3,6 @@ package controllers;
 import models.Problem;
 import play.mvc.Controller;
 import play.mvc.Result;
-import securesocial.core.Identity;
-import securesocial.core.java.SecureSocial;
 
 public class Application extends Controller {
 
@@ -13,21 +11,21 @@ public class Application extends Controller {
 	 * 
 	 * @return
 	 */
-	@SecureSocial.SecuredAction
+	// @SecureSocial.SecuredAction
 	public static Result index() {
 
 		// Mock Problem
-		Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
-
-		Problem p = new Problem();
-		p.setName("Wicked Problem");
-		p.setUserId(user.identityId().userId());
-		p.setProviderId(user.identityId().providerId());
-		p.save();
-
-		// this sucks, set it to client-session only and maybe enable multiple
-		// sessions
-		ctx().args.put("problemId", p.getId());
+		// Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+		session("userId", "dummy");
+		Problem p = null;
+		if (session("problemId") == null) {
+			p.name = "Wicked Problem";
+			p.userId = session("userId");
+			p.save();
+			session("problemId", Long.toString(p.id));
+		} else {
+			p = Problem.find.byId(Long.parseLong(session("problemId")));
+		}
 
 		return ok(views.html.index.render(p));
 	}

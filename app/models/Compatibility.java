@@ -2,11 +2,9 @@ package models;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import play.data.validation.Constraints.Required;
@@ -18,17 +16,15 @@ import play.db.ebean.Model;
 public class Compatibility extends Model {
 
 	@Id
-	@GeneratedValue
-	long id;
+	public long id;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	Set<Attribute> attributes;
+	@ManyToMany
+	public Set<Attribute> attributes;
 
-	String userId;
-	String providerId;
+	public String userId;
 
 	@Required
-	float rating;
+	public float rating;
 
 	public static Finder<Long, Compatibility> find = new Finder<Long, Compatibility>(
 			Long.class, Compatibility.class);

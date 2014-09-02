@@ -8,9 +8,13 @@
 		<link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">
 		<link rel="stylesheet" href="/assets/app/bower_components/bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/assets/css/main.css">
+		<script>
+			// used by angular
+			const problemId = @problem.id;
+		</script>
 	</head>
 	<body>
-		<h5>@problem.getId() - @problem.getName()</h5>
+		<h5>@problem.id - @problem.name</h5>
 		<div ng-view class="container-fluid" style="margin-top: 20px;">
 			
 		</div>
