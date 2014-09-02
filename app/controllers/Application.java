@@ -17,7 +17,7 @@ public class Application extends Controller {
 		// Mock Problem
 		// Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
 		session("userId", "dummy");
-		Problem p = null;
+		Problem p = new Problem();
 		if (session("problemId") == null) {
 			p.name = "Wicked Problem";
 			p.userId = session("userId");
