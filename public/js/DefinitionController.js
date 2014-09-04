@@ -35,13 +35,13 @@ morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope,
 		});
 	};
 
-	$scope.removeParameter = function() {
-		console.log($scope.parameter)
-		/*$http.delete("/api/parameters", {
-			"id": $scope.parameter.id
-		}).success(function() {
-			$scope.parameters.splice(parameter, 1);
-		})*/
+	$scope.removeParameter = function(parameter, index) {
+		//console.log(parameter, index)
+		//$http.delete("/api/parameters", {
+		//	"id": parameter.id
+		//}).success(function() {
+		$scope.parameters.splice(index, 1);
+	//	})
 	};
 
 	// set up environment on load
@@ -85,6 +85,5 @@ morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope,
 			}
 		]);
 	});
-
-	
 }]);
+
