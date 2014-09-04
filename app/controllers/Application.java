@@ -17,15 +17,17 @@ public class Application extends Controller {
 		// Mock Problem
 		// Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
 		session("userId", "dummy");
-		Problem p = new Problem();
-		if (session("problemId") == null) {
+		Problem p = null;
+		if (session("problemId") != null) {
+			p = Problem.find.byId(Long.parseLong(session("problemId")));
+		}
+		if (p == null) {
+			p = new Problem();
 			p.name = "Wicked Problem";
 			p.userId = session("userId");
 			p.save();
-			session("problemId", Long.toString(p.id));
-		} else {
-			p = Problem.find.byId(Long.parseLong(session("problemId")));
 		}
+		session("problemId", Long.toString(p.id));
 
 		return ok(views.html.index.render(p));
 	}

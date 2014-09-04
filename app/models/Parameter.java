@@ -2,6 +2,7 @@ package models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -28,7 +29,7 @@ public class Parameter extends Model {
 	@JsonIgnore
 	public Problem problem;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	public List<Attribute> attributes;
 
 	public static Finder<Long, Parameter> find = new Finder<Long, Parameter>(

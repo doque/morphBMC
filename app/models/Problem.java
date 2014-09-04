@@ -2,6 +2,7 @@ package models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -21,7 +22,7 @@ public class Problem extends Model {
 
 	public String name;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	public List<Parameter> parameters;
 
 	public static Finder<Long, Problem> find = new Finder<Long, Problem>(

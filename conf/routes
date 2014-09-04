@@ -17,6 +17,7 @@ GET     /not-authorized             securesocial.controllers.ProviderController.
 
 # REST endpoints
 POST 	/api/parameters					controllers.Definition.addParameter
+DELETE  /api/parameters/:id				controllers.Definition.deleteParameter(id:Long)
 POST	/api/parameters/:id/attributes	controllers.Definition.addAttribute(id:Long)
 GET		/api/problems/:id				controllers.Definition.getProblemEnvironment(id:Long)
 

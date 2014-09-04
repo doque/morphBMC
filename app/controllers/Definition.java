@@ -44,6 +44,14 @@ public class Definition extends Controller {
 		return ok(Json.toJson(result));
 	}
 
+	public static Result deleteParameter(long parameterId) {
+		Parameter p = Parameter.find.byId(parameterId);
+		if (p != null) {
+			p.delete();
+		}
+		return ok();
+	}
+
 	// @SecuredAction(ajaxCall = true)
 	public static Result addAttribute(long parameterId) {
 
