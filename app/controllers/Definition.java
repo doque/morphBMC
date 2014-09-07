@@ -1,30 +1,19 @@
 package controllers;
 
-import java.util.List;
-import java.util.Map;
-
-import models.Attribute;
-import models.Parameter;
-import models.Problem;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import java.util.Map;
+
+import models.Attribute;
+import models.Parameter;
+import models.Problem;
+
 import com.google.common.collect.Maps;
 
 public class Definition extends Controller {
-
-	// @SecuredAction(ajaxCall = true)
-	public static Result getProblemEnvironment(long problemId) {
-		List<Parameter> params = Parameter.find.where()
-				.eq("problem_id", problemId).findList();
-
-		Map<String, Object> result = Maps.newHashMap();
-		result.put("parameters", params);
-
-		return ok(Json.toJson(result));
-	}
 
 	// @SecuredAction(ajaxCall = true)
 	public static Result addParameter() {
@@ -67,4 +56,5 @@ public class Definition extends Controller {
 		result.put("attribute", attr);
 		return ok(Json.toJson(result));
 	}
+
 }

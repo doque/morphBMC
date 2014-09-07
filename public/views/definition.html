@@ -3,9 +3,9 @@
 		
 		<h5>{{ parameter.name }}</h5>
 
-		<div class="add">
+		<div ng-click="parameter.addingAttribute=true" class="add">
 			<input type="text" class="text" ng-blur="addAttribute(parameter)" ng-model="parameter.attribute.name" ng-show="parameter.addingAttribute==true">
-			<a ng-hide="parameter.addingAttribute==true" ng-click="parameter.addingAttribute=true">Add Attribute</a>
+			<a ng-hide="parameter.addingAttribute==true">Add Attribute</a>	
 		</div>
 		<ul class="attributes">
 			<li ng-repeat="attr in parameter.attributes">{{ attr.name }}</li>

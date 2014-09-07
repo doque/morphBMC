@@ -1,5 +1,7 @@
 package models;
 
+import play.db.ebean.Model;
+
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -7,8 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import play.db.ebean.Model;
 
 @SuppressWarnings("serial")
 @Entity
@@ -28,4 +28,9 @@ public class Problem extends Model {
 	public static Finder<Long, Problem> find = new Finder<Long, Problem>(
 			Long.class, Problem.class);
 
+	public Stage currentStage;
+
+	public enum Stage {
+		Definition, Compatibility
+	}
 }

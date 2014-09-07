@@ -24,7 +24,7 @@ morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope,
 			$scope.addingParameter = false;
 			return;
 		}
-
+		
 		$http.post("/api/parameters", {
 			"name": $scope.parameter.name
 		}).success(function(data) {
@@ -43,45 +43,10 @@ morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope,
 	};
 
 	// set up environment on load
-	$http.get("/api/problems/" + problemId).success(function(data) {
+	$http.get("/api/problems").success(function(data) {
 		// contains problem properties and parameters with their attributes,
 		// if present yet
-		$scope.parameters = angular.copy(data.parameters, [
-			{
-				id: 20,
-				userid: "abc",
-				name: "Distance",
-				attributes: [
-					{
-						id: 1,
-						userid: "def",
-						name: "500km"
-					},
-					{
-						id: 2,
-						userid: "def",
-						name: "100km"
-					}
-				]
-			}, 
-			{
-				id: 100,
-				userid: "def",
-				name: "Kosten",
-				attributes: [
-					{
-						id: 3,
-						userid: "def",
-						name: "500EUR"
-					},
-					{
-						id: 4,
-						userid: "def",
-						name: "100EUR"
-					}
-				]
-			}
-		]);
+		$scope.parameters = data.problem.parameters;
 	});
 }]);
 

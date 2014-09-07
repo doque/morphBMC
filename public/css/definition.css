@@ -68,6 +68,9 @@
 	text-decoration: none;
 	color: #fff;
 }
+.parameter .add input {
+	width: 100%;
+}
 .parameter .options {
 	cursor: pointer;
 	position: absolute;

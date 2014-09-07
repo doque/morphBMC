@@ -1,28 +1,30 @@
-@(problem: Problem)
-
 <!doctype html>
 <html lang="en" ng-app="morphBMC">
 	<head>
 		<meta charset="UTF-8">
-		<title>Logged in{{ title }}</title>
+		<title>{{ problem.name }}</title>
 		<link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">
 		<link rel="stylesheet" href="/assets/app/bower_components/bootstrap/dist/css/bootstrap.min.css">
-		<link rel="stylesheet" href="/assets/css/main.css">
-		<script>
-			// used by angular
-			const problemId = @problem.id;
-		</script>
+		<link rel="stylesheet" href="/assets/css/definition.css">
+		<link rel="stylesheet" href="/assets/css/compatibility.css">
 	</head>
 	<body>
-		<h5>@problem.id - @problem.name</h5>
-		<div ng-view class="container-fluid" style="margin-top: 20px;">
-			
+		<div ng-controller="ProblemController">
+			<header>
+				<h5> {{ problem.id }} - {{ problem.name }} created by {{ problem.userId }} </h5>
+			</header>
 		</div>
+
+		<div ng-view class="container-fluid" style="margin-top: 20px;"></div>
 	</body>
 	<script src="/assets/app/bower_components/jquery/dist/jquery.js"></script>
 	<script src="/assets/app/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script src="/assets/app/bower_components/angular/angular.js"></script>
 	<script src="/assets/app/bower_components/angular-route/angular-route.min.js"></script>
+
 	<script src="/assets/js/app.js"></script>
+
 	<script src="/assets/js/DefinitionController.js"></script>
+	<script src="/assets/js/CompatibilityController.js"></script>
+	<script src="/assets/js/ProblemController.js"></script>
 </html>

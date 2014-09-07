@@ -1,0 +1,10 @@
+#compatibilities td {
+	white-space: nowrap; text-align: center;
+}
+#compatibilities thead td[colspan]:not([rowspan]),
+#compatibilities tbody td[rowspan]:not(.active) {
+	background: #dff0d8; font-weight: bold; vertical-align: middle;
+}
+#compatibilities thead td:not([colspan]) {
+	background: #fcf8e3; vertical-align: middle;
+}
