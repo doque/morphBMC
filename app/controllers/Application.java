@@ -9,6 +9,7 @@ import java.util.Map;
 import models.Problem;
 import models.Problem.Stage;
 
+import com.avaje.ebean.Ebean;
 import com.google.common.collect.Maps;
 
 public class Application extends Controller {
@@ -49,7 +50,7 @@ public class Application extends Controller {
 			p = new Problem();
 			p.name = "Wicked Problem";
 			p.userId = session("userId");
-			p.save();
+			Ebean.save(p);
 		}
 		session("problemId", Long.toString(p.id));
 
