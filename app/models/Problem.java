@@ -6,16 +6,17 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "problems")
 public class Problem extends Model {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long id;
 
 	public String userId;

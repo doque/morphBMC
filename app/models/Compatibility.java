@@ -1,21 +1,22 @@
 package models;
 
-import java.util.Set;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "compatibilities")
 public class Compatibility extends Model {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long id;
 
 	@ManyToMany
