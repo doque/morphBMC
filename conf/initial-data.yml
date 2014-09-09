@@ -1,0 +1,28 @@
+
+# Problems
+
+problems:
+
+    - !!models.Problem
+        userId:     1
+        name:       YML Wicked
+    
+    
+    
+# Projects
+
+#projects:
+
+#    - !!models.Project
+#        id:         1
+#        name:       Play 2.0   
+#        folder:     Play framework
+#        members:
+#           - !!models.User
+#                email: guillaume@sample.com
+#            - !!models.User
+#                email: maxime@sample.com
+#            - !!models.User
+#                email: sadek@sample.com
+#            - !!models.User
+#                email: erwan@sample.com

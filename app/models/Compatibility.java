@@ -6,8 +6,6 @@ import play.db.ebean.Model;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
@@ -16,7 +14,6 @@ import javax.persistence.ManyToMany;
 public class Compatibility extends Model {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long id;
 
 	@ManyToMany

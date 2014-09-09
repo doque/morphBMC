@@ -9,7 +9,6 @@ import java.util.Map;
 import models.Problem;
 import models.Problem.Stage;
 
-import com.avaje.ebean.Ebean;
 import com.google.common.collect.Maps;
 
 public class Application extends Controller {
@@ -17,6 +16,7 @@ public class Application extends Controller {
 	// @SecuredAction(ajaxCall = true)
 	public static Result getProblemEnvironment() {
 		long problemId = Long.parseLong(session("problemId"));
+
 		Problem p = Problem.find.byId(problemId);
 		// sanity check
 		if (p == null) {
@@ -38,21 +38,14 @@ public class Application extends Controller {
 	// TODO parameters for problem creation (name, anything else)
 	// @SecureSocial.SecuredAction
 	public static Result index() {
-
-		// Mock Problem
 		// Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
 		session("userId", "dummy");
-		Problem p = null;
-		if (session("problemId") != null) {
-			p = Problem.find.byId(Long.parseLong(session("problemId")));
-		}
+		long problemId = Long.parseLong(session("problemId"));
+		Problem p = Problem.find.byId(problemId);
+		// sanity check
 		if (p == null) {
-			p = new Problem();
-			p.name = "Wicked Problem";
-			p.userId = session("userId");
-			Ebean.save(p);
+			return notFound();
 		}
-		session("problemId", Long.toString(p.id));
 
 		return ok(views.html.index.render());
 	}
