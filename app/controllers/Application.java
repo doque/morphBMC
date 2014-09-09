@@ -13,6 +13,11 @@ import com.google.common.collect.Maps;
 
 public class Application extends Controller {
 
+	static {
+		session("userId", "Dummy User");
+		session("problemId", "1");
+	}
+
 	// @SecuredAction(ajaxCall = true)
 	public static Result getProblemEnvironment() {
 
@@ -39,8 +44,6 @@ public class Application extends Controller {
 	// @SecureSocial.SecuredAction
 	public static Result index() {
 		// Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
-
-		Controller.session("userId", "dummy");
 		Problem p = Problem.find.byId((long) 1);
 		// sanity check
 		if (p == null) {
