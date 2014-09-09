@@ -15,13 +15,13 @@ public class Application extends Controller {
 
 	// @SecuredAction(ajaxCall = true)
 	public static Result getProblemEnvironment() {
-		long problemId = Long.parseLong(session("problemId"));
 
-		Problem p = Problem.find.byId(problemId);
+		Problem p = Problem.find.byId((long) 1);
 		// sanity check
 		if (p == null) {
 			return notFound();
 		}
+
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("problem", p);
 
@@ -39,9 +39,9 @@ public class Application extends Controller {
 	// @SecureSocial.SecuredAction
 	public static Result index() {
 		// Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
-		session("userId", "dummy");
-		long problemId = Long.parseLong(session("problemId"));
-		Problem p = Problem.find.byId(problemId);
+
+		Controller.session("userId", "dummy");
+		Problem p = Problem.find.byId((long) 1);
 		// sanity check
 		if (p == null) {
 			return notFound();
@@ -59,14 +59,13 @@ public class Application extends Controller {
 	 * @return not found if the problem doesnt exist, otherwise HTTP 200
 	 */
 	public static Result changeState(long problemId, Stage stage) {
-		Problem p = null;
-		if (session("problemId") != null) {
-			p = Problem.find.byId(Long.parseLong(session("problemId")));
-			if (p == null) {
-				return notFound();
-			}
+		Problem p = Problem.find.byId((long) 1);
+		// sanity check
+		if (p == null) {
+			return notFound();
 		}
 		p.currentStage = stage;
+		p.save();
 		return ok();
 	}
 
