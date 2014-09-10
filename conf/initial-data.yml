@@ -1,28 +1,61 @@
-
 # Problems
-
 problems:
-
     - !!models.Problem
         userId:     1
-        name:       YML Wicked
-    
-    
-    
-# Projects
-
-#projects:
-
-#    - !!models.Project
-#        id:         1
-#        name:       Play 2.0   
-#        folder:     Play framework
-#        members:
-#           - !!models.User
-#                email: guillaume@sample.com
-#            - !!models.User
-#                email: maxime@sample.com
-#            - !!models.User
-#                email: sadek@sample.com
-#            - !!models.User
-#                email: erwan@sample.com
+        name:       My awesome Wicked Problem
+        parameters:
+          - !!models.Parameter
+            userId: 1
+            name: Param 1
+            attributes:
+              - !!models.Attribute
+                name: Attr 1
+                userId: 1
+              - !!models.Attribute
+                name: Attr 2
+                userId: 1
+              - !!models.Attribute
+                name: Attr 3
+                userId: 1
+          - !!models.Parameter
+            name: Param 2
+            userId: 1
+            attributes:
+              - !!models.Attribute
+                name: Attr 4
+                userId: 1
+              - !!models.Attribute
+                name: Attr 5
+                userId: 1
+              - !!models.Attribute
+                name: Attr 6
+                userId: 1
+          - !!models.Parameter
+            name: Param 3
+            userId: 1
+            attributes:
+              - !!models.Attribute
+                name: Attr 7
+                userId: 1
+              - !!models.Attribute
+                name: Attr 8
+                userId: 1
+              - !!models.Attribute
+                name: Attr 9
+                userId: 1
+          - !!models.Parameter
+            name: Param 4
+            userId: 1
+            attributes:
+              - !!models.Attribute
+                name: Attr 10
+                userId: 1
+              - !!models.Attribute
+                name: Attr 11
+                userId: 1
+              - !!models.Attribute
+                name: Attr 12
+                userId: 1
+              - !!models.Attribute
+                name: Attr 13
+                userId: 1

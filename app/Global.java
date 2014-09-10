@@ -20,23 +20,23 @@ public class Global extends GlobalSettings {
 
 		public static void insert(Application app) {
 			if (Ebean.find(Problem.class).findRowCount() == 0) {
-
+				Logger.info("no data found yet, populating database");
 				@SuppressWarnings("unchecked")
 				Map<String, List<Object>> all = (Map<String, List<Object>>) Yaml
 						.load("initial-data.yml");
 
+				// we only have one list
 				Ebean.save(all.get("problems"));
-				// Insert users first
-				/*
-				 * Ebean.save(all.get("problems"));
-				 * 
-				 * // Insert projects Ebean.save(all.get("projects")); for
-				 * (Object project : all.get("projects")) { // Insert the
-				 * project/user relation
-				 * Ebean.saveManyToManyAssociations(project, "members"); }
-				 * 
-				 * // Insert tasks Ebean.save(all.get("tasks"));
-				 */
+
+				// save associations, top down
+				for (Object problem : all.get("problems")) {
+					Ebean.saveManyToManyAssociations(problem, "parameters");
+				}
+				for (Object parameter : all.get("parameters")) {
+					Ebean.saveManyToManyAssociations(parameter, "attributes");
+				}
+
+				Logger.info("database populated");
 
 			}
 		}

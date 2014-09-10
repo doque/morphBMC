@@ -1,5 +1,5 @@
 <div id="board">
-	<div class="parameter" ng-repeat="parameter in parameters">
+	<div class="parameter" ng-repeat="parameter in parameters | orderBy:'id'">
 		
 		<h5>{{ parameter.name }}</h5>
 
@@ -8,7 +8,7 @@
 			<a ng-hide="parameter.addingAttribute==true">Add Attribute</a>	
 		</div>
 		<ul class="attributes">
-			<li ng-repeat="attr in parameter.attributes">{{ attr.name }}</li>
+			<li ng-repeat="attr in parameter.attributes | orderBy:'id'">{{ attr.name }}</li>
 		</ul>
 		
 		<div class="options">

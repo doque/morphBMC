@@ -4,6 +4,227 @@
 		<thead>
 			<tr>
 				<td colspan="2" rowspan="2" border="0"></td>
+				<td ng-repeat="parameter in parameters | orderBy:'id'" colspan="{{ parameter.attributes.length}}">{{ parameter.name }}</td>
+			</tr>
+			<tr>
+				<!-- render all attributes that exist -->
+				<td ng-repeat="attribute in getAllAttributes() | orderBy:'id'">{{ attribute.name }}</td>
+			</tr>
+		</thead>
+		<tbody>
+
+			<!-- repeaten by attribute, nicht parameter. dann parameter per get() holen -->
+			<tr ng-repeat="parameter in parameters |orderBy:'id':true" ng-hide="$first"> <!-- skip first parameter! -->
+			<!-- begin mapping param 2 -->
+				<td rowspan="{{ parameter.attributes.length}}">
+					{{ parameter.name }}
+				</td>
+
+				<td class="warning">Attr 4</td>
+
+				<td>A4 - A1</td>
+				<td>A4 - A2</td>
+				<td>A4 - A3</td>
+
+				<td colspan="3" rowspan="3" class="active"></td>
+
+				<td>A4 - A7</td>
+				<td>A4 - A8</td>
+				<td>A4 - A9</td>
+
+				<td>A4 - A10</td>
+				<td>A4 - A11</td>
+				<td>A4 - A12</td>
+				<td>A4 - A13</td>
+			</tr>
+
+			<tr>
+				<td class="warning">Attr 5</td>
+
+				<td>A5 - A1</td>
+				<td>A5 - A2</td>
+				<td>A5 - A3</td>
+
+				<td>A5 - A7</td>
+				<td>A5 - A8</td>
+				<td>A5 - A9</td>
+
+				<td>A5 - A10</td>
+				<td>A5 - A11</td>
+				<td>A5 - A12</td>
+				<td>A5 - A13</td>
+
+			</tr>
+
+			<tr>
+				<td class="warning">Attr 6</td>
+
+				<td>A6 - A1</td>
+				<td>A6 - A2</td>
+				<td>A6 - A3</td>
+
+				<td>A6 - A7</td>
+				<td>A6 - A8</td>
+				<td>A6 - A9</td>
+
+				<td>A6 - A10</td>
+				<td>A6 - A11</td>
+				<td>A6 - A12</td>
+				<td>A6 - A13</td>
+
+			</tr>
+		<!-- end param 2 -->
+
+		<!-- begin mapping param 3 -->
+			<tr>
+				<td rowspan="3">
+					Param 3
+				</td>
+				
+				<td class="warning">Attr 7</td>
+
+				<td>A7 - A1</td>
+				<td>A7 - A2</td>
+				<td>A7 - A3</td>
+
+				<td>A7 - A4</td>
+				<td>A7 - A5</td>
+				<td>A7 - A6</td>
+
+				<td colspan="3" rowspan="3" class="active"></td>
+
+
+				<td>A7 - A10</td>
+				<td>A7 - A11</td>
+				<td>A7 - A12</td>
+				<td>A7 - A13</td>
+			</tr>
+
+			<tr>
+				<td class="warning">Attr 8</td>
+
+				<td>A8 - A1</td>
+				<td>A8 - A2</td>
+				<td>A8 - A3</td>
+
+				<td>A8 - A4</td>
+				<td>A8 - A5</td>
+				<td>A8 - A6</td>
+
+				<td>A8 - A10</td>
+				<td>A8 - A11</td>
+				<td>A8 - A12</td>
+				<td>A8 - A13</td>
+
+			</tr>
+
+			<tr>
+				<td class="warning">Attr 9</td>
+
+				<td>A9 - A1</td>
+				<td>A9 - A2</td>
+				<td>A9 - A3</td>
+
+				<td>A9 - A4</td>
+				<td>A9 - A5</td>
+				<td>A9 - A6</td>
+
+				<td>A9 - A10</td>
+				<td>A9 - A11</td>
+				<td>A9 - A12</td>
+				<td>A9 - A13</td>
+
+			</tr>
+		<!-- end param 3 -->
+
+		<!-- begin mapping param 4 -->
+			<tr>
+				<td rowspan="4">
+					Param 4
+				</td>
+				
+				<td class="warning">Attr 10</td>
+
+				<td>A10 - A1</td>
+				<td>A10 - A2</td>
+				<td>A10 - A3</td>
+
+				<td>A10 - A4</td>
+				<td>A10 - A5</td>
+				<td>A10 - A6</td>
+
+				<td>A10 - A7</td>
+				<td>A10 - A8</td>
+				<td>A10 - A9</td>
+
+				<td colspan="4" rowspan="4" class="active"></td>
+			</tr>
+
+			<tr>
+				<td class="warning">Attr 11</td>
+
+				<td>A11 - A1</td>
+				<td>A11 - A2</td>
+				<td>A11 - A3</td>
+
+				<td>A11 - A4</td>
+				<td>A11 - A5</td>
+				<td>A11 - A6</td>
+
+				<td>A11 - A7</td>
+				<td>A11 - A8</td>
+				<td>A11 - A9</td>
+
+			</tr>
+
+			<tr>
+				<td class="warning">Attr 12</td>
+
+				<td>A12 - A1</td>
+				<td>A12 - A2</td>
+				<td>A12 - A3</td>
+
+				<td>A12 - A4</td>
+				<td>A12 - A5</td>
+				<td>A12 - A6</td>
+
+				<td>A12 - A7</td>
+				<td>A12 - A8</td>
+				<td>A12 - A9</td>
+
+			</tr>
+
+			<tr>
+				<td class="warning">Attr 13</td>
+
+				<td>A13 - A1</td>
+				<td>A13 - A2</td>
+				<td>A13 - A3</td>
+
+				<td>A13 - A4</td>
+				<td>A13 - A5</td>
+				<td>A13 - A6</td>
+
+				<td>A13 - A7</td>
+				<td>A13 - A8</td>
+				<td>A13 - A9</td>
+
+			</tr>
+		<!-- end param 3 -->
+
+
+
+		</tbody>
+		
+	</table>
+
+
+
+
+	<table id="compatibilities2" class="table table-bordered" style="font-size: 0.8em">
+		<thead>
+			<tr>
+				<td colspan="2" rowspan="2" border="0"></td>
 				<td colspan="3">Param1</td>
 				<td colspan="3">Param2</td>
 				<td colspan="3">Param3</td>
@@ -230,4 +451,5 @@
 		</tbody>
 		
 	</table>
+
 </div>

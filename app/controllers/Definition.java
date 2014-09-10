@@ -16,13 +16,13 @@ import com.google.common.collect.Maps;
 public class Definition extends Controller {
 
 	// @SecuredAction(ajaxCall = true)
-	public static Result addParameter() {
+	public static Result addParameter(long problemId) {
 		// incoming parameter
 		Parameter p = Form.form(Parameter.class).bindFromRequest().get();
 
 		p.userId = session("userId");
 
-		p.problem = Problem.find.byId(Long.parseLong(session("problemId")));
+		p.problem = Problem.find.byId(problemId);
 		p.save();
 
 		// outgoing result contains the same object
@@ -33,7 +33,8 @@ public class Definition extends Controller {
 		return ok(Json.toJson(result));
 	}
 
-	public static Result deleteParameter(long parameterId) {
+	public static Result deleteParameter(long problemId, long parameterId) {
+		// TODO auth problemId
 		Parameter p = Parameter.find.byId(parameterId);
 		if (p != null) {
 			p.delete();
@@ -42,7 +43,7 @@ public class Definition extends Controller {
 	}
 
 	// @SecuredAction(ajaxCall = true)
-	public static Result addAttribute(long parameterId) {
+	public static Result addAttribute(long problemId, long parameterId) {
 
 		Attribute attr = Form.form(Attribute.class).bindFromRequest().get();
 		attr.userId = session("userId");

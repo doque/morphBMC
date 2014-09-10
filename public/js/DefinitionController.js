@@ -7,7 +7,7 @@ morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope,
 			return;
 		}
 
-		$http.post("/api/parameters/"+parameter.id+"/attributes", {
+		$http.post("/api/problems/" + window.PROBLEM_ID + "/parameters/"+parameter.id+"/attributes", {
 			"name": parameter.attribute.name
 		}).success(function(data) {
 			parameter.attributes.unshift(data.attribute);
@@ -25,7 +25,7 @@ morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope,
 			return;
 		}
 		
-		$http.post("/api/parameters", {
+		$http.post("/api/problems/" + window.PROBLEM_ID + "/parameters", {
 			"name": $scope.parameter.name
 		}).success(function(data) {
 			$scope.addingParameter = false;
@@ -37,7 +37,7 @@ morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope,
 
 	$scope.removeParameter = function(parameter, index) {
 		//console.log(parameter, index)
-		$http.delete("/api/parameters/" + parameter.id).success(function() {
+		$http.delete("/api/problems/" + window.PROBLEM_ID + "/parameters/" + parameter.id).success(function() {
 			$scope.parameters.splice(index, 1);
 		});
 	};

@@ -21,7 +21,10 @@ public class Application extends Controller {
 	// @SecuredAction(ajaxCall = true)
 	public static Result getProblemEnvironment() {
 
-		Problem p = Problem.find.byId((long) 1);
+		Long id = Long.parseLong(session("problemId"));
+
+		// TODO auth etc.
+		Problem p = Problem.find.byId(id);
 		// sanity check
 		if (p == null) {
 			return notFound();
@@ -44,12 +47,16 @@ public class Application extends Controller {
 	// @SecureSocial.SecuredAction
 	public static Result index() {
 		// Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
-		Problem p = Problem.find.byId((long) 1);
+		Long id = Long.parseLong(session("problemId"));
+
+		// TODO auth etc.
+		Problem p = Problem.find.byId(id);
 		// sanity check
 		if (p == null) {
 			return notFound();
 		}
 
+		// render problem ID as js var
 		return ok(views.html.index.render());
 	}
 
@@ -62,7 +69,10 @@ public class Application extends Controller {
 	 * @return not found if the problem doesnt exist, otherwise HTTP 200
 	 */
 	public static Result changeState(long problemId, Stage stage) {
-		Problem p = Problem.find.byId((long) 1);
+		Long id = Long.parseLong(session("problemId"));
+
+		// TODO auth etc.
+		Problem p = Problem.find.byId(id);
 		// sanity check
 		if (p == null) {
 			return notFound();
