@@ -12,25 +12,26 @@
 			</tr>
 		</thead>
 		<tbody>
-
-			<!-- repeaten by attribute, nicht parameter. dann parameter per get() holen -->
-			
-			<!-- skip attributes of first parameter? -->
 			<tr ng-repeat="y in getAllAttributes() | orderBy: 'id'">
-				<!-- ng hide if rowspan index % length === 0 -->
-				<!-- current param in scope reinbinden -->
-
-				<!-- nur einmal pro parameter zeigen -->
+				<!-- only show this td if the $index is a "new" parameter -->
 				<td data-index="{{ $index }}" ng-if="getOffsets().indexOf($index) >= 0"
 					rowspan="{{ getParameterByAttribute(y.id).attributes.length }}">
 					{{ getParameterByAttribute(y.id).name }}
 				</td>
 
 				<td class="warning">{{ y.name}}</td>
-
-				<!-- jedes weitere attribute hier rein, aber ausgrauen falls die parameterID gleich sind-->
-				<td data-ids="[{{ x.id }}, {{ y.id}}]" ng-repeat="x in getAllAttributes() | orderBy: 'id'">
-					{{y.name}} - {{x.name}}
+				
+				<td ng-class="getParameterByAttribute(y.id).id === getParameterByAttribute(x.id).id ? 'active' : ''"
+					data-ids="[{{ x.id }}, {{ y.id}}]" ng-repeat="x in getAllAttributes() | orderBy: 'id'">
+					<span ng-if="getParameterByAttribute(y.id).id !== getParameterByAttribute(x.id).id">
+						{{ y.name }} - {{ x.name }}
+					</span>
+					<!--<select>
+						<option>{{y.name}} - {{x.name}}</option>
+						<option ng-selected="addCompatibility([x.id, y.id], 5)">Very Good</option>
+						<option ng-selected="addCompatibility([x.id, y.id], 3)">OK</option>
+						<option ng-selected="addCompatibility([x.id, y.id], 1)">Bad</option>
+					</select>-->
 				</td>
 			</tr>
 

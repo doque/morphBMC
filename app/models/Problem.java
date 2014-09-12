@@ -2,6 +2,7 @@ package models;
 
 import play.db.ebean.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -21,7 +22,7 @@ public class Problem extends Model {
 	public String name;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	public List<Parameter> parameters;
+	public List<Parameter> parameters = new ArrayList<Parameter>();
 
 	public static Finder<Long, Problem> find = new Finder<Long, Problem>(
 			Long.class, Problem.class);

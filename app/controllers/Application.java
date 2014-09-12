@@ -13,14 +13,8 @@ import com.google.common.collect.Maps;
 
 public class Application extends Controller {
 
-	static {
-		session("userId", "Dummy User");
-		session("problemId", "1");
-	}
-
 	// @SecuredAction(ajaxCall = true)
 	public static Result getProblemEnvironment() {
-
 		Long id = Long.parseLong(session("problemId"));
 
 		// TODO auth etc.
@@ -46,6 +40,10 @@ public class Application extends Controller {
 	// TODO parameters for problem creation (name, anything else)
 	// @SecureSocial.SecuredAction
 	public static Result index() {
+
+		session("userId", "Dummy User");
+		session("problemId", "1");
+
 		// Identity identity = (Identity) ctx().args.get(SecureSocial.USER_KEY);
 		Long id = Long.parseLong(session("problemId"));
 

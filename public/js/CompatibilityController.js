@@ -12,6 +12,10 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 			return;
 		}
 		$http.post("/api/compatibility", {
+			"attributes": attributes,
+			"rating": rating
+		}).success(function(data) {
+			console.log(data);
 		});
 	};
 
@@ -31,7 +35,7 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 		}, offsets);
 
 		console.log(offsets)
-		return offsets;
+		return offsets;	
 	};
 
 	/**
@@ -79,11 +83,6 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 		});
 		return param;
 	};
-
-	$scope.getOtherAttributes = function(id) {
-
-	};
-
 
 	// grab all existing parameters to build table
 	$http.get("/api/problems").success(function(data) {
