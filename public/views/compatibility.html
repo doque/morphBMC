@@ -12,7 +12,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="y in getAllAttributes() | orderBy: 'id'">
+			<tr ng-if="$index >= getOffsets()[1]" ng-repeat="y in getAllAttributes() | orderBy: 'id'">
 				<!-- only show this td if the $index is a "new" parameter -->
 				<td data-index="{{ $index }}" ng-if="getOffsets().indexOf($index) >= 0"
 					rowspan="{{ getParameterByAttribute(y.id).attributes.length }}">
