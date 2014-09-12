@@ -15,6 +15,24 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 		});
 	};
 
+	/**
+	 * calculates the offsets of parameter arributes
+	 * needed for rowspan calculation on compatibility table
+	 * e.g. if first parameter has 2 attributes and second has
+	 * 4, the offset array will be [2,4]
+	 * during iteration of <tr> elements, everytime $index is in offset,
+	 * a rowspan td is rendered
+	 * @return {array} 
+	 */
+	$scope.getOffsets = function() {
+		var offsets = [];
+		angular.forEach($scope.parameters, function(p, i) {
+			this.push(i * p.attributes.length)
+		}, offsets);
+
+		console.log(offsets)
+		return offsets;
+	};
 
 	/**
 	 * returns all attributes from all problems
@@ -35,12 +53,13 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 	 * returns attributes for a specific problem
 	 */
 	$scope.getAttributesByParameter = function(id) {
-		angular.forEach($scope.parameter, function(p) {
+		var attributes = [];
+		angular.forEach($scope.parameters, function(p) {
 			if (p.id === id) {
-				return p.attributes;
+				attributes = attributes.concat(p.attributes);
 			}
 		});
-		return null;
+		return attributes;
 	};
 
 	/**
@@ -49,15 +68,20 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 	 */
 	$scope.getParameterByAttribute = function(id) {
 		// walk through parameters
-		angular.forEach($scope.parameter, function(p) {
+		var param = null;
+		angular.forEach($scope.parameters, function(p) {
 			// walk through all attributes of parameters
 			angular.forEach(p.attributes, function(a) {
-				if (a.id === id) {
-					return p;
+				if (a.id == id) {
+					param = p;
 				}
 			});
-			return null;
 		});
+		return param;
+	};
+
+	$scope.getOtherAttributes = function(id) {
+
 	};
 
 
