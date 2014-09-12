@@ -1,20 +1,23 @@
 morphBMC.controller("CompatibilityController", ['$scope', '$http', function($scope, $http) {
 
+	$scope.ratings = [{name: "Bad", rating: 1},
+						{name: "OK", rating: 3},
+						{name: "Good", rating: 5}];
+	$scope.adding = false;
+
 	/**
 	 * saves a compatibility
 	 * @param {array} attributes the pair of attribute ids
-	 * @param rating the rating as int
+	 * @param rating the rating as an object with fields ids and rating
 	 */
-	$scope.addCompatibility = function(attributes, rating) {
+	$scope.addCompatibility = function(compatibility) {
+		console.log(compatibility);
 		// attributes contains two attribute ids
-		if (attributes.length !== 2) {
+		if (compatibility.attributes.length !== 2) {
 			console.log("invalid attribute parameter, length is %d", attributes.length);
 			return;
 		}
-		$http.post("/api/compatibility", {
-			"attributes": attributes,
-			"rating": rating
-		}).success(function(data) {
+		$http.post("/api/compatibility", compatibility).success(function(data) {
 			console.log(data);
 		});
 	};
@@ -34,7 +37,6 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 			this.push(i * p.attributes.length)
 		}, offsets);
 
-		console.log(offsets)
 		return offsets;	
 	};
 

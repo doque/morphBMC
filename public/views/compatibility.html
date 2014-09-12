@@ -1,5 +1,4 @@
 <div id="compatibility" ng-cloak>
-
 	<table id="compatibilities" class="table table-bordered" style="font-size: 0.8em">
 		<thead>
 			<tr>
@@ -23,15 +22,20 @@
 				
 				<td ng-class="getParameterByAttribute(y.id).id === getParameterByAttribute(x.id).id ? 'active' : ''"
 					data-ids="[{{ x.id }}, {{ y.id}}]" ng-repeat="x in getAllAttributes() | orderBy: 'id'">
-					<span ng-if="getParameterByAttribute(y.id).id !== getParameterByAttribute(x.id).id">
-						{{ y.name }} - {{ x.name }}
-					</span>
-					<!--<select>
-						<option>{{y.name}} - {{x.name}}</option>
-						<option ng-selected="addCompatibility([x.id, y.id], 5)">Very Good</option>
-						<option ng-selected="addCompatibility([x.id, y.id], 3)">OK</option>
-						<option ng-selected="addCompatibility([x.id, y.id], 1)">Bad</option>
-					</select>-->
+
+					<div ng-if="getParameterByAttribute(y.id).id !== getParameterByAttribute(x.id).id">
+
+						<span ng-click="adding=true" ng-hide="adding == true">
+							{{ y.name }} - {{ x.name }}
+						</span>
+
+						<div ng-show="adding==true" class="adding-compatibility">
+							<input type="hidden" ng-model="attributes" value="[{{ x.id }}, {{ y.id }}]">
+							<select ng-change="addCompatibility()" ng-model="rating" ng-options="rating.name for rating in ratings">
+								<option value="">Rate</option>
+							</select>
+						</div>
+					</div>
 				</td>
 			</tr>
 
