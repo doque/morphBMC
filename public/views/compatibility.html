@@ -3,11 +3,13 @@
 		<thead>
 			<tr>
 				<td colspan="2" rowspan="2" border="0"></td>
-				<td ng-if="!$last" ng-repeat="parameter in parameters" colspan="{{ parameter.attributes.length}}">{{ parameter.name }}</td>
+				<td ng-if="!$last" ng-repeat="parameter in parameters"
+					colspan="{{ parameter.attributes.length}}">{{ parameter.name }}</td>
 			</tr>
 			<tr>
 				<!-- render all attributes that exist -->
-				<td ng-if="$index < getOffsets()[getOffsets().length-2]" ng-repeat="attribute in getAllAttributes()">{{ attribute.name }}</td>
+				<td ng-if="$index < getOffsets()[getOffsets().length-2]"
+					ng-repeat="attribute in getAllAttributes()">{{ attribute.name }}</td>
 			</tr>
 		</thead>
 		<tbody>
@@ -20,22 +22,31 @@
 
 				<td class="warning">{{ y.name}}</td>
 				
-				<td data-paramX="{{ paramX.id}} " data-paramY="{{ paramY.id}}"
-					ng-if="$index < getOffsets()[getOffsets().length-2]" 
+				<td
 					ng-init="paramX = getParameterByAttribute(x.id); paramY = getParameterByAttribute(y.id)"
-					ng-class="paramX.id === paramY.id ? 'active' : ''"
+					data-paramxid="{{ paramX.id}}"
+					data-paramyid="{{ paramY.id}}"
+					ng-if="$index < getOffsets()[getOffsets().length-2]"
+					ng-class="{'disabled' : ( paramX.id === paramY.id ), 'info': _hovered}"
 					data-ids="[{{ x.id }}, {{ y.id}}]"
-					ng-repeat="x in getAllAttributes()">
+					ng-repeat="x in getAllAttributes()"
+					ng-mouseenter="_hovered=true"
+					ng-mouseleave="_hovered=false"
+					>
 
 					<div ng-if="getParameterByAttribute(y.id).id !== getParameterByAttribute(x.id).id">
 
 						<span ng-click="adding=true" ng-hide="adding == true">
-							{{ y.name }} - {{ x.name }}
+							[{{ y.name }}] - [{{ x.name }}]
 						</span>
 
 						<div ng-show="adding==true" class="adding-compatibility">
+
 							<input type="hidden" ng-model="attributes" value="[{{ x.id }}, {{ y.id }}]">
-							<select ng-change="addCompatibility()" ng-model="rating" ng-options="rating.name for rating in ratings">
+
+							<select ng-change="addCompatibility()"
+									ng-model="rating"
+									ng-options="rating.name for rating in ratings">
 								<option value="">Rate</option>
 							</select>
 						</div>

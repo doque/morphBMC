@@ -2,60 +2,60 @@
 problems:
     - !!models.Problem
         userId:     1
-        name:       My awesome Wicked Problem
+        name:       Urlaubsplanung
         parameters:
           - !!models.Parameter
             userId: 1
-            name: Param 1
+            name: Reisezeit
             attributes:
               - !!models.Attribute
-                name: Attr 1
+                name: "< 2h"
                 userId: 1
               - !!models.Attribute
-                name: Attr 2
+                name: 2 - 5h
                 userId: 1
               - !!models.Attribute
-                name: Attr 3
+                name: "> 5h"
                 userId: 1
           - !!models.Parameter
-            name: Param 2
+            name: Kosten
             userId: 1
             attributes:
               - !!models.Attribute
-                name: Attr 4
+                name: "< 500 EUR"
                 userId: 1
               - !!models.Attribute
-                name: Attr 5
+                name: 500 - 1000 EUR
                 userId: 1
               - !!models.Attribute
-                name: Attr 6
+                name: "> 1000 EUR"
                 userId: 1
           - !!models.Parameter
-            name: Param 3
+            name: Distanz
             userId: 1
             attributes:
               - !!models.Attribute
-                name: Attr 7
+                name: "< 200 km"
                 userId: 1
               - !!models.Attribute
-                name: Attr 8
+                name: 200 - 500 km
                 userId: 1
               - !!models.Attribute
-                name: Attr 9
+                name: "> 500 km"
                 userId: 1
           - !!models.Parameter
-            name: Param 4
+            name: Urlaubsziel
             userId: 1
             attributes:
               - !!models.Attribute
-                name: Attr 10
+                name: Städtereise
                 userId: 1
               - !!models.Attribute
-                name: Attr 11
+                name: Strandurlaub
                 userId: 1
               - !!models.Attribute
-                name: Attr 12
+                name: Zelturlaub
                 userId: 1
               - !!models.Attribute
-                name: Attr 13
+                name: Shoppingurlaub
                 userId: 1

@@ -8,3 +8,9 @@
 #compatibilities thead td:not([colspan]) {
 	background: #fcf8e3; vertical-align: middle;
 }
+td.disabled {
+	background: #f5f5f5;
+}
+td.hoveredX, td.hoveredY {
+	background: red !important;
+}
