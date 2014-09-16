@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 @SuppressWarnings("serial")
 @Entity
@@ -22,6 +23,7 @@ public class Problem extends Model {
 	public String name;
 
 	@OneToMany(cascade = CascadeType.ALL)
+	@OrderBy("problem DESC")
 	public List<Parameter> parameters = new ArrayList<Parameter>();
 
 	public static Finder<Long, Problem> find = new Finder<Long, Problem>(

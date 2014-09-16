@@ -26,16 +26,18 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 	 * calculates the offsets of parameter arributes
 	 * needed for rowspan calculation on compatibility table
 	 * e.g. if first parameter has 2 attributes and second has
-	 * 4, the offset array will be [2,4]
-	 * during iteration of <tr> elements, everytime $index is in offset,
-	 * a rowspan td is rendered
+	 * 4, the offset array will be [2, 6]
+	 * during iteration of <tr> elements, only everytime $index is in offset,
+	 * a td with large rowspan is rendered since that is enough for all attributes
 	 * @return {array} 
 	 */
 	$scope.getOffsets = function() {
-		var offsets = [];
+		var offsets = [0];
 		angular.forEach($scope.parameters, function(p, i) {
-			this.push(i * p.attributes.length)
-		}, offsets);
+			// offsets are calculated by adding the last value in the array
+			// and the current parameter's attribute count
+			offsets.push(offsets[offsets.length - 1] + p.attributes.length);
+		});
 
 		return offsets;	
 	};
@@ -48,6 +50,7 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 		// merges all attributes from each parameter into one array
 		angular.forEach($scope.parameters, function(parameter, i) {
 			if (parameter.attributes.length) {
+				//console.log("adding", parameter.attributes)
 				attributes = attributes.concat(parameter.attributes);
 			}
 		});
@@ -91,7 +94,7 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 		// contains problem properties and parameters with their attributes,
 		// if present yet
 		$scope.parameters = data.problem.parameters;
-		
+		console.log($scope.getOffsets());
 	});
 	// then load all present compatibilities
 	//$http.get("/api/problems/" + window.PROBLEM_ID + "/compatibilities").success(function(data) {
