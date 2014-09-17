@@ -14,7 +14,7 @@ create table attribute (
 create table compatibility (
   id                        bigint not null,
   user_id                   varchar(255),
-  rating                    float,
+  rating_id                 bigint,
   constraint pk_compatibility primary key (id))
 ;
 
@@ -35,6 +35,13 @@ create table problem (
   constraint pk_problem primary key (id))
 ;
 
+create table rating (
+  id                        bigint not null,
+  name                      varchar(255),
+  value                     varchar(255),
+  constraint pk_rating primary key (id))
+;
+
 
 create table compatibility_attribute (
   compatibility_id               bigint not null,
@@ -49,10 +56,14 @@ create sequence parameter_seq;
 
 create sequence problem_seq;
 
+create sequence rating_seq;
+
 alter table attribute add constraint fk_attribute_parameter_1 foreign key (parameter_id) references parameter (id);
 create index ix_attribute_parameter_1 on attribute (parameter_id);
-alter table parameter add constraint fk_parameter_problem_2 foreign key (problem_id) references problem (id);
-create index ix_parameter_problem_2 on parameter (problem_id);
+alter table compatibility add constraint fk_compatibility_rating_2 foreign key (rating_id) references rating (id);
+create index ix_compatibility_rating_2 on compatibility (rating_id);
+alter table parameter add constraint fk_parameter_problem_3 foreign key (problem_id) references problem (id);
+create index ix_parameter_problem_3 on parameter (problem_id);
 
 
 
@@ -72,6 +83,8 @@ drop table if exists parameter cascade;
 
 drop table if exists problem cascade;
 
+drop table if exists rating cascade;
+
 drop sequence if exists attribute_seq;
 
 drop sequence if exists compatibility_seq;
@@ -79,4 +92,6 @@ drop sequence if exists compatibility_seq;
 drop sequence if exists parameter_seq;
 
 drop sequence if exists problem_seq;
+
+drop sequence if exists rating_seq;
 

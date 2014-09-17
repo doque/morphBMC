@@ -17,17 +17,14 @@ public class Compatibility extends Controller {
 	 * 
 	 * @return
 	 */
-	public static Result addCompatibility() {
-		models.Compatibility compat = Form.form(models.Compatibility.class)
+	public static Result addCompatibility(long problemId) {
+		models.Compatibility c = Form.form(models.Compatibility.class)
 				.bindFromRequest().get();
-
-		if (compat != null) {
-			compat.userId = session("userId");
-			compat.save();
-		}
+		c.userId = session("userId");
+		c.save();
 
 		Map<String, Object> result = Maps.newHashMap();
-		result.put("compatibility", compat);
+		result.put("compatibility", c);
 		return ok(Json.toJson(result));
 	}
 

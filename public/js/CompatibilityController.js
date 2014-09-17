@@ -1,8 +1,5 @@
 morphBMC.controller("CompatibilityController", ['$scope', '$http', function($scope, $http) {
 
-	$scope.ratings = [{name: "Bad", rating: 1},
-						{name: "OK", rating: 3},
-						{name: "Good", rating: 5}];
 	$scope.adding = false;
 
 	/**
@@ -17,7 +14,7 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 			console.log("invalid attribute parameter, length is %d", attributes.length);
 			return;
 		}
-		$http.post("/api/compatibility", compatibility).success(function(data) {
+		$http.post("/api/problems/" + window.PROBLEM_ID +"/compatibilities", compatibility).success(function(data) {
 			console.log(data);
 		});
 	};
@@ -94,7 +91,10 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 		// contains problem properties and parameters with their attributes,
 		// if present yet
 		$scope.parameters = data.problem.parameters;
-		console.log($scope.getOffsets());
+	});
+	
+	$http.get("/api/ratings").success(function(data) {
+		$scope.ratings = data.ratings;
 	});
 	// then load all present compatibilities
 	//$http.get("/api/problems/" + window.PROBLEM_ID + "/compatibilities").success(function(data) {

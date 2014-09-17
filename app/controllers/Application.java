@@ -4,14 +4,25 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import java.util.List;
 import java.util.Map;
 
 import models.Problem;
 import models.Problem.Stage;
+import models.Rating;
 
 import com.google.common.collect.Maps;
 
 public class Application extends Controller {
+
+	public static Result getRatings() {
+
+		List<Rating> ratings = Rating.find.all();
+		Map<String, Object> result = Maps.newHashMap();
+		result.put("ratings", ratings);
+
+		return ok(Json.toJson(result));
+	}
 
 	// @SecuredAction(ajaxCall = true)
 	public static Result getProblemEnvironment() {

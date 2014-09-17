@@ -1,3 +1,15 @@
+ratings:
+    - !!models.Rating
+        name: Good
+        value: 9
+    - !!models.Rating
+        name: OK
+        value: 4
+    - !!models.Rating
+        name: Bad
+        value: 1
+
+
 # Problems
 problems:
     - !!models.Problem

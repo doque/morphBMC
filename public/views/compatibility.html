@@ -42,10 +42,12 @@
 
 						<div ng-show="adding==true" class="adding-compatibility">
 
-							<input type="hidden" ng-model="attributes" value="[{{ x.id }}, {{ y.id }}]">
-
-							<select ng-change="addCompatibility()"
-									ng-model="rating"
+							<input type="hidden"
+									ng-model="compatibility.attributes"
+									ng-init="compatibility.attributes =
+										[{ id: x.id },{ name: y.name, id: y.id}]">
+							<select ng-change="addCompatibility(compatibility)"
+									ng-model="compatibility.rating"
 									ng-options="rating.name for rating in ratings">
 								<option value="">Rate</option>
 							</select>

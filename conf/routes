@@ -21,10 +21,16 @@ GET     /not-authorized             securesocial.controllers.ProviderController.
 # id comes from session
 GET		/api/problems											controllers.Application.getProblemEnvironment
 
+# Ratings
+GET		/api/ratings											controllers.Application.getRatings
+
 # Definition
 POST 	/api/problems/:id/parameters							controllers.Definition.addParameter(id: Long)
 DELETE  /api/problems/:problemId/parameters/:id					controllers.Definition.deleteParameter(problemId: Long, id: Long)
 POST	/api/problems/:problemId/parameters/:id/attributes		controllers.Definition.addAttribute(problemId: Long, id:Long)
+
+# Compatibility
+POST	/api/problems/:id/compatibilities						controllers.Compatibility.addCompatibility(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               	controllers.Assets.at(path="/public", file)
