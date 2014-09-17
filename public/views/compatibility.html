@@ -43,9 +43,12 @@
 						<div ng-show="adding==true" class="adding-compatibility">
 
 							<input type="hidden"
-									ng-model="compatibility.attributes"
-									ng-init="compatibility.attributes =
-										[{ id: x.id },{ name: y.name, id: y.id}]">
+									ng-model="compatibility.att1"
+									ng-init="compatibility.att1 = x">
+							<input type="hidden"
+									ng-model="compatibility.att2"
+									ng-init="compatibility.att2 = y">
+									
 							<select ng-change="addCompatibility(compatibility)"
 									ng-model="compatibility.rating"
 									ng-options="rating.name for rating in ratings">

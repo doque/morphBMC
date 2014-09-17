@@ -2,12 +2,8 @@ package models;
 
 import play.db.ebean.Model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @SuppressWarnings("serial")
@@ -17,8 +13,11 @@ public class Compatibility extends Model {
 	@Id
 	public long id;
 
-	@ManyToMany
-	public List<Attribute> attributes = new ArrayList<Attribute>();
+	@ManyToOne
+	public Attribute att1;
+
+	@ManyToOne
+	public Attribute att2;
 
 	public String userId;
 
@@ -30,9 +29,7 @@ public class Compatibility extends Model {
 
 	@Override
 	public String toString() {
-		return String.format("ID %d rated %d (%s) attr [%d, %d]", this.id,
-				this.rating.value, this.rating.name, this.attributes.get(0),
-				this.attributes.get(1));
+		return "ID :" + id + ", Rating: " + rating.value;
 	}
 
 }

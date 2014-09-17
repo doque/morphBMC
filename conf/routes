@@ -31,6 +31,7 @@ POST	/api/problems/:problemId/parameters/:id/attributes		controllers.Definition.
 
 # Compatibility
 POST	/api/problems/:id/compatibilities						controllers.Compatibility.addCompatibility(id: Long)
+GET		/api/problems/:id/compatibilities						controllers.Compatibility.getCompatibilities(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               	controllers.Assets.at(path="/public", file)

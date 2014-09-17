@@ -6,6 +6,8 @@ import play.libs.Yaml;
 import java.util.List;
 import java.util.Map;
 
+import models.Rating;
+
 import com.avaje.ebean.Ebean;
 
 public class Global extends GlobalSettings {
@@ -24,7 +26,9 @@ public class Global extends GlobalSettings {
 					.load("initial-data.yml");
 
 			// insert ratings
-			Ebean.save(all.get("ratings"));
+			if (Rating.find.findRowCount() == 0) {
+				Ebean.save(all.get("ratings"));
+			}
 
 			// insert problems
 			Ebean.save(all.get("problems"));

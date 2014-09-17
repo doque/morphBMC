@@ -8,12 +8,6 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 	 * @param rating the rating as an object with fields ids and rating
 	 */
 	$scope.addCompatibility = function(compatibility) {
-		console.log(compatibility);
-		// attributes contains two attribute ids
-		if (compatibility.attributes.length !== 2) {
-			console.log("invalid attribute parameter, length is %d", attributes.length);
-			return;
-		}
 		$http.post("/api/problems/" + window.PROBLEM_ID +"/compatibilities", compatibility).success(function(data) {
 			console.log(data);
 		});
