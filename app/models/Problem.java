@@ -26,12 +26,12 @@ public class Problem extends Model {
 	@OrderBy("problem DESC")
 	public List<Parameter> parameters = new ArrayList<Parameter>();
 
-	public static Finder<Long, Problem> find = new Finder<Long, Problem>(
-			Long.class, Problem.class);
-
 	public Stage currentStage;
 
 	public enum Stage {
 		Definition, Compatibility
 	}
+
+	public static Finder<Long, Problem> find = new Finder<Long, Problem>(
+			Long.class, Problem.class);
 }

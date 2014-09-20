@@ -42,32 +42,32 @@ problems:
               - !!models.Attribute
                 name: "> 1000 EUR"
                 userId: 1
-          - !!models.Parameter
-            name: Distanz
-            userId: 1
-            attributes:
-              - !!models.Attribute
-                name: "< 200 km"
-                userId: 1
-              - !!models.Attribute
-                name: 200 - 500 km
-                userId: 1
-              - !!models.Attribute
-                name: "> 500 km"
-                userId: 1
-          - !!models.Parameter
-            name: Urlaubsziel
-            userId: 1
-            attributes:
-              - !!models.Attribute
-                name: Städtereise
-                userId: 1
-              - !!models.Attribute
-                name: Strandurlaub
-                userId: 1
-              - !!models.Attribute
-                name: Zelturlaub
-                userId: 1
-              - !!models.Attribute
-                name: Shoppingurlaub
-                userId: 1
+#          - !!models.Parameter
+#            name: Distanz
+#            userId: 1
+#            attributes:
+#              - !!models.Attribute
+#                name: "< 200 km"
+#                userId: 1
+#              - !!models.Attribute
+#                name: 200 - 500 km
+#                userId: 1
+#              - !!models.Attribute
+#                name: "> 500 km"
+#                userId: 1
+#          - !!models.Parameter
+#            name: Urlaubsziel
+#            userId: 1
+#            attributes:
+#              - !!models.Attribute
+#                name: Städtereise
+#                userId: 1
+#              - !!models.Attribute
+#                name: Strandurlaub
+#                userId: 1
+#              - !!models.Attribute
+#                name: Zelturlaub
+#                userId: 1
+#              - !!models.Attribute
+#                name: Shoppingurlaub
+#                userId: 1

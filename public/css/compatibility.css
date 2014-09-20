@@ -11,6 +11,3 @@
 td.disabled {
 	background: #f5f5f5;
 }
-td.hoveredX, td.hoveredY {
-	background: red !important;
-}

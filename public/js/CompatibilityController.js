@@ -1,6 +1,7 @@
 morphBMC.controller("CompatibilityController", ['$scope', '$http', function($scope, $http) {
 
 	$scope.adding = false;
+	$scope.rating = "";
 
 	/**
 	 * saves a compatibility
@@ -51,6 +52,8 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 
 	/**
 	 * returns attributes for a specific problem
+	 * 
+	 * @param id - the problem id
 	 */
 	$scope.getAttributesByParameter = function(id) {
 		var attributes = [];
@@ -64,7 +67,7 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 
 	/**
 	 * returns the parameter that a single attribute belongs to
-
+	 * @param id - the attribute id
 	 */
 	$scope.getParameterByAttribute = function(id) {
 		// walk through parameters
@@ -80,13 +83,41 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 		return param;
 	};
 
+	/**
+	 * returns all rated compatibilities that include the given attribute
+	 *
+	 * @param id - the attribute id
+	 */
+	$scope.getCompatibilityRatingsForAttribute = function(id) {
+		var ratings = [];
+		angular.forEach($scope.compatibilities, function(c) {
+			if (c.attr1.id == id || c.attr2.id == id) {
+				ratings.push(c.rating.value);
+			}
+		});
+		return ratings;
+	};
+
+	/**
+	 * 
+	 */
+	$scope.getAverageRating = function(id) {
+		$scope.rating = $scope.getCompatibilityRatingsForAttribute(id).avg();
+		console.log("rating changed to %d", $scope.rating);
+	};	
+
 	// grab all existing parameters to build table
 	$http.get("/api/problems").success(function(data) {
 		// contains problem properties and parameters with their attributes,
 		// if present yet
 		$scope.parameters = data.problem.parameters;
+
+		// after receiving problem id, load existing compatibilities
+		$http.get("/api/problems/" + window.PROBLEM_ID + "/compatibilities").success(function(data) {
+			console.log(data.compatibilities);
+			$scope.compatibilities = data.compatibilities;
+		});
 	});
-	
 	$http.get("/api/ratings").success(function(data) {
 		$scope.ratings = data.ratings;
 	});
@@ -96,4 +127,17 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 	//});
 
 }]);
+
+/**
+ * calculates the average value of all elements in an array
+ * @return float the average value
+ */
+Array.prototype.avg = function() {
+	var v = 0;
+	for (var i=0; i<this.length; i++) {
+		// must cast to a Number here, otherwise JS builds a string
+		v+= (+this[i]);
+	};
+	return v/this.length;
+};
 

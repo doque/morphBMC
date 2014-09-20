@@ -14,10 +14,10 @@ public class Compatibility extends Model {
 	public long id;
 
 	@ManyToOne
-	public Attribute att1;
+	public Attribute attr1;
 
 	@ManyToOne
-	public Attribute att2;
+	public Attribute attr2;
 
 	public String userId;
 

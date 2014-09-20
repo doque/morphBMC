@@ -8,6 +8,7 @@ import play.mvc.Result;
 import java.util.List;
 import java.util.Map;
 
+import com.avaje.ebean.Ebean;
 import com.google.common.collect.Maps;
 
 public class Compatibility extends Controller {
@@ -35,10 +36,14 @@ public class Compatibility extends Controller {
 	 * @return
 	 */
 	public static Result getCompatibilities(long problemId) {
-		List<models.Compatibility> compats = models.Compatibility.find.where()
-				.eq("problem_id", problemId).findList();
 		Map<String, Object> result = Maps.newHashMap();
+
+		List<models.Compatibility> compats = Ebean.find(
+				models.Compatibility.class).findList();
+
 		result.put("compatibilities", compats);
+
 		return ok(Json.toJson(result));
+
 	}
 }

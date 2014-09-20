@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="morphBMC">
+<html lang="en" ng-app="morphBMC" ng-controller="ProblemController">
 	<head>
 		<meta charset="UTF-8">
 		<title>{{ problem.name }}</title>
@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="/assets/css/compatibility.css">
 	</head>
 	<body>
-		<div ng-controller="ProblemController">
+		<div>
 			<header>
 				<h5> {{ problem.id }} - {{ problem.name }} created by {{ problem.userId }} </h5>
 			</header>

@@ -13,8 +13,8 @@ create table attribute (
 
 create table compatibility (
   id                        bigint not null,
-  att1_id                   bigint,
-  att2_id                   bigint,
+  attr1_id                  bigint,
+  attr2_id                  bigint,
   user_id                   varchar(255),
   rating_id                 bigint,
   constraint pk_compatibility primary key (id))
@@ -37,6 +37,16 @@ create table problem (
   constraint pk_problem primary key (id))
 ;
 
+create table rated_compatibility (
+  problem_id                bigint,
+  name                      varchar(255),
+  value                     varchar(255),
+  param1                    varchar(255),
+  param2                    varchar(255),
+  att1                      varchar(255),
+  att2                      varchar(255))
+;
+
 create table rating (
   id                        bigint not null,
   name                      varchar(255),
@@ -56,10 +66,10 @@ create sequence rating_seq;
 
 alter table attribute add constraint fk_attribute_parameter_1 foreign key (parameter_id) references parameter (id);
 create index ix_attribute_parameter_1 on attribute (parameter_id);
-alter table compatibility add constraint fk_compatibility_att1_2 foreign key (att1_id) references attribute (id);
-create index ix_compatibility_att1_2 on compatibility (att1_id);
-alter table compatibility add constraint fk_compatibility_att2_3 foreign key (att2_id) references attribute (id);
-create index ix_compatibility_att2_3 on compatibility (att2_id);
+alter table compatibility add constraint fk_compatibility_attr1_2 foreign key (attr1_id) references attribute (id);
+create index ix_compatibility_attr1_2 on compatibility (attr1_id);
+alter table compatibility add constraint fk_compatibility_attr2_3 foreign key (attr2_id) references attribute (id);
+create index ix_compatibility_attr2_3 on compatibility (attr2_id);
 alter table compatibility add constraint fk_compatibility_rating_4 foreign key (rating_id) references rating (id);
 create index ix_compatibility_rating_4 on compatibility (rating_id);
 alter table parameter add constraint fk_parameter_problem_5 foreign key (problem_id) references problem (id);
@@ -76,6 +86,8 @@ drop table if exists compatibility cascade;
 drop table if exists parameter cascade;
 
 drop table if exists problem cascade;
+
+drop table if exists rated_compatibility cascade;
 
 drop table if exists rating cascade;
 

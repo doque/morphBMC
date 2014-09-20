@@ -1,4 +1,9 @@
 <div id="compatibility" ng-cloak>
+
+	
+	<div>Selected Attribute Rating: {{ rating }}</div>
+
+
 	<table id="compatibilities" class="table table-bordered" style="font-size: 0.8em">
 		<thead>
 			<tr>
@@ -9,7 +14,10 @@
 			<tr>
 				<!-- render all attributes that exist -->
 				<td ng-if="$index < getOffsets()[getOffsets().length-2]"
-					ng-repeat="attribute in getAllAttributes()">{{ attribute.name }}</td>
+					ng-repeat="attribute in getAllAttributes()"
+					ng-dblclick="getAverageRating(attribute.id)"
+					data-attrid="{{attribute.id}}"
+				>{{ attribute.name }}</td>
 			</tr>
 		</thead>
 		<tbody>
@@ -43,11 +51,11 @@
 						<div ng-show="adding==true" class="adding-compatibility">
 
 							<input type="hidden"
-									ng-model="compatibility.att1"
-									ng-init="compatibility.att1 = x">
+									ng-model="compatibility.attr1"
+									ng-init="compatibility.attr1 = x">
 							<input type="hidden"
-									ng-model="compatibility.att2"
-									ng-init="compatibility.att2 = y">
+									ng-model="compatibility.attr2"
+									ng-init="compatibility.attr2 = y">
 									
 							<select ng-change="addCompatibility(compatibility)"
 									ng-model="compatibility.rating"
