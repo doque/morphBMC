@@ -37,16 +37,6 @@ create table problem (
   constraint pk_problem primary key (id))
 ;
 
-create table rated_compatibility (
-  problem_id                bigint,
-  name                      varchar(255),
-  value                     varchar(255),
-  param1                    varchar(255),
-  param2                    varchar(255),
-  att1                      varchar(255),
-  att2                      varchar(255))
-;
-
 create table rating (
   id                        bigint not null,
   name                      varchar(255),
@@ -86,8 +76,6 @@ drop table if exists compatibility cascade;
 drop table if exists parameter cascade;
 
 drop table if exists problem cascade;
-
-drop table if exists rated_compatibility cascade;
 
 drop table if exists rating cascade;
 

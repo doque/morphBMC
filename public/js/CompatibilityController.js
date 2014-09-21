@@ -1,7 +1,7 @@
-morphBMC.controller("CompatibilityController", ['$scope', '$http', function($scope, $http) {
+morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', function($scope, $http) {
 
 	$scope.adding = false;
-	$scope.rating = "";
+	$scope.compatibilities = null;
 
 	/**
 	 * saves a compatibility
@@ -10,7 +10,8 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 	 */
 	$scope.addCompatibility = function(compatibility) {
 		$http.post("/api/problems/" + window.PROBLEM_ID +"/compatibilities", compatibility).success(function(data) {
-			console.log(data);
+			// overwrite on success
+			$scope.compatibilities = data.compatibilities;
 		});
 	};
 
@@ -18,7 +19,7 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 	 * calculates the offsets of parameter arributes
 	 * needed for rowspan calculation on compatibility table
 	 * e.g. if first parameter has 2 attributes and second has
-	 * 4, the offset array will be [2, 6]
+	 * 4, the offset array will be [0, 2, 6]
 	 * during iteration of <tr> elements, only everytime $index is in offset,
 	 * a td with large rowspan is rendered since that is enough for all attributes
 	 * @return {array} 
@@ -89,7 +90,7 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 	 * @param id - the attribute id
 	 */
 	$scope.getCompatibilityRatingsForAttribute = function(id) {
-		var ratings = [];
+		var ratings = null;
 		angular.forEach($scope.compatibilities, function(c) {
 			if (c.attr1.id == id || c.attr2.id == id) {
 				ratings.push(c.rating.value);
@@ -99,12 +100,42 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 	};
 
 	/**
-	 * 
+	 * sums up average rating of one single attribute
 	 */
 	$scope.getAverageRating = function(id) {
-		$scope.rating = $scope.getCompatibilityRatingsForAttribute(id).avg();
-		console.log("rating changed to %d", $scope.rating);
-	};	
+
+		var ratings = $scope.getCompatibilityRatingsForAttribute(id);
+		var v = 0;
+		for (var i=0; i<ratings.length; i++) {
+			// must cast to a Number here, otherwise JS builds a string
+			v+= (+ratings[i]);
+		};
+		return v/ratings.length;
+	};
+
+	/**
+	 * get compatibility for a pair of attributes
+	 */
+	$scope.getCompatibilityRating = function(attr1, attr2) {
+		if ($scope.compatibilities) console.log("nothing yet");
+		var _c = null;
+		angular.forEach($scope.compatibilities, function(c) {
+			// cant break out of foreach
+			if (_c === null) {
+				// arrays should be the same
+				console.log("checking %d", c.id)
+				if ( (attr1 === c.attr1.id && attr2 === c.attr2.id) || (attr2 === c.attr1.id && attr1 === c.attr2.id) ) {
+					console.log("found %d", c.id)
+					_c = c;
+				}
+			}
+
+		});
+		//console.log(_c);
+		return _c;
+	};
+
+
 
 	// grab all existing parameters to build table
 	$http.get("/api/problems").success(function(data) {
@@ -113,31 +144,27 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', function($sco
 		$scope.parameters = data.problem.parameters;
 
 		// after receiving problem id, load existing compatibilities
-		$http.get("/api/problems/" + window.PROBLEM_ID + "/compatibilities").success(function(data) {
-			console.log(data.compatibilities);
+		$http.get("/api/problems/" + window.PROBLEM_ID+ "/compatibilities").success(function(data) {
 			$scope.compatibilities = data.compatibilities;
 		});
 	});
+
 	$http.get("/api/ratings").success(function(data) {
 		$scope.ratings = data.ratings;
 	});
-	// then load all present compatibilities
-	//$http.get("/api/problems/" + window.PROBLEM_ID + "/compatibilities").success(function(data) {
-	//	$scope.compatibilities = data.compatibilities;
-	//});
 
-}]);
 
-/**
- * calculates the average value of all elements in an array
- * @return float the average value
- */
-Array.prototype.avg = function() {
-	var v = 0;
-	for (var i=0; i<this.length; i++) {
-		// must cast to a Number here, otherwise JS builds a string
-		v+= (+this[i]);
-	};
-	return v/this.length;
-};
 
+}]);/*.service("CompatibilityService", function($http, $q) {
+	return {
+		getCompatibilities: function() {
+			var deferred = $q.defer();
+			$http.get("/api/problems/" +  window.PROBLEM_ID + "/compatibilities").success(function(data) {
+				deferred.resolve({
+					compatibilities: data.compatibilities;
+				})
+			});
+			return deferred.promise;
+		}
+	}
+});*/
