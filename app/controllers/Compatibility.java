@@ -5,6 +5,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,28 +34,26 @@ public class Compatibility extends Controller {
 			c.save();
 		}
 
-		// FUCK JA
-		List<SqlRow> rows = Ebean
-				.createSqlQuery(
-						"SELECT r.name, r.value, p.name as param1, a.name as attr1, p2.name as param2, a2.name as attr2 FROM compatibility c JOIN attribute a ON c.attr1_id = a.id JOIN attribute a2 ON c.attr2_id = a2.id JOIN PARAMETER p ON a.parameter_id = p.id JOIN PARAMETER p2 ON a2.parameter_id = p2.id JOIN rating r ON c.rating_id = r.id ")
-				.findList();
+		// first, manually find all joinable information
+		List<SqlRow> rows = Ebean.createSqlQuery(
+				"SELECT c.id FROM compatibility c"
+						+ " JOIN attribute a ON c.attr1_id = a.id"
+						+ " JOIN attribute a2 ON c.attr2_id = a2.id"
+						+ " JOIN PARAMETER p ON a.parameter_id = p.id"
+						+ " JOIN PARAMETER p2 ON a2.parameter_id = p2.id"
+						+ " JOIN rating r ON c.rating_id = r.id").findList();
 
+		List<models.Compatibility> compatibilities = new ArrayList<models.Compatibility>();
+
+		// manually build return objects, because Ebean.find() doesn't join
+		// multiple tables.
 		for (SqlRow row : rows) {
-			String f = row.getString("param2");
-			String g = f + "lolol";
+			compatibilities.add(models.Compatibility.find.byId(row
+					.getLong("id")));
 		}
 
-		/*
-		 * List<models.Compatibility> cs =
-		 * Ebean.find(models.Compatibility.class)
-		 * .fetch("attribute").fetch("parameter").fetch("problem").where()
-		 * .eq("problem.id", problemId).findList(); /*
-		 * models.Compatibility.find.where() .eq("problem_id",
-		 * problemId).findList();
-		 */
-
 		Map<String, Object> result = Maps.newHashMap();
-		result.put("compatibilities", rows);
+		result.put("compatibilities", compatibilities);
 		return ok(Json.toJson(result));
 	}
 

@@ -3,6 +3,7 @@ package models;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -13,15 +14,15 @@ public class Compatibility extends Model {
 	@Id
 	public long id;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	public Attribute attr1;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	public Attribute attr2;
 
 	public String userId;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	public Rating rating;
 
 	public static Finder<Long, Compatibility> find = new Finder<Long, Compatibility>(

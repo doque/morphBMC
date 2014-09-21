@@ -22,6 +22,10 @@ public class Attribute extends Model {
 	@JsonIgnore
 	public Parameter parameter;
 
+	public Attribute(long id, String name) {
+
+	}
+
 	public static Finder<Long, Attribute> find = new Finder<Long, Attribute>(
 			Long.class, Attribute.class);
 

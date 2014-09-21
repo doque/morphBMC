@@ -16,6 +16,11 @@ public class Rating extends Model {
 
 	public String value;
 
+	public Rating(String name, String value) {
+		this.name = name;
+		this.value = value;
+	}
+
 	public static Finder<Long, Rating> find = new Finder<Long, Rating>(
 			Long.class, Rating.class);
 
