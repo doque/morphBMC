@@ -34,26 +34,25 @@
 				<td
 					ng-init="paramX = getParameterByAttribute(x.id);
 							paramY = getParameterByAttribute(y.id);
-							_rated = getCompatibilityRating(x.id, y.id)"
+							compatibility = getCompatibilityRating(x.id, y.id)"
 					data-paramxid="{{ paramX.id}}"
 					data-paramyid="{{ paramY.id}}"
 					ng-if="$index < getOffsets()[getOffsets().length-2]"
-					ng-class="{'disabled' : ( paramX.id === paramY.id ), 'info': _rated !== null}"
+					ng-class="{'disabled' : ( paramX.id === paramY.id ), 'success': compatibility.rating != null}"
 					data-ids="[{{ x.id }}, {{ y.id}}]"
 					ng-repeat="x in getAllAttributes()"
 					>
 
+
 					<div>
 
-						<div ng-if="_rated !== null">
-							{{ _rated.rating.name }}
+						<a href="javascript:;" ng-click="rating = true">[{{ y.name }}] - [{{ x.name }}]</a>
+
+						<div ng-if="compatibility.rating != null" ng-hide="compatibility.rating == null && rating == true">
+							{{ compatibility.rating.name }}
 						</div>
 
-						<span ng-click="adding=true" ng-hide="adding == true">
-							[{{ y.name }}] - [{{ x.name }}]
-						</span>
-
-						<div ng-show="adding==true" class="adding-compatibility">
+						<div ng-show="compatibility.rating == null && rating==true" class="adding-compatibility">
 
 							<input type="hidden"
 									ng-model="compatibility.attr1"
@@ -63,9 +62,9 @@
 									ng-init="compatibility.attr2 = y">
 							<input type="hidden"
 									ng-model="compatibility.id"
-									ng-init="compatibility.id = _rated.id"/>
+									ng-init="compatibility.id = compatibility.id"/>
 									
-							<select ng-change="addCompatibility(compatibility)"
+							<select ng-blur="rating=false" ng-change="addCompatibility(compatibility);"
 									ng-model="compatibility.rating"
 									ng-options="rating.name for rating in ratings">
 								<option value="">Rate</option>

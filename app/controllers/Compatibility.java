@@ -27,7 +27,7 @@ public class Compatibility extends Controller {
 				.bindFromRequest().get();
 
 		c.userId = session("userId");
-
+		// prevent dupes, instead just update existing
 		if (c.id != 0) {
 			c.update();
 		} else {

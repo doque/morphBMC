@@ -16,6 +16,12 @@ var morphBMC = angular.module('morphBMC', ['ngRoute']).config(
         	controller: 'CompatibilityController'
         });
 
+        // Exploration
+        $routeProvider.when('/exploration', {
+            templateUrl: '/assets/views/exploration.html',
+            controller: 'ExplorationController'
+        })
+
         // default route
         $routeProvider.otherwise({redirectTo: '/definition'});
 

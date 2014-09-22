@@ -9,10 +9,12 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', fu
 	 * @param rating the rating as an object with fields ids and rating
 	 */
 	$scope.addCompatibility = function(compatibility) {
+
 		$http.post("/api/problems/" + window.PROBLEM_ID +"/compatibilities", compatibility).success(function(data) {
 			// overwrite on success
 			$scope.compatibilities = data.compatibilities;
 		});
+
 	};
 
 	/**
@@ -117,13 +119,13 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', fu
 	 * get compatibility for a pair of attributes
 	 */
 	$scope.getCompatibilityRating = function(attr1, attr2) {
-		if ($scope.compatibilities) console.log("nothing yet");
+		//if ($scope.compatibilities) console.log("nothing yet");
 		var _c = null;
 		angular.forEach($scope.compatibilities, function(c) {
 			// cant break out of foreach
 			if (_c === null) {
 				// arrays should be the same
-				console.log("checking %d", c.id)
+				//console.log("checking %d", c.id)
 				if ( (attr1 === c.attr1.id && attr2 === c.attr2.id) || (attr2 === c.attr1.id && attr1 === c.attr2.id) ) {
 					console.log("found %d", c.id)
 					_c = c;
