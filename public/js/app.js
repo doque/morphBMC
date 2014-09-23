@@ -7,7 +7,7 @@ var morphBMC = angular.module('morphBMC', ['ngRoute']).config(
         // Route for Definition
         $routeProvider.when('/definition', {
         	templateUrl: '/assets/views/definition.html',
-        	controller: 'DefinitionController'
+        	controller: 'DefinitionController',
         });
 
         // Compatibility

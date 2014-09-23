@@ -9,13 +9,28 @@
 		<link rel="stylesheet" href="/assets/css/compatibility.css">
 	</head>
 	<body>
-		<div>
+		<div class="container-fluid" style="margin-top: 20px;">
+
 			<header>
 				<h5> {{ problem.id }} - {{ problem.name }} created by {{ problem.userId }} </h5>
 			</header>
-		</div>
 
-		<div ng-view class="container-fluid" style="margin-top: 20px;"></div>
+			<nav> 
+				<ul class="nav nav-tabs">
+					<li ng-class="{ 'active': currentPath() === '/definition' }">
+						<a ng-href="#/definition">Definition</a>
+					</li>
+					<li ng-class="{ 'active': currentPath() === '/compatibility' }">
+						<a ng-href="#/compatibility">Compatibility</a>
+					</li>
+					<li ng-class="{ 'active': currentPath() === '/exploration' }">
+						<a ng-href="#/exploration">Exploration</a>
+					</li>
+				</ul>
+			</nav>
+
+			<div style="padding-top: 20px;" ng-view></div>
+		</div>
 	</body>
 	<script src="/assets/app/bower_components/jquery/dist/jquery.js"></script>
 	<script src="/assets/app/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -24,8 +39,10 @@
 	<script src="/assets/app/bower_components/angular-ui/build/angular-ui.min.js"></script>
 
 	<script src="/assets/js/app.js"></script>
+	
+	<script src="/assets/js/ProblemController.js"></script>
 
 	<script src="/assets/js/DefinitionController.js"></script>
 	<script src="/assets/js/CompatibilityController.js"></script>
-	<script src="/assets/js/ProblemController.js"></script>
+	<script src="/assets/js/ExplorationController.js"></script>
 </html>
