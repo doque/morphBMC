@@ -14,9 +14,9 @@ public class Rating extends Model {
 
 	public String name;
 
-	public String value;
+	public Float value;
 
-	public Rating(String name, String value) {
+	public Rating(String name, Float value) {
 		this.name = name;
 		this.value = value;
 	}

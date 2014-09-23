@@ -3,7 +3,6 @@ morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope,
 	$scope.addAttribute = function(parameter) {
 
 		if (parameter.attribute.name.length === 0) {
-			parameter.addingAttribute = false;
 			return;
 		}
 
@@ -11,7 +10,6 @@ morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope,
 			"name": parameter.attribute.name
 		}).success(function(data) {
 			parameter.attributes.unshift(data.attribute);
-			parameter.addingAttribute = false;
 			parameter.attribute.name = "";
 		});
 	};
@@ -39,6 +37,8 @@ morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope,
 		//console.log(parameter, index)
 		$http.delete("/api/problems/" + window.PROBLEM_ID + "/parameters/" + parameter.id).success(function() {
 			$scope.parameters.splice(index, 1);
+		}).error(function() {
+			alert("this parameter has existing compatibilities");
 		});
 	};
 

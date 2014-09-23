@@ -40,7 +40,7 @@ create table problem (
 create table rating (
   id                        bigint not null,
   name                      varchar(255),
-  value                     varchar(255),
+  value                     float,
   constraint pk_rating primary key (id))
 ;
 

@@ -1,10 +1,28 @@
-<div id="board">
-	<div class="parameter" ng-repeat="parameter in parameters | orderBy:'id'">
-		<h5>{{ parameter.name }}</h5>
+<div id="exploration">
 
-		<ul class="attributes">
-			<li ng-repeat="attr in parameter.attributes | orderBy:'id'">{{ attr.name }}</li>
-		</ul>
-		
+	<div id="summary">
+		<p>{{ selected.length }} attributes selected</p>
+		<p>total average rating of {{ average || 0 }}</p>
+		<p>{{ better.length }} compatibilities with better rating</p>
 	</div>
+
+	<div class="board">
+
+		<div class="parameter" ng-repeat="parameter in parameters | orderBy:'id'">
+			<h5>{{ parameter.name }}</h5>
+
+			<ul class="attributes">
+				<li ng-click="toggleSelect(attr.id); getBetterThanAverage(attr.id);"
+					ng-repeat="attr in parameter.attributes | orderBy:'id'"
+					ng-class="{
+						'better': better.indexOf(attr.id) >= 0,
+						'selected': selected.indexOf(attr.id) >= 0
+					}">
+					{{ attr.name }}
+				</li>
+			</ul>
+			
+		</div>
+	</div>
+
 </div>

@@ -2,6 +2,7 @@ package models;
 
 import play.db.ebean.Model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -18,13 +19,9 @@ public class Attribute extends Model {
 
 	public String userId;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnore
 	public Parameter parameter;
-
-	public Attribute(long id, String name) {
-
-	}
 
 	public static Finder<Long, Attribute> find = new Finder<Long, Attribute>(
 			Long.class, Attribute.class);

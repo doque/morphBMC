@@ -1,11 +1,11 @@
-<div id="board">
+<div id="definition" class="board">
 	<div class="parameter" ng-repeat="parameter in parameters | orderBy:'id'">
 		
 		<h5>{{ parameter.name }}</h5>
 
-		<div ng-click="parameter.addingAttribute=true" class="add">
-			<input type="text" class="text" ng-blur="addAttribute(parameter)" ng-model="parameter.attribute.name" ng-show="parameter.addingAttribute==true">
-			<a ng-hide="parameter.addingAttribute==true">Add Attribute</a>	
+		<div ng-click="addingAttribute=true" class="add">
+			<input type="text" class="text" ng-blur="addingAttribute = false; addAttribute(parameter)" ng-model="parameter.attribute.name" ng-show="addingAttribute">
+			<a ng-hide="addingAttribute">Add Attribute</a>	
 		</div>
 		<ul class="attributes">
 			<li ng-repeat="attr in parameter.attributes | orderBy:'id'">{{ attr.name }}</li>

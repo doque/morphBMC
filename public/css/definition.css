@@ -1,4 +1,4 @@
-#board {
+.board {
 	min-height: 500px;
 	height: 95%; 
 	-webkit-box-align: start;

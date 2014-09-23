@@ -1,9 +1,6 @@
 <div id="compatibility" ng-cloak>
 
 	
-	<div>Selected Attribute Rating: {{ rating }}</div>
-
-	<div>compatibilities: {{ compatibilities.length }}</div>
 
 	<table ng-if="compatibilities !== null" id="compatibilities" class="table table-bordered" style="font-size: 0.8em">
 		<thead>
@@ -22,9 +19,12 @@
 			</tr>
 		</thead>
 		<tbody>
+			<!-- skip first parameter here -->
+
 			<tr ng-repeat="y in getAllAttributes()" ng-if="$index >= getOffsets()[1]" >
+			
 				<!-- only show this td if the $index is a "new" parameter -->
-				<td data-index="{{ $index }}" ng-if="getOffsets().indexOf($index) >= 0"
+				<td ng-if="getOffsets().indexOf($index) >= 0"
 					rowspan="{{ getParameterByAttribute(y.id).attributes.length }}">
 					{{ getParameterByAttribute(y.id).name }}
 				</td>
@@ -34,19 +34,17 @@
 				<td
 					ng-init="paramX = getParameterByAttribute(x.id);
 							paramY = getParameterByAttribute(y.id);
-							compatibility = getCompatibilityRating(x.id, y.id)"
-					data-paramxid="{{ paramX.id}}"
-					data-paramyid="{{ paramY.id}}"
-					ng-if="$index < getOffsets()[getOffsets().length-2]"
-					ng-class="{'disabled' : ( paramX.id === paramY.id ), 'success': compatibility.rating != null}"
-					data-ids="[{{ x.id }}, {{ y.id}}]"
+							compatibility = getCompatibilityRating(x.id, y.id);
+							redundant = paramX.id >= paramY.id"
+					ng-if="$index < getOffsets()[getOffsets().length - 2]"
+					ng-class="{'disabled' : redundant, 'success': !redundant && compatibility.rating != null}"
 					ng-repeat="x in getAllAttributes()"
 					>
 
+					<!-- redundant means that this combination of attributes WILL be rendered in the following rows -->
+					<div ng-init="rating=true" ng-if="!redundant">
 
-					<div>
-
-						<a href="javascript:;" ng-click="rating = true">[{{ y.name }}] - [{{ x.name }}]</a>
+						<span>[{{ y.name }}] - [{{ x.name }}]</span>
 
 						<div ng-if="compatibility.rating != null" ng-hide="compatibility.rating == null && rating == true">
 							{{ compatibility.rating.name }}

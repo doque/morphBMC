@@ -1,0 +1,21 @@
+# definition of Business Model Canvas terminology
+
+parameters:
+  - !!models.Parameter
+    name: "Key Partners"
+  - !!models.Parameter
+    name: "Key Activities"
+  - !!models.Parameter
+    name: "Key Resources"
+  - !!models.Parameter
+    name: "Value Propositions "
+  - !!models.Parameter
+    name: "Customer Relationships"
+  - !!models.Parameter
+    name: "Channels"
+  - !!models.Parameter
+    name: "Customer Segments"
+  - !!models.Parameter
+    name: "Cost Structure"
+  - !!models.Parameter
+    name: "Revenue Streams"

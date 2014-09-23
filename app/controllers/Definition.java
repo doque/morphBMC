@@ -37,6 +37,7 @@ public class Definition extends Controller {
 		// TODO auth problemId
 		Parameter p = Parameter.find.byId(parameterId);
 		if (p != null) {
+			// p.deleteManyToManyAssociations("");
 			p.delete();
 		}
 		return ok();

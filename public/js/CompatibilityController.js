@@ -5,8 +5,7 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', fu
 
 	/**
 	 * saves a compatibility
-	 * @param {array} attributes the pair of attribute ids
-	 * @param rating the rating as an object with fields ids and rating
+	 * @param {compatiblity) the compatibility object
 	 */
 	$scope.addCompatibility = function(compatibility) {
 
@@ -33,7 +32,6 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', fu
 			// and the current parameter's attribute count
 			offsets.push(offsets[offsets.length - 1] + p.attributes.length);
 		});
-
 		return offsets;	
 	};
 
@@ -50,21 +48,6 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', fu
 			}
 		});
 
-		return attributes;
-	};
-
-	/**
-	 * returns attributes for a specific problem
-	 * 
-	 * @param id - the problem id
-	 */
-	$scope.getAttributesByParameter = function(id) {
-		var attributes = [];
-		angular.forEach($scope.parameters, function(p) {
-			if (p.id === id) {
-				attributes = attributes.concat(p.attributes);
-			}
-		});
 		return attributes;
 	};
 
@@ -86,54 +69,22 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', fu
 		return param;
 	};
 
-	/**
-	 * returns all rated compatibilities that include the given attribute
-	 *
-	 * @param id - the attribute id
-	 */
-	$scope.getCompatibilityRatingsForAttribute = function(id) {
-		var ratings = null;
-		angular.forEach($scope.compatibilities, function(c) {
-			if (c.attr1.id == id || c.attr2.id == id) {
-				ratings.push(c.rating.value);
-			}
-		});
-		return ratings;
-	};
-
-	/**
-	 * sums up average rating of one single attribute
-	 */
-	$scope.getAverageRating = function(id) {
-
-		var ratings = $scope.getCompatibilityRatingsForAttribute(id);
-		var v = 0;
-		for (var i=0; i<ratings.length; i++) {
-			// must cast to a Number here, otherwise JS builds a string
-			v+= (+ratings[i]);
-		};
-		return v/ratings.length;
-	};
 
 	/**
 	 * get compatibility for a pair of attributes
 	 */
 	$scope.getCompatibilityRating = function(attr1, attr2) {
-		//if ($scope.compatibilities) console.log("nothing yet");
 		var _c = null;
 		angular.forEach($scope.compatibilities, function(c) {
 			// cant break out of foreach
 			if (_c === null) {
 				// arrays should be the same
-				//console.log("checking %d", c.id)
 				if ( (attr1 === c.attr1.id && attr2 === c.attr2.id) || (attr2 === c.attr1.id && attr1 === c.attr2.id) ) {
-					console.log("found %d", c.id)
 					_c = c;
 				}
 			}
 
 		});
-		//console.log(_c);
 		return _c;
 	};
 
