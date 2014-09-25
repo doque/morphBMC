@@ -5,7 +5,7 @@
 #compatibilities tbody td[rowspan]:not(.active) {
 	background: #d9edf7; font-weight: bold; vertical-align: middle;
 }
-#compatibilities thead td:not([colspan]) {
+#compatibilities thead td:not([colspan]), #compatibilities td.warning {
 	background: #fcf8e3; vertical-align: middle;
 }
 td.disabled {
