@@ -1,63 +1,75 @@
 morphBMC.controller("ExplorationController", ['$scope', '$http', '$filter', function($scope, $http) {
 
-	// großes array bauen mit allen möglichen attributes
-	// 
-	// ein attribut wählen, dann alle compatibilities ausgehend davon wählen (hier: filter angeben?)
-	// alles aus dem array kicken was nicht in den compatibilitites ist
-	// 
-	// oder parameterweise durchgehen: einen wählen, seine ID wo reinpacken
-	// dann alle übrigen compatibilities, in denen das attribute nicht diese parameterID hat highlighten (mit filter)
-	// 
-	// filter: rating > mittelwert!
-
+	// initial view template variables
 	$scope.selected = [];
 	$scope.attributes = [];
 	$scope.average = 0;
 	$scope.compatibilities = [];
 	$scope.better = [];
+	$scope.suggested = [];
 
 	/**
 	 * calculates all attributes to which there is a better-than-average compatibility
+	 * TODO extend this with a filter (instead of simple average)
 	 */
 	$scope.getBetterThanAverage = function(id) {
+		// holds the parameter of the chosen attribute, we don't need any compatibilities for that
+		var thisParam = getParameterByAttribute(id);
+		// initial average rating
 		var avg = 0;
+		// calculate average of all compatibilities that include the chosen attribute
 		angular.forEach($scope.selected, function(id) {
-			var thisAvg = getAverageRating(id);
-			console.log(thisAvg)
-			avg += thisAvg;
+			avg += getAverageRating(id);
 		});
 		avg /= $scope.selected.length;
 
+		// array to hold all attribute ids of "better" compatibilities
 		var better = [];
-		angular.forEach($scope.compatibilities, function(c) {
-			if ((c.attr1.id === id || c.attr2.id === id) && c.rating.value >= avg) {
-				console.log("better than avg: ", c.attr1.name, c.attr2.name, "with rating ov ", c.rating.value);
-				// push "the other" id.
-				better.push( c.attr1.id === id ? c.attr2.id : c.attr1.id);
+		for (var i=0; i<$scope.compatibilities.length; i++) {
+			var c = $scope.compatibilities[i];
+			// skip all compatibilities that include the current parameter
+			if (getParameterByAttribute(c.attr1.id).id === thisParam ||
+				getParameterByAttribute(c.attr2.id).id === thisParam) {
+				continue;
 			}
-		});
+			// check if either one of a compatibility's attribute is the chosen attribute
+			// and if that compatibility's rating is "better", i.e. higher than average
+			if ((c.attr1.id === id || c.attr2.id === id) && c.rating.value >= avg) {
+				// get the calculated id
+				var suggestedId = c.attr1.id === id ? c.attr2.id : c.attr1.id
+				if ($scope.selected.indexOf(suggestedId) === -1) {
+					better.push(suggestedId);
+				}
+			}
+		}
+		// apply the two calculated values to the view template
 		$scope.average = avg;
 		$scope.better = better;
-	}
-
-
+	};
 
 
 	/**
 	 * adds or removes a selected attribute to selected attributes
 	 */
 	$scope.toggleSelect = function(id) {
-		getSiblingAttributes(id);
 
-		if ($scope.selected.indexOf(id) >= 0) {
-			$scope.selected.splice($scope.selected.indexOf(id), 1);
-		} else {
-			$scope.selected.push(id);
+		var siblings = getSiblingAttributes(id);
+
+		// deselect all sibling attribtues of chosen attribtues
+		// to only allow selection of one attribute per parameter
+		angular.forEach(siblings, function(s) {
+			remove($scope.selected, s);
+		});
+
+		// toggle element selection
+		if ($scope.selected.indexOf(id) > -1) {
+			remove($scope.selected, id);
+			return;
 		}
-		if ($scope.selected.length === 0) {
-			$scope.better = [];
-		}
-	}
+
+		$scope.selected.push(id);
+
+	};
 
 	/**
 	 * returns attributes for a specific problem
@@ -96,12 +108,13 @@ morphBMC.controller("ExplorationController", ['$scope', '$http', '$filter', func
 	function getSiblingAttributes(id) {
 		var p = getParameterByAttribute(id);
 		var siblings = [];
-		angular.forEach(p.attributes, function(a) {
-			if (a.id === id) return;
+		for (var i=0; i<p.attributes.length; i++) {
+			var a = p.attributes[i];
+			if (a.id === id) {
+				continue;
+			}
 			siblings.push(a.id);
-		});
-
-		console.log(siblings);
+		}
 		return siblings;
 	};
 
@@ -138,6 +151,18 @@ morphBMC.controller("ExplorationController", ['$scope', '$http', '$filter', func
 		return param;
 	};
 
+/**
+ * helper function that removes an int from an array
+ */
+	function remove(arr, int) {
+		if (arr.indexOf(int) >= 0) {
+			if (arr.length === 1) {
+				arr.pop();
+			}
+			arr.splice(arr.indexOf(int), 1);
+		}
+		return arr;
+	}
 	
 
 	// set up environment on load

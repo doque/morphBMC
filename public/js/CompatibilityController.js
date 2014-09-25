@@ -108,16 +108,4 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', fu
 
 
 
-}]);/*.service("CompatibilityService", function($http, $q) {
-	return {
-		getCompatibilities: function() {
-			var deferred = $q.defer();
-			$http.get("/api/problems/" +  window.PROBLEM_ID + "/compatibilities").success(function(data) {
-				deferred.resolve({
-					compatibilities: data.compatibilities;
-				})
-			});
-			return deferred.promise;
-		}
-	}
-});*/
+}]);
