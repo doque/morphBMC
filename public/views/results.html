@@ -1,4 +1,21 @@
 <div id="results">
 
+	<div id="summary">
+		Calculated {{configurations.length }} possible configurations:
+	</div>
+
+	<div class="board">
+
+		<div class="parameter" ng-repeat="c in configurations">
+			<h5>Configuration {{$index+1}}:</h5>
+			<ul class="attributes">
+				<li ng-repeat="attr in c">
+					{{ getParameterByAttribute(attr.id).name }}:
+					{{ attr.name }}
+				</li>
+			</ul>
+		</div>
+
+	</div>
 
 </div>
