@@ -13,8 +13,6 @@
 				<!-- render all attributes that exist -->
 				<td ng-if="$index < getOffsets()[getOffsets().length-2]"
 					ng-repeat="attribute in getAllAttributes()"
-					ng-dblclick="getAverageRating(attribute.id)"
-					data-attrid="{{attribute.id}}"
 				>{{ attribute.name }}</td>
 			</tr>
 		</thead>
@@ -37,7 +35,12 @@
 							compatibility = getCompatibilityRating(x.id, y.id);
 							redundant = paramX.id >= paramY.id"
 					ng-if="$index < getOffsets()[getOffsets().length - 2]"
-					ng-class="{'disabled' : redundant, 'success': !redundant && compatibility.rating != null}"
+					ng-class="{
+								'disabled' : redundant,
+								'success': compatibility.rating.value === 9,
+								'warning': compatibility.rating.value === 4,
+								'danger': compatibility.rating.value === 1
+							}"
 					ng-repeat="x in getAllAttributes()"
 					>
 
@@ -46,11 +49,11 @@
 
 						<span>[{{ y.name }}] - [{{ x.name }}]</span>
 
-						<div ng-if="compatibility.rating != null" ng-hide="compatibility.rating == null && rating == true">
+						<div ng-hide="rating == true">
 							{{ compatibility.rating.name }}
 						</div>
 
-						<div ng-show="compatibility.rating == null && rating==true" class="adding-compatibility">
+						<div ng-show="rating==true" class="adding-compatibility">
 
 							<input type="hidden"
 									ng-model="compatibility.attr1"
@@ -62,7 +65,7 @@
 									ng-model="compatibility.id"
 									ng-init="compatibility.id = compatibility.id"/>
 									
-							<select ng-blur="rating=false" ng-change="addCompatibility(compatibility);"
+							<select ng-blur="" ng-change="addCompatibility(compatibility);"
 									ng-model="compatibility.rating"
 									ng-options="rating.name for rating in ratings">
 								<option value="">Rate</option>

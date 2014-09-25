@@ -22,6 +22,13 @@ var morphBMC = angular.module('morphBMC', ['ngRoute']).config(
             controller: 'ExplorationController'
         })
 
+        // Results
+        $routeProvider.when('/results', {
+            templateUrl: '/assets/views/results.html',
+            controller: 'ResultsController'
+        })
+
+
         // default route
         $routeProvider.otherwise({redirectTo: '/definition'});
 

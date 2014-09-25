@@ -1,12 +1,14 @@
 package controllers;
 
 import play.libs.Json;
+import play.libs.Yaml;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 import java.util.List;
 import java.util.Map;
 
+import models.Parameter;
 import models.Problem;
 import models.Problem.Stage;
 import models.Rating;
@@ -14,6 +16,44 @@ import models.Rating;
 import com.google.common.collect.Maps;
 
 public class Application extends Controller {
+
+	public static Result createProblem() {
+
+		Problem p = new models.Problem();
+		p.userId = session("userId");
+		p.save();
+
+		session("problemId", Long.toString(p.id));
+
+		Map<String, Object> result = Maps.newHashMap();
+		result.put("status", "ok");
+		return ok(Json.toJson(result));
+	}
+
+	public static Result createBMC() {
+
+		Problem p = new models.Problem();
+		p.userId = session("userId");
+
+		// read BMC terminology
+		@SuppressWarnings("unchecked")
+		Map<String, List<Object>> all = (Map<String, List<Object>>) Yaml
+				.load("bmc.yml");
+
+		// insert parameters to problem
+		for (Object o : all.get("parameters")) {
+			Parameter param = (Parameter) o;
+			p.parameters.add(param);
+		}
+
+		p.save();
+
+		session("problemId", Long.toString(p.id));
+
+		Map<String, Object> result = Maps.newHashMap();
+		result.put("status", "ok");
+		return ok(Json.toJson(result));
+	}
 
 	public static Result getRatings() {
 
