@@ -4,9 +4,10 @@ morphBMC.controller("ResultsController", ['$scope', '$http', '$filter', function
 	$scope.allPossible() = function() {
 
 		var all = [];
-		angular.foreach($scope.parameters, function() {
-
-		});
+		for (var i=0; i<$scope.parameters.length; i++) {
+			var p = $scope.parameters[i];
+			
+		}
 
 		// data structure:
 		// [{

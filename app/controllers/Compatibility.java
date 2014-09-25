@@ -1,5 +1,6 @@
 package controllers;
 
+import play.Logger;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -10,6 +11,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.persistence.PersistenceException;
 
 import models.Attribute;
 import models.Parameter;
@@ -53,12 +56,13 @@ public class Compatibility extends Controller {
 	 */
 	public static Result getCompatibilities(long problemId) {
 
-		// if no compatibilities exist yet, insert a default rating for them all
-		if (getAllCompatibilities(problemId).size() == 0) {
-			Rating defaultRating = Rating.find.where().eq("name", "OK")
-					.findUnique();
-			insertInitialCompatibilities(problemId, defaultRating);
-		}
+		// for each attribute, if attribute has no rating, insert default
+		// rating for it
+		// if (getAllCompatibilities(problemId).size() == 0) {
+		Rating defaultRating = Rating.find.where().eq("name", "OK")
+				.findUnique();
+		insertInitialCompatibilities(problemId, defaultRating);
+		// }
 
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("compatibilities", getAllCompatibilities(problemId));
@@ -98,12 +102,17 @@ public class Compatibility extends Controller {
 		}
 		// now create default rating for all these pairs
 		for (Pair pair : attributeIds) {
+
 			models.Compatibility c = new models.Compatibility();
 			c.attr1 = Attribute.find.byId(pair.x);
 			c.attr2 = Attribute.find.byId(pair.y);
 			c.userId = session("userId");
 			c.rating = defaultRating;
-			c.save();
+			try {
+				c.save();
+			} catch (PersistenceException e) {
+				Logger.info("ignoring duplicate value");
+			}
 		}
 
 		System.out.println(attributeIds.size());
