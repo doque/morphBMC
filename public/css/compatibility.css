@@ -9,9 +9,17 @@
 	background: #fcf8e3; vertical-align: middle;
 }
 td.disabled {
-	background: #f5f5f5;
+	background: #f5f5f5 !important;
 }
 .highlight {
 	background: #428bca !important;
 	color: white;
+}
+.spinner {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -16px;
+	margin-left: -16px;
+	z-index: -5;
 }

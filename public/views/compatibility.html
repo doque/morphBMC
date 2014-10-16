@@ -1,6 +1,10 @@
-<div id="compatibility" ng-cloak>
 
-	<table ng-if="compatibilities !== null" id="compatibilities" class="table table-bordered" style="font-size: 0.8em">
+<img src="/assets/img/spinner.gif" class="spinner"/>
+
+<div id="compatibility">
+
+
+	<table ng-cloak ng-if="compatibilities !== null" id="compatibilities" class="table table-bordered" style="font-size: 0.8em" >
 		<thead>
 			<tr>
 				<td colspan="2" rowspan="2" border="0"></td>
@@ -40,14 +44,14 @@
 							redundant = paramX.id >= paramY.id"
 					ng-if="$index < getOffsets()[getOffsets().length - 2]"
 					ng-class="{
-								'disabled' : redundant,
-								'success': !redundant &amp;&amp; compatibility.rating.value === 9,
-								'warning': !redundant &amp;&amp; compatibility.rating.value === 4,
-								'danger': !redundant &amp;&amp; compatibility.rating.value === 1
+								'success': compatibility.rating.value === 9,
+								'warning': compatibility.rating.value === 4,
+								'danger': compatibility.rating.value === 1,
+								'disabled' : redundant
 							}"
 					ng-repeat="x in getAllAttributes()"
 					ng-mouseenter="hover(x.id, y.id); hovered=true;"	
-					ng-mouseleave="hovered=false"
+					ng-mouseleave="hover(0,0); hovered=false"
 					>
 
 					<!-- redundant means that this combination of attributes WILL be rendered in the following rows -->

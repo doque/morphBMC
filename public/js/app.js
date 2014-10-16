@@ -39,26 +39,21 @@ var morphBMC = angular.module('morphBMC', ['ngRoute']).config(
     	// dependency injection
     	$inject: ['$routeProvider', '$httpProvider']
     }
-).directive('autofocus',function($timeout) {
+).directive('autofocus', function($timeout) {
     return {
         link : function($scope,$element,$attr) {
             $scope.$watch($attr.autofocus, function(_focusVal) {
                 $timeout(function() {
-                    _focusVal ? $element.focus() : $element.blur();
+                    if (_focusVal) $element.focus();
                 });
             });
         }
     }
-}).directive('tooltip', function(){
-    return {
-        link: function(scope, element, attrs){
-            $(element).hover(function(){
-                // on mouseenter
-                $(element).tooltip('show');
-            }, function(){
-                // on mouseleave
-                $(element).tooltip('hide');
-            });
+}).directive('slowload', function() {
+    return function(scope, element, attrs) {
+        if (scope.$last) { // all are rendered
+            console.log("all done");
+            scope.$emit("slowloaded");
         }
-    };
-});;
+    }
+});
