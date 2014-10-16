@@ -1,7 +1,5 @@
 <div id="compatibility" ng-cloak>
 
-	
-
 	<table ng-if="compatibilities !== null" id="compatibilities" class="table table-bordered" style="font-size: 0.8em">
 		<thead>
 			<tr>
@@ -13,7 +11,11 @@
 				<!-- render all attributes that exist -->
 				<td ng-if="$index < getOffsets()[getOffsets().length-2]"
 					ng-repeat="attribute in getAllAttributes()"
-				>{{ attribute.name }}</td>
+					data-attrid="{{attribute.id}}"
+					ng-class="{ 'highlight': attribute.id == hoverX }"
+				>
+					{{ attribute.name }}
+				</td>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,7 +29,9 @@
 					{{ getParameterByAttribute(y.id).name }}
 				</td>
 
-				<td class="warning">{{ y.name}}</td>
+				<td 
+					ng-class="{ 'highlight': y.id == hoverY }"
+					class="warning">{{ y.name}}</td>
 				
 				<td
 					ng-init="paramX = getParameterByAttribute(x.id);
@@ -37,23 +41,31 @@
 					ng-if="$index < getOffsets()[getOffsets().length - 2]"
 					ng-class="{
 								'disabled' : redundant,
-								'success': compatibility.rating.value === 9,
-								'warning': compatibility.rating.value === 4,
-								'danger': compatibility.rating.value === 1
+								'success': !redundant &amp;&amp; compatibility.rating.value === 9,
+								'warning': !redundant &amp;&amp; compatibility.rating.value === 4,
+								'danger': !redundant &amp;&amp; compatibility.rating.value === 1
 							}"
 					ng-repeat="x in getAllAttributes()"
+					ng-mouseenter="hover(x.id, y.id); hovered=true;"	
+					ng-mouseleave="hovered=false"
 					>
 
 					<!-- redundant means that this combination of attributes WILL be rendered in the following rows -->
-					<div ng-init="rating=true" ng-if="!redundant">
+					<div
+						tooltip
+						data-toggle="tooltip"
+						data-placement="top"
+						data-html="true"
+						title="{{ paramX.name }}: {{ x.name }}<br/>{{ paramY.name }} : {{ y.name }}"
+						ng-init="rating=false"
+						ng-click="rating=true"
+						ng-if="!redundant">
 
-						<span>[{{ y.name }}] - [{{ x.name }}]</span>
-
-						<div ng-hide="rating == true">
+						<div ng-show="rating == false">
 							{{ compatibility.rating.name }}
 						</div>
 
-						<div ng-show="rating==true" class="adding-compatibility">
+						<div ng-show="rating == true" class="adding-compatibility">
 
 							<input type="hidden"
 									ng-model="compatibility.attr1"
@@ -65,7 +77,7 @@
 									ng-model="compatibility.id"
 									ng-init="compatibility.id = compatibility.id"/>
 									
-							<select ng-blur="" ng-change="addCompatibility(compatibility);"
+							<select ng-change="addCompatibility(compatibility); rating=false;"
 									ng-model="compatibility.rating"
 									ng-options="rating.name for rating in ratings">
 								<option value="">Rate</option>

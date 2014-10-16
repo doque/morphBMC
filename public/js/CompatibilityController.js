@@ -3,6 +3,9 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', fu
 	$scope.adding = false;
 	$scope.compatibilities = null;
 
+	$scope.hoverX = 0;
+	$scope.hoverY = 0;
+
 	/**
 	 * saves a compatibility
 	 * @param {compatiblity) the compatibility object
@@ -14,6 +17,11 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', fu
 			$scope.compatibilities = data.compatibilities;
 		});
 
+	};
+
+	$scope.hover = function(x, y) {
+		$scope.hoverX = x;
+		$scope.hoverY = y;
 	};
 
 	/**
@@ -106,6 +114,7 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', fu
 		$scope.ratings = data.ratings;
 	});
 
-
+	// set up tooltips
+	$('[rel="tooltip"]').tooltip();
 
 }]);
