@@ -4,7 +4,7 @@
 		<h5>{{ parameter.name }}</h5>
 
 		<div ng-click="addingAttribute=true" class="add">
-			<input type="text" class="text" ng-blur="addingAttribute = false; addAttribute(parameter)" ng-model="parameter.attribute.name" ng-show="addingAttribute">
+			<input type="text" class="text" ng-blur="addingAttribute = false; addAttribute(parameter)" ng-model="parameter.attribute.name" ng-show="addingAttribute" autofocus="addingAttribute==true">
 			<a ng-hide="addingAttribute">Add Attribute</a>	
 		</div>
 		<ul class="attributes">
@@ -24,8 +24,8 @@
 	</div>
 	
 	<div class="parameter parameter-add">
-		<input type="text" class="text" ng-blur="addParameter()" ng-model="parameter.name" ng-show="addingParameter==true">
-		<h5 ng-hide="addingParameter==true" ng-click="addingParameter=true">
+		<input type="text" class="text" ng-blur="addParameter()" autofocus="addingParameter==true" ng-model="parameter.name" ng-show="addingParameter">
+		<h5 ng-hide="addingParameter" ng-click="addingParameter=true">
 			<span class="glyphicon glyphicon-plus-sign"></span> Add a Parameter
 		</h5>
 	</div>

@@ -2,6 +2,8 @@ morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope,
 
 	$scope.addAttribute = function(parameter) {
 
+		if (!parameter.attribute) return;
+
 		if (parameter.attribute.name.length === 0) {
 			return;
 		}
@@ -16,6 +18,7 @@ morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope,
 
 
 	$scope.addParameter = function() {
+		if (!$scope.parameter) return;
 		// sanity check
 		if ($scope.parameter.name.length === 0) {
 			// no value given

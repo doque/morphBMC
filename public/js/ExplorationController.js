@@ -18,6 +18,8 @@ morphBMC.controller("ExplorationController", ['$scope', '$http', '$filter', func
 		// initial average rating
 		var avg = 0;
 		// calculate average of all compatibilities that include the chosen attribute
+		// 
+		// TODO: apply filter here and grab the compatibilities that dont contain "BAD"
 		angular.forEach($scope.selected, function(id) {
 			avg += getAverageRating(id);
 		});

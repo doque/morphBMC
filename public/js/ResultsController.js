@@ -51,7 +51,7 @@ morphBMC.controller("ResultsController", ['$scope', '$http', '$filter', function
 	    
 	    var combinations = [];
 	    for(var i = 0; i < numPerms; i++) {
-	        combinations.push(getPermutation(i, arraysToCombine));
+	        combinations.push( (i, arraysToCombine));
 	    }
 	    return combinations;
 	}
@@ -71,5 +71,9 @@ morphBMC.controller("ResultsController", ['$scope', '$http', '$filter', function
 			$scope.compatibilities = data.compatibilities;
 		});
 	});
+
+
+	// Consistency Klasse erstellen, Konsistenzwert berechnen
+	// auch für exploration, einfach angeklickte sachen hinzufügen und gucken wie sich der wert verändert?
 
 }]);

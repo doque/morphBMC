@@ -39,4 +39,14 @@ var morphBMC = angular.module('morphBMC', ['ngRoute']).config(
     	// dependency injection
     	$inject: ['$routeProvider', '$httpProvider']
     }
-);
+).directive('autofocus',function($timeout) {
+    return {
+        link : function($scope,$element,$attr) {
+            $scope.$watch($attr.autofocus, function(_focusVal) {
+                $timeout(function() {
+                    _focusVal ? $element.focus() : $element.blur();
+                });
+            });
+        }
+    }
+});
