@@ -49,11 +49,4 @@ var morphBMC = angular.module('morphBMC', ['ngRoute']).config(
             });
         }
     }
-}).directive('slowload', function() {
-    return function(scope, element, attrs) {
-        if (scope.$last) { // all are rendered
-            console.log("all done");
-            scope.$emit("slowloaded");
-        }
-    }
 });

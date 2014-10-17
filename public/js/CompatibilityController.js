@@ -7,13 +7,6 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', fu
 	$scope.hoverY = 0;
 
 	/**
-	 * all compatibilities take forever to load, so remove the spinner when done.
-	 */
-	$scope.$on('slowloaded', function(ngRepeatFinishedEvent) {
-		angular.element($("#compatibility .spinner").hide());
-	});
-
-	/**
 	 * saves a compatibility
 	 * @param {compatiblity) the compatibility object
 	 */
@@ -126,5 +119,4 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', fu
 
 	// set up tooltips
 	$('a[rel="tooltip"]').tooltip();
-	angular.element($("#compatibility .spinner").hide());
 }]);
