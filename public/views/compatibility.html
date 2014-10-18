@@ -34,6 +34,7 @@
 				</td>
 
 				<td 
+					data-attrid ="{{ y.id }}"
 					ng-class="{ 'highlight': y.id == hoverY }"
 					class="warning">{{ y.name}}</td>
 				
@@ -60,7 +61,7 @@
 						data-toggle="tooltip"
 						data-placement="top"
 						data-html="true"
-						title="{{ paramX.name }}: {{ x.name }}<br/>{{ paramY.name }} : {{ y.name }}"
+						data-original-title="{{ paramX.name }}: {{ x.name }}<br/>{{ paramY.name }} : {{ y.name }}"
 						ng-init="rating=false"
 						ng-click="rating=true"
 						ng-if="!redundant">
@@ -81,7 +82,8 @@
 									ng-model="compatibility.id"
 									ng-init="compatibility.id = compatibility.id"/>
 									
-							<select ng-change="addCompatibility(compatibility); rating=false;"
+							<select ng-blur="rating=false;"
+									ng-change="addCompatibility(compatibility); rating=false;"
 									ng-model="compatibility.rating"
 									ng-options="rating.name for rating in ratings">
 								<option value="">Rate</option>
