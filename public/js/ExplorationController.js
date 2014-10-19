@@ -44,15 +44,20 @@ morphBMC.controller("ExplorationController", ['$scope', '$http', '$filter', func
 					// compatibility object is the currently walked ID
 					var ratableId = c.attr1.id === selected ? c.attr2.id : c.attr1.id;
 
-					// push to the corresponding array but only if the attribute
-					// but only respect worse ratings.
-					if (c.rating.value === 4 && ok.indexOf(ratableId) === -1) {
-						ok.push(ratableId);
+					// push to the corresponding array
+					// precedence order is:
+					// 
+					// BAD > OK > GOOD
+					var isBad = bad.indexOf(ratableId) > -1;
+					var isOk = ok.indexOf(ratableId) > -1;
+					var isGood = good.indexOf(ratableId) > -1;
 
-					} else if (c.rating.value === 9 && good.indexOf(ratableId) === -1) {
+					if (c.rating.value === 9 && !isGood && (!isOk && !isBad)) {
 						good.push(ratableId);
-
-					} else if (c.rating.value === 1 && bad.indexOf(ratableId) === -1) {
+					}
+					else if (c.rating.value === 4 && !isOk && !isBad) {
+						ok.push(ratableId);
+					} else if (!isBad && c.rating.value === 1) {
 						bad.push(ratableId);
 					}
 				}
@@ -63,7 +68,6 @@ morphBMC.controller("ExplorationController", ['$scope', '$http', '$filter', func
 		// siblings holds all the attributes that belong to a parameter of which the
 		// user already has made a choice. so we don't need it 
 		angular.forEach(siblings, function(s) {
-			console.log("removing", s)
 			remove(good, s);
 			remove(bad, s);
 			remove(ok, s);
@@ -73,6 +77,10 @@ morphBMC.controller("ExplorationController", ['$scope', '$http', '$filter', func
 		$scope.good = good;
 		$scope.bad = bad;
 		$scope.ok = ok;
+
+		console.log($scope.good.toString())
+		console.log($scope.bad.toString())
+		console.log($scope.ok.toString())
 
 	};
 

@@ -17,7 +17,7 @@
 					ng-repeat="attr in parameter.attributes | orderBy:'id'"
 					data-attrid="{{ attr.id }}"
 					ng-class="{
-						'good': good.indexOf(attr.id) > -1,
+						'good': good.indexOf(attr.id) > -1 ,
 						'ok': ok.indexOf(attr.id) > -1,
 						'bad': bad.indexOf(attr.id) > -1,
 						'selected': selected.indexOf(attr.id) > -1
