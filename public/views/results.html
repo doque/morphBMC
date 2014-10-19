@@ -34,7 +34,7 @@
 		<thead>
 			<tr>
 				<th></th>
-				<th ts-criteria="consistencyValue">Consistency Value</th>
+				<th ts-default="descending" ts-criteria="consistencyValue">Consistency Value</th>
 				<th ts-criteria="{{ p.name }} | lowercase" ng-repeat="p in parameters | orderBy: 'name'">
 					{{ p.name }}
 				</th>
