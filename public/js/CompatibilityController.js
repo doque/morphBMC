@@ -6,6 +6,8 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', fu
 	$scope.hoverX = 0;
 	$scope.hoverY = 0;
 
+	$scope.rendering = true;
+
 	/**
 	 * saves a compatibility
 	 * @param {compatiblity) the compatibility object

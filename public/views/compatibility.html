@@ -1,7 +1,6 @@
+<img src="/assets/img/spinner.gif" class="spinner" ng-if="rendering===true"/>
 
-<img src="/assets/img/spinner.gif" class="spinner"/>
-
-<div id="compatibility">
+<div id="compatibility" ng-cloak>
 
 
 	<table ng-cloak ng-if="compatibilities !== null" id="compatibilities" class="table table-bordered" style="font-size: 0.8em" >
@@ -25,7 +24,7 @@
 		<tbody>
 			<!-- skip first parameter here -->
 
-			<tr ng-repeat="y in getAllAttributes()" ng-if="$index >= getOffsets()[1]" >
+			<tr ng-repeat="y in getAllAttributes()" ng-if="$index >= getOffsets()[1]" on-finish-render="rendering=false;">
 			
 				<!-- only show this td if the $index is a "new" parameter -->
 				<td ng-if="getOffsets().indexOf($index) >= 0"
