@@ -2,8 +2,9 @@
 
 	<div id="summary">
 		<p>{{ selected.length }} attributes selected</p>
-		<p>total average rating of {{ average || 0 }}</p>
-		<p>{{ better.length }} compatibilities with rating greater than {{ average || 0}}</p>
+		<p>{{ good.length }} good fits</p>
+		<p>{{ ok.length }} ok fits</p>
+		<p>{{ bad.length }} bad fits</p>
 	</div>
 
 	<div class="board">
@@ -12,11 +13,14 @@
 			<h5>{{ parameter.name }}</h5>
 
 			<ul class="attributes">
-				<li ng-click="toggleSelect(attr.id); getBetterThanAverage(attr.id);"
+				<li ng-click="getCompatibleAttributes(attr.id);"
 					ng-repeat="attr in parameter.attributes | orderBy:'id'"
+					data-attrid="{{ attr.id }}"
 					ng-class="{
-						'better': better.indexOf(attr.id) >= 0,
-						'selected': selected.indexOf(attr.id) >= 0
+						'good': good.indexOf(attr.id) > -1,
+						'ok': ok.indexOf(attr.id) > -1,
+						'bad': bad.indexOf(attr.id) > -1,
+						'selected': selected.indexOf(attr.id) > -1
 					}">
 					{{ attr.name }}
 				</li>

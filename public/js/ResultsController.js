@@ -6,7 +6,6 @@ morphBMC.controller("ResultsController", ['$scope', '$http', '$filter', function
 
 	$scope.allPossible = function() {
 		$scope.configurations = getAllCombinations($scope.attributes);
-
 	};
 
 	/**
@@ -55,6 +54,20 @@ morphBMC.controller("ResultsController", ['$scope', '$http', '$filter', function
 	    }
 	    return combinations;
 	}
+
+	/**
+	 * sums up average rating of one single attribute
+	 */
+	function getAverageRating(id) {
+		var ratings = $scope.getCompatibilityRatingsForAttribute(id);
+		var v = 0;
+		for (var i=0; i<ratings.length; i++) {
+			// must cast to a Number here, otherwise JS builds a string
+			v+= (+ratings[i].value);
+		};
+
+		return v/ratings.length;
+	};
 
 
 	// set up environment on load

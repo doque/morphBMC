@@ -3,60 +3,84 @@ morphBMC.controller("ExplorationController", ['$scope', '$http', '$filter', func
 	// initial view template variables
 	$scope.selected = [];
 	$scope.attributes = [];
-	$scope.average = 0;
+	$scope.good = [];
+	$scope.ok = [];
+	$scope.bad = [];
+
 	$scope.compatibilities = [];
-	$scope.better = [];
-	$scope.suggested = [];
 
 	/**
-	 * calculates all attributes to which there is a better-than-average compatibility
-	 * TODO extend this with a filter (instead of simple average)
+	 * calculates all attributes to which there is a "good" or "ok" compatibility
+	 * all "bad" compatibilities will be ignored and faded out
 	 */
-	$scope.getBetterThanAverage = function(id) {
-		// holds the parameter of the chosen attribute, we don't need any compatibilities for that
-		var thisParam = getParameterByAttribute(id);
-		// initial average rating
-		var avg = 0;
-		// calculate average of all compatibilities that include the chosen attribute
-		// 
-		// TODO: apply filter here and grab the compatibilities that dont contain "BAD"
-		angular.forEach($scope.selected, function(id) {
-			avg += getAverageRating(id);
-		});
-		avg /= $scope.selected.length;
+	$scope.getCompatibleAttributes = function(id) {
 
-		// array to hold all attribute ids of "better" compatibilities
-		var better = [];
-		for (var i=0; i<$scope.compatibilities.length; i++) {
-			var c = $scope.compatibilities[i];
-			// skip all compatibilities that include the current parameter
-			if (getParameterByAttribute(c.attr1.id).id === thisParam ||
-				getParameterByAttribute(c.attr2.id).id === thisParam) {
-				continue;
-			}
-			// check if either one of a compatibility's attribute is the chosen attribute
-			// and if that compatibility's rating is "better", i.e. higher than average
-			if ((c.attr1.id === id || c.attr2.id === id) && c.rating.value >= avg) {
-				// get the calculated id
-				var suggestedId = c.attr1.id === id ? c.attr2.id : c.attr1.id
-				if ($scope.selected.indexOf(suggestedId) === -1) {
-					better.push(suggestedId);
+		// UI stuff
+		toggleSelect(id);
+
+		// these hold the attributes
+		var good = [], ok = [], bad = [];
+
+		// holds all siblings of selected attributes
+		// these will be ignored for suggestions 
+		var siblings = [];
+
+		angular.forEach($scope.selected, function(selected) {
+
+			// remember all parameters of selected attributes
+			siblings = siblings.concat(getSiblingAttributes(selected));
+			// cross check all compatibilities
+			for (var i=0; i<$scope.compatibilities.length; i++) {
+
+				// shortcut
+				var c = $scope.compatibilities[i];
+
+				//console.log(c.attr1.id, c.attr2.id, selected);
+				// grab compatibilities that include the current id
+
+				if (c.attr1.id === selected || c.attr2.id === selected) {
+
+					// grab the id of a possible attribute, the other ID of the
+					// compatibility object is the currently walked ID
+					var ratableId = c.attr1.id === selected ? c.attr2.id : c.attr1.id;
+
+					// push to the corresponding array but only if the attribute
+					// but only respect worse ratings.
+					if (c.rating.value === 4 && ok.indexOf(ratableId) === -1) {
+						ok.push(ratableId);
+
+					} else if (c.rating.value === 9 && good.indexOf(ratableId) === -1) {
+						good.push(ratableId);
+
+					} else if (c.rating.value === 1 && bad.indexOf(ratableId) === -1) {
+						bad.push(ratableId);
+					}
 				}
 			}
-		}
-		// apply the two calculated values to the view template
-		$scope.average = avg;
-		$scope.better = better;
-	};
 
+		});
+		
+		// siblings holds all the attributes that belong to a parameter of which the
+		// user already has made a choice. so we don't need it 
+		angular.forEach(siblings, function(s) {
+			console.log("removing", s)
+			remove(good, s);
+			remove(bad, s);
+			remove(ok, s);
+		});
+
+		// bind to view
+		$scope.good = good;
+		$scope.bad = bad;
+		$scope.ok = ok;
+
+	};
 
 	/**
 	 * adds or removes a selected attribute to selected attributes
 	 */
-	$scope.toggleSelect = function(id) {
-
+	var toggleSelect = function(id) {
 		var siblings = getSiblingAttributes(id);
-
 		// deselect all sibling attribtues of chosen attribtues
 		// to only allow selection of one attribute per parameter
 		angular.forEach(siblings, function(s) {
@@ -105,7 +129,6 @@ morphBMC.controller("ExplorationController", ['$scope', '$http', '$filter', func
 	};
 
 
-
 	// TODO get adjacent attribtues!
 	function getSiblingAttributes(id) {
 		var p = getParameterByAttribute(id);
@@ -120,19 +143,6 @@ morphBMC.controller("ExplorationController", ['$scope', '$http', '$filter', func
 		return siblings;
 	};
 
-	/**
-	 * sums up average rating of one single attribute
-	 */
-	function getAverageRating(id) {
-		var ratings = $scope.getCompatibilityRatingsForAttribute(id);
-		var v = 0;
-		for (var i=0; i<ratings.length; i++) {
-			// must cast to a Number here, otherwise JS builds a string
-			v+= (+ratings[i].value);
-		};
-
-		return v/ratings.length;
-	};
 	
 
 	/**

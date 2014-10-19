@@ -1,17 +1,19 @@
 .attributes li {
 	border-color: #e1e1e8;
 }
-
+.attributes li.bad {
+	border: 1px solid #a94442 !important;
+	background-color: rgba(235, 204, 209, 0.8) !important;
+}
+.attributes li.ok {
+	border: 1px solid #faebcc !important;
+	background-color: #fcf8e3 !important;
+}
+.attributes li.good {
+	border: 1px solid #3c763d !important;
+	background-color: rgba(223, 240, 216, 0.8) !important;
+}
 .attributes li.selected {
-	border: 1px solid #31708f;
-	background-color: rgba(188, 232, 241, 0.8);
-}
-.attributes li.better {
-	border: 1px solid #3c763d;
-	background: ;
-	background-color: rgba(223, 240, 216, 0.8);
-}
-.attributes li.worse {
-	border: 1px solid #a94442;
-	background-color: rgba(235, 204, 209, 0.8);
+	border: 1px solid #31708f !important;
+	background-color: rgba(188, 232, 241, 0.8) !important;
 }
