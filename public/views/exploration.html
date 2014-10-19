@@ -1,9 +1,10 @@
 <div id="exploration">
 
 	<div id="summary" class="row">
-		<div class="col-sm-offset-2 col-sm-2">
+		<div class="col-sm-2" style="padding-left: 30px">
 			<div class="alert alert-info">{{ selected.length }} selected</div>
 		</div>
+		<div style="padding: 8px; font-weight: bold" class="col-sm-1">Remaining:</div>
 
 		<div class="col-sm-2">
 			<div class="alert alert-success">{{ good.length }} good fits</div>
@@ -18,7 +19,7 @@
 		</div>
 	</div>
 
-	<div class="board">
+	<div class="board" style="padding: 8px;">
 
 		<div class="parameter" ng-repeat="parameter in parameters | orderBy:'id'">
 			<h5>{{ parameter.name }}</h5>
