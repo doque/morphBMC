@@ -1,21 +1,60 @@
 <div id="results">
-
+	
 	<div id="summary">
-		Calculated {{configurations.length }} possible configurations:
+		There are {{configurations.length }} possible configurations:
 	</div>
 
-	<div class="board">
+	<!--<table id="configurations" class="table table-hover table-bordered">
+		<thead>
+			<tr>
+				<th></th>
+				<th>Consistency Value</th>
+				<th data-title="{{p.name}}" ng-repeat="p in parameters | orderBy: 'name'">
+					{{ p.name }}
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="c in configurations">
+				<td>Configuration {{ $index+1}}</td>
+				<td>
+					{{ c.consistencyValue}}			
+				</td>
+				<td
+					ng-if="key != 'consistencyValue'"
+					ng-repeat="(key, value) in c">
+					{{ value }}
+				</td>
+			</tr>
+		</tbody>
+	</table>-->
 
-		<div class="parameter" ng-repeat="c in configurations">
-			<h5>Configuration {{$index+1}}:</h5>
-			<ul class="attributes">
-				<li ng-repeat="attr in c">
-					{{ getParameterByAttribute(attr.id).name }}:
-					{{ attr.name }}
-				</li>
-			</ul>
-		</div>
 
-	</div>
+	<table class="table table-hover table-bordered" id="configurations" ts-wrapper>
+		<thead>
+			<tr>
+				<th></th>
+				<th ts-criteria="consistencyValue">Consistency Value</th>
+				<th ts-criteria="{{ p.name }} | lowercase" ng-repeat="p in parameters | orderBy: 'name'">
+					{{ p.name }}
+				</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr ng-repeat="c in configurations" ts-repeat>
+				<td>Configuration {{ $index+1}}</td>
+				<td>
+					{{ c.consistencyValue}}			
+				</td>
+				<td
+					ng-if="key != 'consistencyValue'"
+					ng-repeat="(key, value) in c">
+					{{ value }}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
 
 </div>
