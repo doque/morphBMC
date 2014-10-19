@@ -44,20 +44,19 @@ morphBMC.controller("ExplorationController", ['$scope', '$http', '$filter', func
 					// compatibility object is the currently walked ID
 					var ratableId = c.attr1.id === selected ? c.attr2.id : c.attr1.id;
 
+					// a selected item doesnt need to be rated, just skip it
+					if ($scope.selected.indexOf(ratableId) > -1) {
+						continue;
+					}
 					// push to the corresponding array
-					// precedence order is:
-					// 
-					// BAD > OK > GOOD
-					var isBad = bad.indexOf(ratableId) > -1;
-					var isOk = ok.indexOf(ratableId) > -1;
-					var isGood = good.indexOf(ratableId) > -1;
-
-					if (c.rating.value === 9 && !isGood && (!isOk && !isBad)) {
+					// clean up later when arrays are full
+					// but avoid duplicates here
+					if (c.rating.value === 9 && good.indexOf(ratableId) === -1) {
 						good.push(ratableId);
 					}
-					else if (c.rating.value === 4 && !isOk && !isBad) {
+					else if (c.rating.value === 4 && ok.indexOf(ratableId) === -1) {
 						ok.push(ratableId);
-					} else if (!isBad && c.rating.value === 1) {
+					} else if (c.rating.value === 1 && bad.indexOf(ratableId) === -1) {
 						bad.push(ratableId);
 					}
 				}
@@ -72,6 +71,31 @@ morphBMC.controller("ExplorationController", ['$scope', '$http', '$filter', func
 			remove(bad, s);
 			remove(ok, s);
 		});
+
+		// clean the array
+		// BAD takes precedence, so anything BAD can't be in OK or GOOD
+		// anything OK can't be in GOOD
+		// 
+		// todo: cleanup
+		angular.forEach(bad, function(id) {
+			while (ok.indexOf(id) > -1) {
+				remove(ok, id)
+			}
+			while (good.indexOf(id) > -1) {
+				remove(good, id)
+			}
+		});
+		angular.forEach(ok, function(id) {
+			while (good.indexOf(id) > -1) {
+				remove(good, id);
+			}
+		});
+
+
+		console.log("good", good);
+		console.log("bad", bad);
+		console.log("ok", ok);
+
 
 		// bind to view
 		$scope.good = good;

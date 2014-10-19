@@ -1,10 +1,21 @@
 <div id="exploration">
 
-	<div id="summary">
-		<p>{{ selected.length }} attributes selected</p>
-		<p>{{ good.length }} good fits</p>
-		<p>{{ ok.length }} ok fits</p>
-		<p>{{ bad.length }} bad fits</p>
+	<div id="summary" class="row">
+		<div class="col-sm-offset-2 col-sm-2">
+			<div class="alert alert-info">{{ selected.length }} selected</div>
+		</div>
+
+		<div class="col-sm-2">
+			<div class="alert alert-success">{{ good.length }} good fits</div>
+		</div>
+
+		<div class="col-sm-2">
+			<div class="alert alert-warning">{{ ok.length }} ok fits</div>
+		</div>
+
+		<div class="col-sm-2">
+			<div class="alert alert-danger">{{ bad.length }} bad fits</div>
+		</div>
 	</div>
 
 	<div class="board">
