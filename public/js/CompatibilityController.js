@@ -119,6 +119,4 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', fu
 		$scope.ratings = data.ratings;
 	});
 
-	// set up tooltips
-	$('a[rel="tooltip"]').tooltip();
 }]);

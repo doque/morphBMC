@@ -1,4 +1,8 @@
-<div id="results" ng-cloak>
+<div class="text-center" ng-show="rendering">
+	<img src="/assets/img/spinner.gif"/>
+</div>
+
+<div id="results" ng-show="!rendering">
 	
 	<div class="alert alert-success">
 		There are {{configurations.length }} possible configurations
@@ -16,7 +20,7 @@
 		</thead>
 
 		<tbody>
-			<tr ng-repeat="c in configurations" ts-repeat>
+			<tr ng-repeat="c in configurations" on-finish-render="rendering=false;" ts-repeat>
 				<td>{{ $index +1 }}</td>
 				<td>
 					{{ c.consistencyValue.toFixed(3)}}			

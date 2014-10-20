@@ -4,6 +4,8 @@ morphBMC.controller("ResultsController", ['$scope', '$http', function($scope, $h
 	$scope.attributes = [];
 	$scope.configurations = [];
 
+	$scope.rendering = true;
+
 	/**
 	 * creates nice complex objects that contain all possible configurations
 	 * @return {array} array of configuration objects

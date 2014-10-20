@@ -1,8 +1,8 @@
-<div class="text-center" ng-if="rendering">
+<div class="text-center" ng-show="rendering">
 	<img src="/assets/img/spinner.gif"/>
 </div>
 
-<div id="compatibility" ng-cloak>
+<div id="compatibility" ng-show="!rendering">
 
 
 	<table ng-cloak ng-if="compatibilities !== null" id="compatibilities" class="table table-bordered" style="font-size: 0.8em" >

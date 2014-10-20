@@ -56,7 +56,7 @@ var morphBMC = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
 		link: function($scope, $element, $attr) {
 			if ($scope.$last === true) {
 				// manually grab the right scope here.
-				var _scope = angular.element($("#compatibility")).scope();
+				var _scope = angular.element($("#compatibility, #results")).scope();
 				_scope.$eval($attr.onFinishRender);
 			}
 		}
