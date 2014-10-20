@@ -16,30 +16,37 @@ morphBMC.controller("ResultsController", ['$scope', '$http', function($scope, $h
 
 		// walk all permutations
 		angular.forEach(all, function(permutation) {
+
 			// build object
 			var configuration = {
 				consistencyValue: 0
 			};
-
-			// walk this configurations attribute IDs
+			// walk all attributes of that configuration,
+			// assign to appropriate parameter
 			var sum = 0;
+
 			for (var i=0; i<permutation.length; i++) {
+				for (var x=0; x<permutation.length; x++) {
+					if (permutation[i].id === permutation[x].id) continue;
+					var ratings = getCompatibilityRatingsForAttributes(permutation[x].id, permutation[i].id);
+					sum += ratings.reduce(function(attr1, attr2) {
+						return attr1 + (+attr2.value);
+					}, 0);
+				}
 				var attribute = permutation[i], param = getParameterByAttribute(attribute.id);
 				// each configuration holds an array of parameters,
 				// their id and name
 				// and the chosen attribute for that parameter
 				configuration[param.name] = attribute.name;
-
-				// calculate sum of all average ratings for that attribute for consistency rating
-				sum += getAverageRating(attribute.id);
 			}
 			// calculate average rating value
-			configuration.consistencyValue = (sum/permutation.length).toFixed(3);
+			configuration.consistencyValue = sum/permutation.length;
 
 			configurations.push(configuration);
 		});
 
 		$scope.configurations = configurations;
+
 	};
 
 	/**
@@ -94,29 +101,16 @@ morphBMC.controller("ResultsController", ['$scope', '$http', function($scope, $h
 		return combinations;
 	}
 
-	/**
-	 * sums up average rating of one single attribute
-	 */
-	function getAverageRating(id) {
-		var ratings = getCompatibilityRatingsForAttribute(id);
-		var v = 0;
-		for (var i=0; i<ratings.length; i++) {
-			// must cast to a Number here, otherwise JS builds a string
-			v+= (+ratings[i].value);
-		};
-		return v/ratings.length;
-	};
-
-	function getCompatibilityRatingsForAttribute(id) {
+	function getCompatibilityRatingsForAttributes(x, y) {
 		var ratings = [];
 		angular.forEach($scope.compatibilities, function(c) {
-			if (c.attr1.id == id || c.attr2.id == id) {
+			if ((c.attr1.id === x && c.attr2.id === y) ||
+				(c.attr1.id === y && c.attr2.id === x)) {
 				ratings.push(c.rating);
 			}
 		});
 		return ratings;
 	};
-
 
 	// set up environment on load
 	$http.get("/api/problems").success(function(data) {
@@ -140,3 +134,28 @@ morphBMC.controller("ResultsController", ['$scope', '$http', function($scope, $h
 
 
 }]);
+
+
+
+function Configuration(attributes) {
+	this.attributes = attributes || [];
+	this.consistencyValue = 0;
+	this.calculateConsistency();
+
+	function calculateConsistency() {
+		var consistency = 0;
+		angular.foreach(this.attributes, function(attr) {
+			var ratings = getCompatibilityRatingsForAttribute(attr.id);
+			consistency = ratings.reduce(function(attr1, attr2) {
+				return attr1 + (+attr2.value);
+			}, 0);
+		});
+		this.consistencyValue = consistency;
+	}
+
+	
+
+	return {
+		consistencyValue: consistencyValue
+	};
+}

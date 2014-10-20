@@ -92,11 +92,6 @@ morphBMC.controller("ExplorationController", ['$scope', '$http', '$filter', func
 		});
 
 
-		console.log("good", good);
-		console.log("bad", bad);
-		console.log("ok", ok);
-
-
 		// bind to view
 		$scope.good = good;
 		$scope.bad = bad;
