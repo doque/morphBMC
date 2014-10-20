@@ -8,18 +8,23 @@
 	<table ng-cloak ng-if="compatibilities !== null" id="compatibilities" class="table table-bordered" style="font-size: 0.8em" >
 		<thead>
 			<tr>
-				<td colspan="2" rowspan="2" border="0"></td>
-				<td ng-if="!$last" ng-repeat="parameter in parameters"
-					colspan="{{ parameter.attributes.length}}">{{ parameter.name }}</td>
+				<td class="empty" colspan="2" rowspan="2"></td>
+				<!--<td ng-if="!$last" ng-repeat="parameter in parameters"
+					colspan="{{ parameter.attributes.length}}">{{ parameter.name }}</td>-->
 			</tr>
 			<tr>
 				<!-- render all attributes that exist -->
 				<td ng-if="$index < getOffsets()[getOffsets().length-2]"
 					ng-repeat="attribute in getAllAttributes()"
 					data-attrid="{{attribute.id}}"
-					ng-class="{ 'highlight': attribute.id == hoverX }"
+					ng-class="{
+								'highlight': attribute.id === hoverX
+							}"
+					class="rotate"
 				>
-					{{ attribute.name }}
+					<div class="rotated">
+						<span>{{ attribute.name }}</span>
+					</div>
 				</td>
 			</tr>
 		</thead>
@@ -36,8 +41,10 @@
 
 				<td 
 					data-attrid ="{{ y.id }}"
-					ng-class="{ 'highlight': y.id == hoverY }"
-					class="warning">{{ y.name}}</td>
+					ng-class="{
+								'highlight': y.id === hoverY
+							}"
+					class="legend">{{ y.name}}</td>
 				
 				<td
 					ng-init="paramX = getParameterByAttribute(x.id);
@@ -54,6 +61,7 @@
 					ng-repeat="x in getAllAttributes()"
 					ng-mouseenter="hover(x.id, y.id); hovered=true;"	
 					ng-mouseleave="hover(0,0); hovered=false"
+					class="cell"
 					>
 
 					<!-- redundant means that this combination of attributes WILL be rendered in the following rows -->
@@ -67,7 +75,7 @@
 						ng-click="rating=true"
 						ng-if="!redundant">
 
-						<div ng-show="rating == false">
+						<div class="rating" ng-show="rating == false">
 							{{ compatibility.rating.name }}
 						</div>
 

@@ -1,5 +1,18 @@
+
+#compatibilities {
+	width: auto;
+	border: 0;
+	margin-top: 120px;
+}
+#compatibilities thead {
+	border: 0;
+}
+#compatibilities td.empty {
+	border: 0;
+}
 #compatibilities td {
-	white-space: nowrap; text-align: center;
+	white-space: nowrap;
+	text-align: center;
 }
 #compatibilities thead td[colspan]:not([rowspan]),
 #compatibilities tbody td[rowspan]:not(.active) {
@@ -8,10 +21,52 @@
 #compatibilities thead td:not([colspan]), #compatibilities td.warning {
 	background: #fcf8e3; vertical-align: middle;
 }
+td.cell {
+	padding: 0 !important;
+	width: 60px;
+	vertical-align: middle !important
+}
+td.cell > div.rating {
+	padding: 8px;
+}
+td.legend {
+	background: rgba(240, 173, 78, 0.2);
+}
 td.disabled {
 	background: #f5f5f5 !important;
 }
-.highlight {
+td.rotate {
+	position: relative;
+	text-align: left !important;
+	padding: 0;
+	border: 0 !important; 
+	background: transparent !important;
+	max-height: 8px !important;
+}
+td.rotate > div.rotated {
+	background: white !important;
+	z-index: 5;
+	width: 180px;
+	position: absolute;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #ddd !important;
+	transform: translate(15px, -80px) rotate(-45deg);
+}
+td.rotate.first > div.rotated {
+	border-top: 1px solid #ddd !important;
+}
+td.rotate div.rotated span {
+	margin-left: 10px;
+}
+td.highlight {
 	background: #428bca !important;
-	color: white;
+}
+td.highlight:not(.rotate) {
+	color: white !important;
+}
+td.highlight.rotate div.rotated span {
+	font-weight: bold;
+	color: #000;
+	padding-bottom: 3px;
+	border-bottom: 1px solid #000;
 }
