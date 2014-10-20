@@ -150,8 +150,11 @@ morphBMC.controller("ExplorationController", ['$scope', '$http', '$filter', func
 		return ratings;
 	};
 
-
-	// TODO get adjacent attribtues!
+	/**
+	 * returns an attribute's parameter's other attributes
+	 * @param  id the attribute id
+	 * @return array the sibling attribute ids
+	 */
 	function getSiblingAttributes(id) {
 		var p = getParameterByAttribute(id);
 		var siblings = [];
@@ -185,9 +188,9 @@ morphBMC.controller("ExplorationController", ['$scope', '$http', '$filter', func
 		return param;
 	};
 
-/**
- * helper function that removes an int from an array
- */
+	/**
+	 * helper function that removes an int from an array
+	 */
 	function remove(arr, int) {
 		if (arr.indexOf(int) >= 0) {
 			if (arr.length === 1) {

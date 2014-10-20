@@ -8,7 +8,9 @@
 			<a ng-hide="addingAttribute">Add Attribute</a>	
 		</div>
 		<ul class="attributes">
-			<li ng-repeat="attr in parameter.attributes | orderBy:'id'">{{ attr.name }}</li>
+			<li ng-repeat="attr in parameter.attributes | orderBy:'id'">
+				<div>{{ attr.name }}</div>
+			</li>
 		</ul>
 		
 		<div class="options">

@@ -42,10 +42,12 @@
 	flex: 0 0 260px;
 	margin-right: 8px;
 	max-height: 100%;
-	padding: 4px 0;
 	position: relative;
 	-webkit-transform: translate3d(0,0,0);
 	width: 260px;
+}
+.parameter > div {
+	margin: 4px 0;
 }
 .parameter .add {
 	background-color: #2f6f9f;
@@ -97,12 +99,14 @@
 	padding: 0 3px;
 }
 .attributes li {
-	padding: 5px;
 	margin: 5px 0;
 	border: 1px solid #2f6f9f;
 	background-color: rgba(79, 159, 207, 0.08);
 }
+.attributes li > div {
+	padding: 5px;
+}
 .parameter h5 {
-	padding: 3px 8px;
+	padding: 8px;
 	margin: 0;
 }

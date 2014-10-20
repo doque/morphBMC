@@ -4,6 +4,9 @@
 .attributes li {
 	border-color: #e1e1e8;
 }
+#exploration .attributes li > div {
+	cursor: pointer;
+}
 .attributes li.ok {
 	border: 1px solid #faebcc;
 	background-color: #fcf8e3;
@@ -13,8 +16,13 @@
 	background-color: rgba(223, 240, 216, 0.8);
 }
 .attributes li.bad {
+	opacity: 0.5;
+	cursor: not-allowed;
 	border: 1px solid #a94442 !important;
 	background-color: rgba(235, 204, 209, 0.8) !important;
+}
+.attributes li.bad > div {
+	pointer-events: none;
 }
 .attributes li.selected {
 	border: 1px solid #31708f !important;

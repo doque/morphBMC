@@ -25,7 +25,7 @@
 			<h5>{{ parameter.name }}</h5>
 
 			<ul class="attributes">
-				<li ng-click="getCompatibleAttributes(attr.id);"
+				<li 
 					ng-repeat="attr in parameter.attributes | orderBy:'id'"
 					data-attrid="{{ attr.id }}"
 					ng-class="{
@@ -34,7 +34,7 @@
 						'bad': bad.indexOf(attr.id) > -1,
 						'selected': selected.indexOf(attr.id) > -1
 					}">
-					{{ attr.name }}
+					<div ng-click="getCompatibleAttributes(attr.id);">{{ attr.name }}</div>
 				</li>
 			</ul>
 			
