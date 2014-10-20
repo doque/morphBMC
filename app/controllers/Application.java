@@ -5,6 +5,8 @@ import play.libs.Yaml;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import securesocial.core.java.SecureSocial;
+
 import java.util.List;
 import java.util.Map;
 
@@ -89,7 +91,7 @@ public class Application extends Controller {
 	 */
 
 	// TODO parameters for problem creation (name, anything else)
-	// @SecureSocial.SecuredAction
+	@SecureSocial.SecuredAction
 	public static Result index() {
 
 		session("userId", "Dummy User");

@@ -7,7 +7,7 @@
 	<table class="table table-hover table-bordered" id="configurations" ts-wrapper>
 		<thead>
 			<tr>
-				<th></th>
+				<th>#</th>
 				<th ts-default="descending" ts-criteria="consistencyValue">Consistency Value</th>
 				<th ts-criteria="{{ p.name }} | lowercase" ng-repeat="p in parameters | orderBy: 'name'">
 					{{ p.name }}
@@ -17,7 +17,7 @@
 
 		<tbody>
 			<tr ng-repeat="c in configurations" ts-repeat>
-				<td>Configuration {{ $index+1}}</td>
+				<td>{{ $index+1}}</td>
 				<td>
 					{{ c.consistencyValue}}			
 				</td>

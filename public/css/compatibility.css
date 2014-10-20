@@ -15,11 +15,3 @@ td.disabled {
 	background: #428bca !important;
 	color: white;
 }
-.spinner {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -16px;
-	margin-left: -16px;
-	z-index: -5;
-}

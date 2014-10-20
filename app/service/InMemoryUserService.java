@@ -16,19 +16,20 @@
  */
 package service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import play.Application;
 import play.Logger;
+
 import scala.Option;
 import securesocial.core.Identity;
 import securesocial.core.IdentityId;
 import securesocial.core.java.BaseUserService;
 import securesocial.core.java.Token;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A Sample In Memory user service in Java
