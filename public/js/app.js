@@ -1,5 +1,5 @@
 // define my own module with required modules
-var morphBMC = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
+var morphBMC = angular.module('morphBMC', ['ngRoute', 'tableSort', 'multi-select']).config(
 	function ($routeProvider, $httpProvider) {
 		// enable strict mode for JS parser
 		'use strict';

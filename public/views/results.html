@@ -5,12 +5,32 @@
 <div id="results" ng-show="!rendering">
 	
 	<div class="alert alert-success">
-		There are {{configurations.length }} possible configurations
+		There are <code>{{configurations.length }}</code> possible configurations,
+		<code>{{ betterThanMedium}}</code> of which have a higher consistency value
+		than the average of <code>{{ mediumConsistency.toFixed(3)}}</code>.
+	</div>
+	<div>
+		{{ selectedAttributes }}
 	</div>
 
 	<table class="table table-hover table-bordered" id="configurations" ts-wrapper>
 		<thead>
-			<tr>
+			<tr class="active">
+				<th colspan="2"></th>
+				<th ng-repeat="p in parameters | orderBy: 'name'">
+
+					<div
+						multi-select
+						input-model="p.attributes"
+						output-model="selectedAttributes[p.name]"
+						button-label="name"
+						item-label="name"
+						tick-property="selected"
+					>
+					</div>
+				</th>
+			</tr>
+			<tr class="info">
 				<th>Rank</th>
 				<th ts-default="descending" ts-criteria="consistencyValue">Consistency Value</th>
 				<th ts-criteria="{{ p.name }} | lowercase" ng-repeat="p in parameters | orderBy: 'name'">
@@ -20,15 +40,21 @@
 		</thead>
 
 		<tbody>
-			<tr ng-repeat="c in configurations" on-finish-render="rendering=false;" ts-repeat>
+			<tr ng-class="{
+					'danger': c.consistencyValue < mediumConsistency
+				}"
+				ng-show="isSelected(c)"
+				ng-repeat="c in configurations"
+				on-finish-render="rendering=false;"
+				ts-repeat>
 				<td>{{ $index +1 }}</td>
 				<td>
 					{{ c.consistencyValue.toFixed(3)}}			
 				</td>
 				<td
 					ng-if="key != 'consistencyValue' &amp;&amp; key != 'fakeId'"
-					ng-repeat="(key, value) in c">
-					{{ value }}
+					ng-repeat="(key, attr) in c">
+					{{ attr.name }}
 				</td>
 			</tr>
 		</tbody>

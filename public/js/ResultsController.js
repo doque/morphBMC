@@ -5,6 +5,10 @@ morphBMC.controller("ResultsController", ['$scope', '$http', function($scope, $h
 	$scope.configurations = [];
 
 	$scope.rendering = true;
+	$scope.selectedAttributes = {};
+
+	$scope.mediumConsistency = 0;
+	$scope.betterThanMedium = 0;
 
 	/**
 	 * creates nice complex objects that contain all possible configurations
@@ -21,7 +25,8 @@ morphBMC.controller("ResultsController", ['$scope', '$http', function($scope, $h
 
 			// build object
 			var configuration = {
-				consistencyValue: 0
+				consistencyValue: 0,
+				selected: true // for filtering
 			};
 			// walk all attributes of that configuration,
 			// assign to appropriate parameter
@@ -39,7 +44,10 @@ morphBMC.controller("ResultsController", ['$scope', '$http', function($scope, $h
 				// each configuration holds an array of parameters,
 				// their id and name
 				// and the chosen attribute for that parameter
-				configuration[param.name] = attribute.name;
+				configuration[param.name] =  {
+					name: attribute.name,
+					id: attribute.id
+				};
 			}
 			// calculate average rating value
 			configuration.consistencyValue = sum/permutation.length;
@@ -47,8 +55,29 @@ morphBMC.controller("ResultsController", ['$scope', '$http', function($scope, $h
 			configurations.push(configuration);
 		});
 
+		$scope.mediumConsistency = configurations.reduce(function(a,b) {
+			return a + +b.consistencyValue;
+		}, 0) / configurations.length;
+
+		$scope.betterThanMedium = configurations.reduce(function(a,b) {
+			if (b.consistencyValue > $scope.mediumConsistency) return a+ +1;
+			return a+ +0;
+		}, 0);
 		$scope.configurations = configurations;
 
+	};
+
+	$scope.isSelected = function(configuration) {
+		var is = false;
+		for (var param in configuration) {
+			angular.forEach($scope.selectedAttributes[param], function(attr) {
+				if (attr.id === configuration[param].id) {
+					is = true;
+					return;
+				}
+			})
+		}
+		return is;
 	};
 
 	/**
@@ -68,6 +97,7 @@ morphBMC.controller("ResultsController", ['$scope', '$http', function($scope, $h
 		});
 		return param;
 	};
+
 
 	/**
 	 * calculates all possible permutations of a list of lists
@@ -136,28 +166,3 @@ morphBMC.controller("ResultsController", ['$scope', '$http', function($scope, $h
 
 
 }]);
-
-
-
-function Configuration(attributes) {
-	this.attributes = attributes || [];
-	this.consistencyValue = 0;
-	this.calculateConsistency();
-
-	function calculateConsistency() {
-		var consistency = 0;
-		angular.foreach(this.attributes, function(attr) {
-			var ratings = getCompatibilityRatingsForAttribute(attr.id);
-			consistency = ratings.reduce(function(attr1, attr2) {
-				return attr1 + (+attr2.value);
-			}, 0);
-		});
-		this.consistencyValue = consistency;
-	}
-
-	
-
-	return {
-		consistencyValue: consistencyValue
-	};
-}

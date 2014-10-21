@@ -2,10 +2,11 @@
 <html lang="en" ng-app="morphBMC" ng-controller="ProblemController">
 	<head>
 		<meta charset="UTF-8">
-		<title>{{ problem.name }}</title>
+		<title ng-bind="title">{{ problem.name }}</title>
 		<link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">
 		<link rel="stylesheet" href="/assets/app/bower_components/bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/assets/app/bower_components/angular-tablesort/tablesort.css">
+		<link rel="stylesheet" href="/assets/app/bower_components/angular-multi-select/angular-multi-select.css">
 
 		<!-- custom stylesheets per view -->
 		<link rel="stylesheet" href="/assets/css/definition.css">
@@ -46,6 +47,9 @@
 	<script src="/assets/app/bower_components/angular-route/angular-route.min.js"></script>
 	<script src="/assets/app/bower_components/angular-ui/build/angular-ui.min.js"></script>
 	<script src="/assets/app/bower_components/angular-tablesort/js/angular-tablesort.js"></script>
+	<script src="/assets/app/bower_components/angular-multi-select/angular-multi-select.js"></script>
+
+	
 	<script src="/assets/js/app.js"></script>
 	
 	<script src="/assets/js/ProblemController.js"></script>
