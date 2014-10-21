@@ -6,6 +6,9 @@ morphBMC.controller("ResultsController", ['$scope', '$http', function($scope, $h
 
 	$scope.rendering = true;
 
+	$scope.mediumConsistency = 0;
+	$scope.betterThanMedium = 0;
+
 	/**
 	 * creates nice complex objects that contain all possible configurations
 	 * @return {array} array of configuration objects
@@ -14,12 +17,13 @@ morphBMC.controller("ResultsController", ['$scope', '$http', function($scope, $h
 		// only holds IDs of attributes, but no further information
 		// in order to display this nicely, we'll have to build a complex object
 		var all = getAllCombinations($scope.attributes);
+		// holds all configurations, will be assigned to scope below
 		var configurations = [];
 
 		// walk all permutations
 		angular.forEach(all, function(permutation) {
 
-			// build object
+			// build configuration object here
 			var configuration = {
 				consistencyValue: 0
 			};
@@ -44,8 +48,20 @@ morphBMC.controller("ResultsController", ['$scope', '$http', function($scope, $h
 			// calculate average rating value
 			configuration.consistencyValue = sum/permutation.length;
 
+			// push it
 			configurations.push(configuration);
 		});
+
+		// calculate average consistency of all configurations
+		$scope.mediumConsistency = configurations.reduce(function(a,b) {
+			return a + +b.consistencyValue;
+		}, 0) / configurations.length;
+
+		// how many configurations have above-average consistency?
+		$scope.betterThanMedium = configurations.reduce(function(a,b) {
+			if (b.consistencyValue > $scope.mediumConsistency) return a+ +1;
+			return a+ +0;
+		}, 0);
 
 		$scope.configurations = configurations;
 
@@ -103,6 +119,9 @@ morphBMC.controller("ResultsController", ['$scope', '$http', function($scope, $h
 		return combinations;
 	}
 
+	/**
+	 * returns all compatibilities for a pair of attributes
+	 */
 	function getCompatibilityRatingsForAttributes(x, y) {
 		var ratings = [];
 		angular.forEach($scope.compatibilities, function(c) {

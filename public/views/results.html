@@ -5,7 +5,9 @@
 <div id="results" ng-show="!rendering">
 	
 	<div class="alert alert-success">
-		There are {{configurations.length }} possible configurations
+		There are <code>{{configurations.length }}</code> possible configurations,
+		<code>{{ betterThanMedium}}</code> of which have a higher consistency value
+		than the average of <code>{{ mediumConsistency.toFixed(3)}}</code>.
 	</div>
 
 	<table class="table table-hover table-bordered" id="configurations" ts-wrapper>
