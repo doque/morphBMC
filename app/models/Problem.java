@@ -20,6 +20,8 @@ public class Problem extends Model {
 
 	public String userId;
 
+	public String owner;
+
 	public String name;
 
 	@OneToMany(cascade = CascadeType.ALL)

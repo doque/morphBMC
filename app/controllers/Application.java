@@ -29,15 +29,16 @@ public class Application extends Controller {
 			return notFound();
 		}
 
+		// grab user
 		Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
 		String userId = user.identityId().userId();
 
 		// can the user see the problem? -> for now, always yes.
 		if (true || p.userId.equals(userId)) {
-			return ok(views.html.problem.render(p));
+
+			return ok(views.html.problem.render(p.id, userId));
 		}
 
 		return unauthorized();
 	}
-
 }

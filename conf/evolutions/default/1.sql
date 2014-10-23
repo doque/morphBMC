@@ -31,6 +31,7 @@ create table parameter (
 create table problem (
   id                        bigint not null,
   user_id                   varchar(255),
+  owner                     varchar(255),
   name                      varchar(255),
   current_stage             integer,
   constraint ck_problem_current_stage check (current_stage in (0,1)),
