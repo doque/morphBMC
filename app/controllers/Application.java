@@ -19,7 +19,6 @@ public class Application extends Controller {
 	 * 
 	 * @return HTTP 200 when creating a new problem
 	 */
-
 	@SecureSocial.SecuredAction
 	public static Result viewProblem(long id) {
 

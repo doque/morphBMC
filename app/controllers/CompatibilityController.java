@@ -1,10 +1,14 @@
 package controllers;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import play.Logger;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+
+import services.SocketServiceInterface;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,15 +26,23 @@ import models.Rating;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.SqlRow;
 import com.google.common.collect.Maps;
+import com.google.inject.Inject;
 
 public class CompatibilityController extends Controller {
 
+
+	private SocketServiceInterface socketService;
+	
+	@Inject	public CompatibilityController(SocketServiceInterface socketService) {
+		System.out.println("not injecting anything");
+		this.socketService = checkNotNull(socketService);
+	}
 	/**
 	 * store new compatibility for a pair of attributes and rating
 	 * 
 	 * @return
 	 */
-	public static Result addCompatibility(long problemId) {
+	public Result addCompatibility(long problemId) {
 		// TODO: overwrite
 
 		Compatibility c = Form.form(Compatibility.class).bindFromRequest()
@@ -55,7 +67,7 @@ public class CompatibilityController extends Controller {
 	 * @param problemId
 	 * @return
 	 */
-	public static Result getCompatibilities(long problemId) {
+	public Result getCompatibilities(long problemId) {
 
 		// for each attribute, if attribute has no rating, insert default
 		// rating for it
@@ -71,7 +83,7 @@ public class CompatibilityController extends Controller {
 
 	}
 
-	private static void insertInitialCompatibilities(long problemId,
+	private void insertInitialCompatibilities(long problemId,
 			Rating defaultRating) {
 		List<Parameter> params = Parameter.find.where()
 				.eq("problem_id", problemId).findList();
@@ -119,7 +131,7 @@ public class CompatibilityController extends Controller {
 		System.out.println(attributeIds.size());
 	}
 
-	private static List<Compatibility> getAllCompatibilities(long problemId) {
+	private List<Compatibility> getAllCompatibilities(long problemId) {
 		List<SqlRow> rows = Ebean
 				.createSqlQuery(
 						"SELECT c.id FROM compatibility c"
@@ -142,7 +154,7 @@ public class CompatibilityController extends Controller {
 		return compatibilities;
 	}
 
-	public static class Pair {
+	public class Pair {
 		public long x;
 		public long y;
 

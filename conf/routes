@@ -1,41 +1,53 @@
-# Routes
-# This file defines all application routes (Higher priority routes first)
-# ~~~~
+#################
+# Play Templates
+#################
 
-# Home page
-GET     /                           controllers.Application.index()
+# Home Page
+GET     /                           							controllers.Application.index()
+# Angular root
+GET		/problem/:id											controllers.Application.viewProblem(id: Long)
 
-GET		/problem/:id				controllers.Application.viewProblem(id: Long)
 
+#################
+# SecureSocial
+#################
 
 # Login page
-GET     /login                      securesocial.controllers.LoginPage.login
-GET     /logout                     securesocial.controllers.LoginPage.logout
+GET     /login                      							securesocial.controllers.LoginPage.login
+GET     /logout                     							securesocial.controllers.LoginPage.logout
 
 # Providers entry points
-GET     /authenticate/:provider     securesocial.controllers.ProviderController.authenticate(provider)
-POST    /authenticate/:provider     securesocial.controllers.ProviderController.authenticateByPost(provider)
-GET     /not-authorized             securesocial.controllers.ProviderController.notAuthorized
+GET     /authenticate/:provider     							securesocial.controllers.ProviderController.authenticate(provider)
+POST    /authenticate/:provider     							securesocial.controllers.ProviderController.authenticateByPost(provider)
+GET     /not-authorized             							securesocial.controllers.ProviderController.notAuthorized
 
 
-# REST endpoints
+#################
+# REST Endpoints
+#################
 
-
-# Application
-# id comes from session
-GET		/api/problems/:id										controllers.ProblemController.getProblemEnvironment(id: Long)
+# Problem
+GET		/api/problems/:id										@controllers.ProblemController.getProblemEnvironment(id: Long)
 
 # Ratings
-GET		/api/ratings											controllers.RatingController.getRatings
+GET		/api/ratings											@controllers.RatingController.getRatings
 
 # Definition
-POST 	/api/problems/:id/parameters							controllers.DefinitionController.addParameter(id: Long)
-DELETE  /api/problems/:problemId/parameters/:id					controllers.DefinitionController.deleteParameter(problemId: Long, id: Long)
-POST	/api/problems/:problemId/parameters/:id/attributes		controllers.DefinitionController.addAttribute(problemId: Long, id:Long)
+POST 	/api/problems/:id/parameters							@controllers.DefinitionController.addParameter(id: Long)
+DELETE  /api/problems/:problemId/parameters/:id					@controllers.DefinitionController.deleteParameter(problemId: Long, id: Long)
+POST	/api/problems/:problemId/parameters/:id/attributes		@controllers.DefinitionController.addAttribute(problemId: Long, id:Long)
 
 # Compatibility
-POST	/api/problems/:id/compatibilities						controllers.CompatibilityController.addCompatibility(id: Long)
-GET		/api/problems/:id/compatibilities						controllers.CompatibilityController.getCompatibilities(id: Long)
+POST	/api/problems/:id/compatibilities						@controllers.CompatibilityController.addCompatibility(id: Long)
+GET		/api/problems/:id/compatibilities						@controllers.CompatibilityController.getCompatibilities(id: Long)
+
+
+#################
+# WebSocket
+#################
+
+GET     /ws/open/:problemId/:userId								@controllers.WebSocketController.open(problemId: Long, userId: String)
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               							controllers.Assets.at(path="/public", file)

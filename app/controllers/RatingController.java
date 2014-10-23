@@ -12,7 +12,7 @@ import models.Rating;
 import com.google.common.collect.Maps;
 
 public class RatingController extends Controller {
-	public static Result getRatings() {
+	public Result getRatings() {
 
 		List<Rating> ratings = Rating.find.all();
 		Map<String, Object> result = Maps.newHashMap();

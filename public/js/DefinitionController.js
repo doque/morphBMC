@@ -1,4 +1,4 @@
-morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope, $http) {
+morphBMC.controller("DefinitionController", ['$scope', '$http', 'SocketsService', function($scope, $http, SocketsService) {
 
 	$scope.addAttribute = function(parameter) {
 
@@ -16,6 +16,8 @@ morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope,
 		});
 	};
 
+
+	SocketsService.status();
 
 	$scope.addParameter = function() {
 		if (!$scope.parameter) return;
@@ -47,8 +49,7 @@ morphBMC.controller("DefinitionController", ['$scope', '$http', function($scope,
 
 	// set up environment on load
 	$http.get("/api/problems/"+window.PROBLEM_ID).success(function(data) {
-		// contains problem properties and parameters with their attributes,
-		// if present yet
+
 		$scope.parameters = data.problem.parameters;
 	});
 }]);

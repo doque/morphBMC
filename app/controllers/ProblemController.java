@@ -56,7 +56,7 @@ public class ProblemController extends Controller {
 	 * @return
 	 */
 	// @SecuredAction(ajaxCall = true)
-	public static Result getProblemEnvironment(long id) {
+	public Result getProblemEnvironment(long id) {
 
 		Problem p = Problem.find.byId(id);
 		if (p == null) {
