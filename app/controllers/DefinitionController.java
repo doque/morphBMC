@@ -13,7 +13,7 @@ import models.Problem;
 
 import com.google.common.collect.Maps;
 
-public class Definition extends Controller {
+public class DefinitionController extends Controller {
 
 	// @SecuredAction(ajaxCall = true)
 	public static Result addParameter(long problemId) {

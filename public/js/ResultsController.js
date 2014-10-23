@@ -134,7 +134,7 @@ morphBMC.controller("ResultsController", ['$scope', '$http', function($scope, $h
 	};
 
 	// set up environment on load
-	$http.get("/api/problems").success(function(data) {
+	$http.get("/api/problems/"+window.PROBLEM_ID).success(function(data) {
 
 		$scope.parameters = data.problem.parameters;
 
@@ -147,7 +147,6 @@ morphBMC.controller("ResultsController", ['$scope', '$http', function($scope, $h
 		$http.get("/api/problems/" + window.PROBLEM_ID+ "/compatibilities").success(function(data) {
 			$scope.compatibilities = data.compatibilities;
 			$scope.allPossible();
-
 		});
 
 	

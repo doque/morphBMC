@@ -5,6 +5,9 @@
 # Home page
 GET     /                           controllers.Application.index()
 
+GET		/problem/:id				controllers.Application.viewProblem(id: Long)
+
+
 # Login page
 GET     /login                      securesocial.controllers.LoginPage.login
 GET     /logout                     securesocial.controllers.LoginPage.logout
@@ -17,21 +20,22 @@ GET     /not-authorized             securesocial.controllers.ProviderController.
 
 # REST endpoints
 
+
 # Application
 # id comes from session
-GET		/api/problems											controllers.Application.getProblemEnvironment
+GET		/api/problems/:id										controllers.ProblemController.getProblemEnvironment(id: Long)
 
 # Ratings
-GET		/api/ratings											controllers.Application.getRatings
+GET		/api/ratings											controllers.RatingController.getRatings
 
 # Definition
-POST 	/api/problems/:id/parameters							controllers.Definition.addParameter(id: Long)
-DELETE  /api/problems/:problemId/parameters/:id					controllers.Definition.deleteParameter(problemId: Long, id: Long)
-POST	/api/problems/:problemId/parameters/:id/attributes		controllers.Definition.addAttribute(problemId: Long, id:Long)
+POST 	/api/problems/:id/parameters							controllers.DefinitionController.addParameter(id: Long)
+DELETE  /api/problems/:problemId/parameters/:id					controllers.DefinitionController.deleteParameter(problemId: Long, id: Long)
+POST	/api/problems/:problemId/parameters/:id/attributes		controllers.DefinitionController.addAttribute(problemId: Long, id:Long)
 
 # Compatibility
-POST	/api/problems/:id/compatibilities						controllers.Compatibility.addCompatibility(id: Long)
-GET		/api/problems/:id/compatibilities						controllers.Compatibility.getCompatibilities(id: Long)
+POST	/api/problems/:id/compatibilities						controllers.CompatibilityController.addCompatibility(id: Long)
+GET		/api/problems/:id/compatibilities						controllers.CompatibilityController.getCompatibilities(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               	controllers.Assets.at(path="/public", file)
+GET     /assets/*file               							controllers.Assets.at(path="/public", file)

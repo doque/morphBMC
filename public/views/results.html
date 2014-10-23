@@ -22,7 +22,8 @@
 		</thead>
 
 		<tbody>
-			<tr ng-repeat="c in configurations" on-finish-render="rendering=false;" ts-repeat>
+			<tr ng-class="{'warning': c.consistencyValue < mediumConsistency }"
+				ng-repeat="c in configurations" on-finish-render="rendering=false;" ts-repeat>
 				<td>{{ $index +1 }}</td>
 				<td>
 					{{ c.consistencyValue.toFixed(3)}}			

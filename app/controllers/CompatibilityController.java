@@ -15,6 +15,7 @@ import java.util.Set;
 import javax.persistence.PersistenceException;
 
 import models.Attribute;
+import models.Compatibility;
 import models.Parameter;
 import models.Rating;
 
@@ -22,7 +23,7 @@ import com.avaje.ebean.Ebean;
 import com.avaje.ebean.SqlRow;
 import com.google.common.collect.Maps;
 
-public class Compatibility extends Controller {
+public class CompatibilityController extends Controller {
 
 	/**
 	 * store new compatibility for a pair of attributes and rating
@@ -32,8 +33,8 @@ public class Compatibility extends Controller {
 	public static Result addCompatibility(long problemId) {
 		// TODO: overwrite
 
-		models.Compatibility c = Form.form(models.Compatibility.class)
-				.bindFromRequest().get();
+		Compatibility c = Form.form(Compatibility.class).bindFromRequest()
+				.get();
 
 		c.userId = session("userId");
 		// prevent dupes, instead just update existing
@@ -103,7 +104,7 @@ public class Compatibility extends Controller {
 		// now create default rating for all these pairs
 		for (Pair pair : attributeIds) {
 
-			models.Compatibility c = new models.Compatibility();
+			Compatibility c = new Compatibility();
 			c.attr1 = Attribute.find.byId(pair.x);
 			c.attr2 = Attribute.find.byId(pair.y);
 			c.userId = session("userId");
@@ -118,8 +119,7 @@ public class Compatibility extends Controller {
 		System.out.println(attributeIds.size());
 	}
 
-	private static List<models.Compatibility> getAllCompatibilities(
-			long problemId) {
+	private static List<Compatibility> getAllCompatibilities(long problemId) {
 		List<SqlRow> rows = Ebean
 				.createSqlQuery(
 						"SELECT c.id FROM compatibility c"
@@ -131,13 +131,12 @@ public class Compatibility extends Controller {
 								+ " WHERE p.problem_id = :problem_id OR p2.problem_id = :problem_id")
 				.setParameter("problem_id", problemId).findList();
 
-		List<models.Compatibility> compatibilities = new ArrayList<models.Compatibility>();
+		List<Compatibility> compatibilities = new ArrayList<Compatibility>();
 
 		// manually build return objects, because Ebean.find() doesn't join
 		// multiple tables.
 		for (SqlRow row : rows) {
-			compatibilities.add(models.Compatibility.find.byId(row
-					.getLong("id")));
+			compatibilities.add(Compatibility.find.byId(row.getLong("id")));
 		}
 
 		return compatibilities;

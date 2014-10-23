@@ -104,7 +104,7 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', fu
 
 
 	// grab all existing parameters to build table
-	$http.get("/api/problems").success(function(data) {
+	$http.get("/api/problems/"+window.PROBLEM_ID).success(function(data) {
 		// contains problem properties and parameters with their attributes,
 		// if present yet
 		$scope.parameters = data.problem.parameters;
