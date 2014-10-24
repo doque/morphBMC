@@ -4,7 +4,15 @@
 		<h5>{{ parameter.name }}</h5>
 
 		<div ng-click="addingAttribute=true" class="add">
-			<input type="text" class="text" ng-blur="addingAttribute = false; addAttribute(parameter)" ng-model="parameter.attribute.name" ng-show="addingAttribute" autofocus="addingAttribute==true">
+			<input
+				type="text"
+				class="text"
+				ng-blur="addAttribute(parameter); addingAttribute = false;"
+				ng-model="parameter.attribute.name"
+				ng-show="addingAttribute"
+				autofocus="addingAttribute"
+				ng-enter="addAttribute(parameter)"
+				>
 			<a ng-hide="addingAttribute">Add Attribute</a>	
 		</div>
 		<ul class="attributes">
