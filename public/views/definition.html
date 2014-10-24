@@ -34,7 +34,13 @@
 	</div>
 	
 	<div class="parameter parameter-add">
-		<input type="text" class="text" ng-blur="addParameter()" autofocus="addingParameter==true" ng-model="parameter.name" ng-show="addingParameter">
+		<input
+			type="text"
+			class="text"
+			autofocus="addingParameter"
+			ng-model="parameter.name" 
+			ng-show="addingParameter"
+			ng-enter="addParameter(); addingParameter = false;">
 		<h5 ng-hide="addingParameter" ng-click="addingParameter=true">
 			<span class="glyphicon glyphicon-plus-sign"></span> Add a Parameter
 		</h5>
