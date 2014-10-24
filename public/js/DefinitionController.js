@@ -25,8 +25,6 @@ morphBMC.controller("DefinitionController", ['$scope', '$http', 'SocketService',
 			return;
 		}
 		
-
-
 		$http.post("/api/problems/" + window.PROBLEM_ID + "/parameters", {
 			"name": $scope.parameter.name
 		}).success(function(data) {

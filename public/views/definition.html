@@ -2,13 +2,16 @@
 
 	<div class="parameter parameter-add">
 		<input
-			type="text"
+			type="text input-small"
 			class="text"
 			ng-blur="addingParameter=false;"
 			autofocus="addingParameter"
 			ng-model="parameter.name" 
 			ng-show="addingParameter"
-			ng-enter="addParameter(); addingParameter=false; addingAttribute=true;">
+			placeholder="Enter Name for Parameter"
+			ng-enter="addParameter(); addingParameter=false; addingAttribute=true;"
+			ng-class="{'adding': addingParameter }"
+		>
 		<h5 ng-hide="addingParameter" ng-click="addingParameter=true">
 			<span class="glyphicon glyphicon-plus-sign"></span> Add a Parameter
 		</h5>

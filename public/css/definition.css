@@ -81,10 +81,13 @@
 }
 .parameter.parameter-add {
 	opacity: 0.3;
-	width: 160px;
-	-ms-flex: 0 0 160px;
-	-webkit-flex: 0 0 160px;
-	flex: 0 0 160px;
+	width: 260px;
+	-ms-flex: 0 0 260px;
+	-webkit-flex: 0 0 260px;
+	flex: 0 0 260px;
+}
+.parameter.parameter-add input {
+	margin: 8px 10px;
 }
 .parameter.parameter-add:hover {
 	opacity: 1;
@@ -92,6 +95,9 @@
 .parameter .options .dropdown-menu {
 	right: 0;
 	left: auto;
+}
+.parameter-parameter-add input.text {
+	width: 160px;
 }
 .attributes {
 	list-style: none;
