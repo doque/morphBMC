@@ -43,13 +43,12 @@ public class CompatibilityController extends Controller {
 	 * @return
 	 */
 	public Result addCompatibility(long problemId) {
-		// TODO: overwrite
 
 		Compatibility c = Form.form(Compatibility.class).bindFromRequest()
 				.get();
 
 		c.userId = session("userId");
-		// prevent dupes, instead just update existing
+		// update existing
 		if (c.id != 0) {
 			c.update();
 		} else {
@@ -71,11 +70,10 @@ public class CompatibilityController extends Controller {
 
 		// for each attribute, if attribute has no rating, insert default
 		// rating for it
-		// if (getAllCompatibilities(problemId).size() == 0) {
-		Rating defaultRating = Rating.find.where().eq("name", "OK")
+		Rating defaultRating = Rating.find.where().eq("name", "Rate")
 				.findUnique();
+		// add user id
 		insertInitialCompatibilities(problemId, defaultRating);
-		// }
 
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("compatibilities", getAllCompatibilities(problemId));
@@ -113,22 +111,22 @@ public class CompatibilityController extends Controller {
 				}
 			}
 		}
+		int count = 0;
 		// now create default rating for all these pairs
 		for (Pair pair : attributeIds) {
-
 			Compatibility c = new Compatibility();
 			c.attr1 = Attribute.find.byId(pair.x);
 			c.attr2 = Attribute.find.byId(pair.y);
-			c.userId = session("userId");
 			c.rating = defaultRating;
+			c.userId = session().get("userId");
 			try {
 				c.save();
+				++count;
 			} catch (PersistenceException e) {
 				Logger.info("ignoring duplicate value");
 			}
 		}
-
-		System.out.println(attributeIds.size());
+		Logger.info("Total number of configurations: " + count);
 	}
 
 	private List<Compatibility> getAllCompatibilities(long problemId) {

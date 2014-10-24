@@ -31,7 +31,11 @@ public class Application extends Controller {
 		// grab user
 		Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
 		String userId = user.identityId().userId();
-
+		// yes this is not 100 % accurate because different provider's userIds overlap,
+		// but for now we're only using twitter anyway so it works.
+		
+		session().put("userId", userId);
+		
 		// can the user see the problem? -> for now, always yes.
 		if (true || p.userId.equals(userId)) {
 

@@ -2,7 +2,6 @@ package models;
 
 import play.db.ebean.Model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -16,11 +15,9 @@ public class Compatibility extends Model {
 	public long id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@Column(nullable = true)
 	public Attribute attr1;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@Column(nullable = true)
 	public Attribute attr2;
 
 	public String userId;

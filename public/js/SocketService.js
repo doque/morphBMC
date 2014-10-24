@@ -1,4 +1,4 @@
-morphBMC.factory('SocketsService', ['$q', '$rootScope', '$location', function($q, $rootScope, $location) {
+morphBMC.factory('SocketService', ['$q', '$rootScope', '$location', function($q, $rootScope, $location) {
 
     // Save established socket (connected, ready to send)
     var establishedSocket;
@@ -57,7 +57,7 @@ morphBMC.factory('SocketsService', ['$q', '$rootScope', '$location', function($q
         var type = data.type;
         var message = data.message;
         var args = data;*/
-        console.log("incoming socket event:", incoming);
+        console.log("socket.in", incoming);
         //$rootScope.$broadcast(type, args);
     };
 

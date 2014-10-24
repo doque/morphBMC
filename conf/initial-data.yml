@@ -1,5 +1,8 @@
 ratings:
     - !!models.Rating
+        name: Rate
+        value: 0
+    - !!models.Rating
         name: Good
         value: 9
     - !!models.Rating
