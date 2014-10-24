@@ -38,9 +38,15 @@ morphBMC.controller("DefinitionController", ['$scope', '$http', 'SocketService',
 	};
 
 	$scope.removeParameter = function(parameter, index) {
-		//console.log(parameter, index)
 		$http.delete("/api/problems/" + window.PROBLEM_ID + "/parameters/" + parameter.id).success(function() {
-			$scope.parameters.splice(index, 1);
+			// remove from scope
+			angular.forEach($scope.parameters, function(p, index) {
+				if (p.id === parameter.id) {
+					$scope.parameters.splice(index, 1);
+					return;
+				}
+			});
+
 		}).error(function() {
 			alert("this parameter has existing compatibilities");
 		});

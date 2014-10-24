@@ -82,6 +82,9 @@ var morphBMC = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
                 });
                 event.preventDefault();
             }
+            if (event.which === 27) {
+            	element[0].blur();
+            }
         });
     };
 });;

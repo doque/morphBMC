@@ -1,5 +1,20 @@
 <div id="definition" class="board">
-	<div class="parameter" ng-repeat="parameter in parameters | orderBy:'id'">
+
+	<div class="parameter parameter-add">
+		<input
+			type="text"
+			class="text"
+			ng-blur="addingParameter=false;"
+			autofocus="addingParameter"
+			ng-model="parameter.name" 
+			ng-show="addingParameter"
+			ng-enter="addParameter(); addingParameter=false; addingAttribute=true;">
+		<h5 ng-hide="addingParameter" ng-click="addingParameter=true">
+			<span class="glyphicon glyphicon-plus-sign"></span> Add a Parameter
+		</h5>
+	</div>
+
+	<div class="parameter" ng-repeat="parameter in parameters | orderBy: 'id':true">
 		
 		<h5>{{ parameter.name }}</h5>
 
@@ -7,6 +22,7 @@
 			<input
 				type="text"
 				class="text"
+				placeholder="Enter Name for Attribute"
 				ng-blur="addAttribute(parameter); addingAttribute = false;"
 				ng-model="parameter.attribute.name"
 				ng-show="addingAttribute"
@@ -32,17 +48,5 @@
 			</ul>
 		</div>
 	</div>
-	
-	<div class="parameter parameter-add">
-		<input
-			type="text"
-			class="text"
-			autofocus="addingParameter"
-			ng-model="parameter.name" 
-			ng-show="addingParameter"
-			ng-enter="addParameter(); addingParameter = false;">
-		<h5 ng-hide="addingParameter" ng-click="addingParameter=true">
-			<span class="glyphicon glyphicon-plus-sign"></span> Add a Parameter
-		</h5>
-	</div>
+
 </div>
