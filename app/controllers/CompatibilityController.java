@@ -30,16 +30,17 @@ import com.google.inject.Inject;
 
 public class CompatibilityController extends Controller {
 
-
+	/**
+	 * DI
+	 */
 	private SocketServiceInterface socketService;
-	
 	@Inject	public CompatibilityController(SocketServiceInterface socketService) {
 		System.out.println("not injecting anything");
 		this.socketService = checkNotNull(socketService);
 	}
+	
 	/**
 	 * store new compatibility for a pair of attributes and rating
-	 * 
 	 * @return
 	 */
 	public Result addCompatibility(long problemId) {
@@ -56,13 +57,12 @@ public class CompatibilityController extends Controller {
 		}
 
 		Map<String, Object> result = Maps.newHashMap();
-		result.put("compatibilities", getAllCompatibilities(problemId));
+		result.put("compatibilities", retrieveCompatibilities(problemId));
 		return ok(Json.toJson(result));
 	}
 
 	/**
-	 * retrieve all existing compatibilities and serve them to client
-	 * 
+	 * retrieve all existing compatibilities for a problem and serve them to client
 	 * @param problemId
 	 * @return
 	 */
@@ -76,11 +76,17 @@ public class CompatibilityController extends Controller {
 		insertInitialCompatibilities(problemId, defaultRating);
 
 		Map<String, Object> result = Maps.newHashMap();
-		result.put("compatibilities", getAllCompatibilities(problemId));
+		result.put("compatibilities", retrieveCompatibilities(problemId));
 		return ok(Json.toJson(result));
 
 	}
 
+	/**
+	 * inserts an initial rating of 0 - "Rate" for each possible
+	 * combination of attributes for a specific problem
+	 * @param problemId
+	 * @param defaultRating
+	 */
 	private void insertInitialCompatibilities(long problemId,
 			Rating defaultRating) {
 		List<Parameter> params = Parameter.find.where()
@@ -126,10 +132,15 @@ public class CompatibilityController extends Controller {
 				Logger.info("ignoring duplicate value");
 			}
 		}
-		Logger.info("Total number of configurations: " + count);
+		Logger.info("Total number of new configurations: " + count);
 	}
 
-	private List<Compatibility> getAllCompatibilities(long problemId) {
+	/**
+	 * read all existing compatibilities from 
+	 * @param problemId
+	 * @return
+	 */
+	private List<Compatibility> retrieveCompatibilities(long problemId) {
 		List<SqlRow> rows = Ebean
 				.createSqlQuery(
 						"SELECT c.id FROM compatibility c"

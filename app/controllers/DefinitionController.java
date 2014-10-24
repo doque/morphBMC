@@ -59,6 +59,7 @@ public class DefinitionController extends Controller {
 
 	/**
 	 * Delete a parameter, including all its attributes
+	 * and all compatibilities that refer to one of its attributes
 	 * @param problemId
 	 * @param parameterId
 	 * @return
