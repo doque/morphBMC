@@ -59,7 +59,7 @@
 								'disabled' : redundant
 							}"
 					ng-repeat="x in getAllAttributes()"
-					ng-mouseenter="hover(x.id, y.id); hovered=true;"	
+					ng-mouseenter="hover(x.id, y.id, redundant); hovered=true;"	
 					ng-mouseleave="hover(0,0); hovered=false"
 					class="cell"
 					>

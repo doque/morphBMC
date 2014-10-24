@@ -24,9 +24,11 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', fu
 	/**
 	 * provides hover effect for parent tds
 	 */
-	$scope.hover = function(x, y) {
-		$scope.hoverX = x;
-		$scope.hoverY = y;
+	$scope.hover = function(x, y, redundant) {
+		if (!redundant) {
+			$scope.hoverX = x;
+			$scope.hoverY = y;
+		}
 	};
 
 	/**
