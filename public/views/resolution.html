@@ -47,7 +47,7 @@
 				<td
 					ng-init="paramX = getParameterByAttribute(x.id);
 							paramY = getParameterByAttribute(y.id);
-							compatibility = getCompatibilityRating(x.id, y.id);
+							compatibilities = getCompatibilityRatings(x.id, y.id);
 							redundant = paramX.id >= paramY.id"
 					ng-if="$index < getOffsets()[getOffsets().length - 2]"
 					ng-class="{
@@ -64,6 +64,7 @@
 
 					<!-- redundant means that this combination of attributes WILL be rendered in the following rows -->
 					<div
+						ng-repeat="compatibility in compatibilities"
 						tooltip
 						data-toggle="tooltip"
 						data-placement="top"

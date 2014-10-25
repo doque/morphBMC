@@ -86,21 +86,18 @@ app.controller("ResolutionController", ['$scope', '$http', '$filter', function($
 
 
 	/**
-	 * get compatibility for a pair of attributes
+	 * get all compatibilities for a pair of attributes
 	 */
-	$scope.getCompatibilityRating = function(attr1, attr2) {
-		var _c = null;
+	$scope.getCompatibilityRatings = function(attr1, attr2) {
+		var compats = [];
 		angular.forEach($scope.compatibilities, function(c) {
-			// cant break out of foreach
-			if (_c === null) {
 				// arrays should be the same
-				if ( (attr1 === c.attr1.id && attr2 === c.attr2.id) || (attr2 === c.attr1.id && attr1 === c.attr2.id) ) {
-					_c = c;
-				}
+			if ( (attr1 === c.attr1.id && attr2 === c.attr2.id) || (attr2 === c.attr1.id && attr1 === c.attr2.id) ) {
+				compats.push(c);
 			}
 
 		});
-		return _c;
+		return compats;
 	};
 
 
@@ -111,12 +108,9 @@ app.controller("ResolutionController", ['$scope', '$http', '$filter', function($
 		// if present yet
 		$scope.parameters = data.problem.parameters;
 
-
-
 		// after receiving problem id, load existing compatibilities
-		$http.get("/api/problems/" + window.PROBLEM_ID+ "/compatibilities").success(function(data) {
+		$http.get("/api/problems/" + window.PROBLEM_ID+ "/compatibilities?all=yes").success(function(data) {
 			$scope.compatibilities = data.compatibilities;
-			console.log($scope)
 		});
 	});
 

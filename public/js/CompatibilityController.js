@@ -1,4 +1,4 @@
-app.controller("CompatibilityController", ['$scope', '$http', '$filter', function($scope, $http) {
+app.controller("CompatibilityController", ['$scope', '$http', 'CompatibilityService', function($scope, $http, CompatibilityService) {
 
 	$scope.adding = false;
 	$scope.compatibilities = null;
@@ -25,10 +25,7 @@ app.controller("CompatibilityController", ['$scope', '$http', '$filter', functio
 	 * provides hover effect for parent tds
 	 */
 	$scope.hover = function(x, y, redundant) {
-		if (!redundant) {
-			$scope.hoverX = x;
-			$scope.hoverY = y;
-		}
+		return CompatibilityService.hover($scope.hoverX, x, $scope.hoverY, y, redundant);
 	};
 
 	/**
