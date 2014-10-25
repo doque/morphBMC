@@ -1,4 +1,4 @@
-morphBMC.controller("DefinitionController", ['$scope', '$http', 'SocketService', function($scope, $http, SocketsService) {
+app.controller("DefinitionController", ['$scope', '$http', 'SocketService', function($scope, $http, SocketsService) {
 
 	/**
 	 * send a POST request to add a new attribute

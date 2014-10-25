@@ -1,4 +1,4 @@
-morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', function($scope, $http) {
+app.controller("CompatibilityController", ['$scope', '$http', '$filter', function($scope, $http) {
 
 	$scope.adding = false;
 	$scope.compatibilities = null;

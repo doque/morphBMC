@@ -1,4 +1,4 @@
-morphBMC.controller("ExplorationController", ['$scope', '$http', '$filter', function($scope, $http) {
+app.controller("ExplorationController", ['$scope', '$http', '$filter', function($scope, $http) {
 
 	// initial view template variables
 	$scope.selected = [];

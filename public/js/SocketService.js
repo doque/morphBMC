@@ -1,4 +1,4 @@
-morphBMC.factory('SocketService', ['$q', '$rootScope', '$location', function($q, $rootScope, $location) {
+app.factory('SocketService', ['$q', '$rootScope', '$location', function($q, $rootScope, $location) {
 
     // Save established socket (connected, ready to send)
     var establishedSocket;

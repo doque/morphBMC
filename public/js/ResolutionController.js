@@ -1,4 +1,4 @@
-morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', function($scope, $http) {
+app.controller("ResolutionController", ['$scope', '$http', '$filter', function($scope, $http) {
 
 	$scope.adding = false;
 	$scope.compatibilities = null;
@@ -111,9 +111,12 @@ morphBMC.controller("CompatibilityController", ['$scope', '$http', '$filter', fu
 		// if present yet
 		$scope.parameters = data.problem.parameters;
 
+
+
 		// after receiving problem id, load existing compatibilities
 		$http.get("/api/problems/" + window.PROBLEM_ID+ "/compatibilities").success(function(data) {
 			$scope.compatibilities = data.compatibilities;
+			console.log($scope)
 		});
 	});
 

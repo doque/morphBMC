@@ -1,11 +1,9 @@
-<div class="text-center" ng-show="rendering">
-	<img src="/assets/img/spinner.gif"/>
-</div>
+<ng-include src="'/assets/views/_spinner.html'"></ng-include>
 
 <div id="resolution" ng-show="!rendering">
 
 
-	<table ng-cloak ng-if="compatibilities !== null" id="compatibilities" class="table table-bordered" style="font-size: 0.8em" >
+	<table ng-cloak ng-if="compatibilities !== null" class="compatibilities table table-bordered">
 		<thead>
 			<tr>
 				<td class="empty" colspan="2" rowspan="2"></td>

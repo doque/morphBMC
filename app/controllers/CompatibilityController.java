@@ -62,18 +62,19 @@ public class CompatibilityController extends Controller {
 	}
 
 	/**
-	 * retrieve all existing compatibilities for a problem and serve them to client
+	 * retrieve all compatibilities for a problem that belong to the requesting client
 	 * @param problemId
 	 * @return
 	 */
 	public Result getCompatibilities(long problemId) {
 
+		String userId = session().get("userId");
 		// for each attribute, if attribute has no rating, insert default
 		// rating for it
 		Rating defaultRating = Rating.find.where().eq("name", "Rate")
 				.findUnique();
 		// add user id
-		insertInitialCompatibilities(problemId, defaultRating);
+		insertInitialCompatibilities(problemId, userId, defaultRating);
 
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("compatibilities", retrieveCompatibilities(problemId));
@@ -87,7 +88,7 @@ public class CompatibilityController extends Controller {
 	 * @param problemId
 	 * @param defaultRating
 	 */
-	private void insertInitialCompatibilities(long problemId,
+	private void insertInitialCompatibilities(long problemId, String userId,
 			Rating defaultRating) {
 		List<Parameter> params = Parameter.find.where()
 				.eq("problem_id", problemId).findList();
@@ -124,7 +125,7 @@ public class CompatibilityController extends Controller {
 			c.attr1 = Attribute.find.byId(pair.x);
 			c.attr2 = Attribute.find.byId(pair.y);
 			c.rating = defaultRating;
-			c.userId = session().get("userId");
+			c.userId = userId;
 			try {
 				c.save();
 				++count;

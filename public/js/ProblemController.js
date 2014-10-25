@@ -1,9 +1,7 @@
-morphBMC.controller("ProblemController", ['$scope', '$http', '$location', function($scope, $http, $location) {
+app.controller("ProblemController", ['$scope', '$http', '$location', function($scope, $http, $location) {
 
 	
 	$scope.problem = {};
-
-	console.log($scope.problem)
 
 	$scope.changeStage = function(stage) {
 
@@ -11,7 +9,6 @@ morphBMC.controller("ProblemController", ['$scope', '$http', '$location', functi
 
 		// POST to server, broadcast from there
 		if ($scope.problem.userId == window.USER_ID) {
-			console.log("setting stage to ", stage)
 			$http.post("/api/problems/"+window.PROBLEM_ID, {
 				stage: stage
 			});

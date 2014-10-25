@@ -1,4 +1,4 @@
-morphBMC.controller("ResultsController", ['$scope', '$http', function($scope, $http) {
+app.controller("ResultsController", ['$scope', '$http', function($scope, $http) {
 
 	$scope.parameters = [];
 	$scope.attributes = [];

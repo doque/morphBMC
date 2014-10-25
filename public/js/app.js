@@ -1,5 +1,5 @@
 // define my own module with required modules
-var morphBMC = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
+var app = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
 	function ($routeProvider, $httpProvider) {
 		// enable strict mode for JS parser
 		'use strict';
@@ -74,7 +74,7 @@ var morphBMC = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
 		link: function($scope, $element, $attr) {
 			if ($scope.$last === true) {
 				// manually grab the right scope here.
-				var _scope = angular.element($("#compatibility, #results")).scope();
+				var _scope = angular.element($(".content")).scope();
 				_scope.$eval($attr.onFinishRender);
 			}
 		}
