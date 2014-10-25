@@ -35,12 +35,21 @@ public class Problem extends Model {
 	public Stage stage;
 
 	public enum Stage {
-		Definition,
-		Refinement,
-		Compatibility,
-		ConflictResolution,
-		Exploration,
-		Results
+		DEFINITION,
+		REFINEMENT,
+		COMPATIBILITY,
+		RESOLUTION,
+		EXPLORATION,
+		RESULTS;
+		
+		/**
+		 * grabs an angular #anchor in lowercase and returns the enum for it
+		 * @param v - malformed anchor
+		 * @return Stage enum
+		 */
+		public static Stage getStage(String v) {
+			return Stage.valueOf(v.replace(" ", "").toUpperCase());
+		}
 	}
 
 	public static Finder<Long, Problem> find = new Finder<Long, Problem>(

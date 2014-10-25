@@ -1,5 +1,6 @@
 package controllers;
 
+import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -78,14 +79,22 @@ public class ProblemController extends Controller {
 	 * @param stage
 	 * @return not found if the problem doesnt exist, otherwise HTTP 200
 	 */
-	public static Result changeState(long id, Stage stage) {
+	public Result changeStage(long id) {
+		
+		String _stage = Form.form().bindFromRequest().get("stage");
+		
+		Stage stage = Stage.getStage(_stage);
+		
+		if (_stage == null) {
+			return badRequest();
+		}
 		
 		Problem p = Problem.find.byId(id);
-		// sanity check
 		if (p == null) {
 			return notFound();
 		}
-		if (p.userId != session().get("userId")) {
+		
+		if (!p.userId.equals(session().get("userId"))) {
 			return unauthorized();
 		}
 		

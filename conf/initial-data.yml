@@ -19,7 +19,7 @@ problems:
         userId:     212249140
         owner:      Dominique Busser
         name:       Urlaubsplanung
-        stage:      Definition
+        stage:      DEFINITION
         parameters:
           - !!models.Parameter
             userId: 212249140
