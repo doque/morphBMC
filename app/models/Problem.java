@@ -28,10 +28,19 @@ public class Problem extends Model {
 	@OrderBy("problem DESC")
 	public List<Parameter> parameters = new ArrayList<Parameter>();
 
-	public Stage currentStage;
+	/**
+	 * registers the current stage of a project. this will be updated
+	 * when the owner clicks one of the navigation links
+	 */
+	public Stage stage;
 
 	public enum Stage {
-		Definition, Compatibility
+		Definition,
+		Refinement,
+		Compatibility,
+		ConflictResolution,
+		Exploration,
+		Results
 	}
 
 	public static Finder<Long, Problem> find = new Finder<Long, Problem>(

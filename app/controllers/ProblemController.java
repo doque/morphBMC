@@ -7,6 +7,7 @@ import play.mvc.Result;
 import java.util.Map;
 
 import models.Problem;
+import models.Problem.Stage;
 
 import com.google.common.collect.Maps;
 
@@ -76,12 +77,22 @@ public class ProblemController extends Controller {
 	 * @param problemId
 	 * @param stage
 	 * @return not found if the problem doesnt exist, otherwise HTTP 200
-	 * 
-	 *         public static Result changeState(long problemId, Stage stage) {
-	 *         Long id = Long.parseLong(session("problemId"));
-	 * 
-	 *         // TODO auth etc. Problem p = Problem.find.byId(id); // sanity
-	 *         check if (p == null) { return notFound(); } p.currentStage =
-	 *         stage; p.save(); return ok(); }
 	 */
+	public static Result changeState(long id, Stage stage) {
+		
+		Problem p = Problem.find.byId(id);
+		// sanity check
+		if (p == null) {
+			return notFound();
+		}
+		if (p.userId != session().get("userId")) {
+			return unauthorized();
+		}
+		
+		p.stage = stage;
+		p.save();
+		
+		return ok();
+	}
+
 }

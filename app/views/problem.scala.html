@@ -32,23 +32,28 @@
 
 			<nav class="row"> 
 				<ul class="nav nav-tabs">
-					<li ng-class="{ 'active': currentPath() === '/definition' }">
-						<a ng-href="#/definition">Definition</a>
+					<li ng-class="{ 'active': problem.stage === '/definition' }">
+						<a href="#/definition" ng-click="changeStage('definition')">Definition</a>
 					</li>
-					<li ng-class="{ 'active': currentPath() === '/refinement' }">
-						<a ng-href="#/refinement">Refinement</a>
+
+					<li ng-class="{ 'active': problem.stage === '/refinement' }">
+						<a href="#/refinement" ng-click="changeStage('refinement')">Refinement</a>
 					</li>
-					<li ng-class="{ 'active': currentPath() === '/compatibility' }">
-						<a ng-href="#/compatibility">Compatibility</a>
+
+					<li ng-class="{ 'active': problem.stage === '/compatibility' }">
+						<a href="#/compatibility" ng-click="changeStage('compatibility')">Compatibility</a>
 					</li>
-					<li ng-class="{ 'active': currentPath() === '/resolution' }">
-						<a ng-href="#/resolution">Conflict Resolution</a>
+
+					<li ng-class="{ 'active': problem.stage === '/resolution' }">
+						<a href="#/resolution" ng-click="changeStage('resolution')">Conflict Resolution</a>
 					</li>
-					<li ng-if="true" ng-class="{ 'active': currentPath() === '/exploration' }">
-						<a ng-href="#/exploration">Exploration</a>
+
+					<li ng-if="true" ng-class="{ 'active': problem.stage === '/exploration' }">
+						<a href="#/exploration" ng-click="changeStage('exploration')">Exploration</a>
 					</li>
-					<li ng-if="true" ng-class="{ 'active': currentPath() === '/results' }">
-						<a ng-href="#/results">Results</a>
+
+					<li ng-if="true" ng-class="{ 'active': problem.stage === '/results' }">
+						<a href="#/results" ng-click="changeStage('results')">Results</a>
 					</li>
 				</ul>
 			</nav>

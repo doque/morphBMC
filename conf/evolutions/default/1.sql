@@ -33,8 +33,8 @@ create table problem (
   user_id                   varchar(255),
   owner                     varchar(255),
   name                      varchar(255),
-  current_stage             integer,
-  constraint ck_problem_current_stage check (current_stage in (0,1)),
+  stage                     integer,
+  constraint ck_problem_stage check (stage in (0,1,2,3,4,5)),
   constraint pk_problem primary key (id))
 ;
 
