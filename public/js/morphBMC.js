@@ -10,10 +10,22 @@ var morphBMC = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
 			controller: 'DefinitionController',
 		});
 
+		// Route for Refinement
+		$routeProvider.when('/refinement', {
+			templateUrl: '/assets/views/refinement.html',
+			controller: 'RefinementController',
+		});
+
 		// Compatibility
 		$routeProvider.when('/compatibility', {
 			templateUrl: '/assets/views/compatibility.html',
 			controller: 'CompatibilityController'
+		});
+
+		// Route for Conflict Resolution
+		$routeProvider.when('/resolution', {
+			templateUrl: '/assets/views/resolution.html',
+			controller: 'ResolutionController',
 		});
 
 		// Exploration
@@ -39,6 +51,9 @@ var morphBMC = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
 		// dependency injection
 		$inject: ['$routeProvider', '$httpProvider']
 	}
+/**
+ * directive to set focus on an element based on a condition
+ */
 ).directive('autofocus', function($timeout) {
 	return {
 		restrict: "A",
@@ -50,6 +65,9 @@ var morphBMC = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
 			});
 		}
 	}
+/**
+ * directive to be fired after an ng-repeat is finished rendering
+ */
 }).directive('onFinishRender', function($timeout) {
 	return {
 		restrict: "A",
@@ -61,6 +79,9 @@ var morphBMC = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
 			}
 		}
 	}
+/**
+ * more elegant way to instantiate Bootstrap's tooltips
+ */
 }).directive('tooltip', function(){
     return {
         link: function(scope, element, attrs){
@@ -73,6 +94,9 @@ var morphBMC = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
             });
         }
     };
+/**
+ * catches RETURN keypress and evaluates attribute
+ */
 }).directive('ngEnter', function () {
     return function (scope, element, attrs) {
         element.bind("keydown keypress", function (event) {
@@ -82,9 +106,20 @@ var morphBMC = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
                 });
                 event.preventDefault();
             }
-            if (event.which === 27) {
-            	element[0].blur();
+        });
+    };
+/**
+ * catches ESCAPE keypress and evaluates attribute
+ */
+}).directive('ngEsc', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 27) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.ngEnter);
+                });
+                event.preventDefault();
             }
         });
     };
-});;
+});

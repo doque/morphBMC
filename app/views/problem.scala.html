@@ -3,14 +3,16 @@
 <html lang="en" ng-app="morphBMC" ng-controller="ProblemController">
 	<head>
 		<meta charset="UTF-8">
-		<title>{{ problem.name }}</title>
+		<title ng-bind="problem.name">morphBMC</title>
 		<link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">
 		<link rel="stylesheet" href="/assets/app/bower_components/bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/assets/app/bower_components/angular-tablesort/tablesort.css">
 
 		<!-- custom stylesheets per view -->
 		<link rel="stylesheet" href="/assets/css/definition.css">
+		<link rel="stylesheet" href="/assets/css/refinement.css">
 		<link rel="stylesheet" href="/assets/css/compatibility.css">
+		<link rel="stylesheet" href="/assets/css/resolution.css">
 		<link rel="stylesheet" href="/assets/css/exploration.css">
 
 		<script>
@@ -33,13 +35,19 @@
 					<li ng-class="{ 'active': currentPath() === '/definition' }">
 						<a ng-href="#/definition">Definition</a>
 					</li>
+					<li ng-class="{ 'active': currentPath() === '/refinement' }">
+						<a ng-href="#/refinement">Refinement</a>
+					</li>
 					<li ng-class="{ 'active': currentPath() === '/compatibility' }">
 						<a ng-href="#/compatibility">Compatibility</a>
 					</li>
-					<li ng-class="{ 'active': currentPath() === '/exploration' }">
+					<li ng-class="{ 'active': currentPath() === '/resolution' }">
+						<a ng-href="#/resolution">Conflict Resolution</a>
+					</li>
+					<li ng-if="true" ng-class="{ 'active': currentPath() === '/exploration' }">
 						<a ng-href="#/exploration">Exploration</a>
 					</li>
-					<li ng-class="{ 'active': currentPath() === '/results' }">
+					<li ng-if="true" ng-class="{ 'active': currentPath() === '/results' }">
 						<a ng-href="#/results">Results</a>
 					</li>
 				</ul>
@@ -61,7 +69,9 @@
 	<script src="/assets/js/ProblemController.js"></script>
 
 	<script src="/assets/js/DefinitionController.js"></script>
+	<script src="/assets/js/RefinementController.js"></script>
 	<script src="/assets/js/CompatibilityController.js"></script>
+	<script src="/assets/js/ResolutionController.js"></script>
 	<script src="/assets/js/ExplorationController.js"></script>
 	<script src="/assets/js/ResultsController.js"></script>
 	<script src="/assets/js/SocketService.js"></script>

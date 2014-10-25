@@ -1,24 +1,24 @@
-
-#compatibilities {
+.compatibilities {
 	width: auto;
 	border: 0;
+	font-size: 0.8em;
 	margin-top: 120px;
 }
-#compatibilities thead {
+.compatibilities thead {
 	border: 0;
 }
-#compatibilities td.empty {
+.compatibilities td.empty {
 	border: 0;
 }
-#compatibilities td {
+.compatibilities td {
 	white-space: nowrap;
 	text-align: center;
 }
-#compatibilities thead td[colspan]:not([rowspan]),
-#compatibilities tbody td[rowspan]:not(.active) {
+.compatibilities thead td[colspan]:not([rowspan]),
+.compatibilities tbody td[rowspan]:not(.active) {
 	background: #d9edf7; font-weight: bold; vertical-align: middle;
 }
-#compatibilities thead td:not([colspan]), #compatibilities td.warning {
+.compatibilities thead td:not([colspan]), .compatibilities td.warning {
 	background: #fcf8e3; vertical-align: middle;
 }
 td.cell {
