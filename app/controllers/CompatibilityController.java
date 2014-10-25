@@ -25,6 +25,7 @@ import models.Rating;
 
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.SqlRow;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 
@@ -34,13 +35,16 @@ public class CompatibilityController extends Controller {
 	 * DI
 	 */
 	private SocketServiceInterface socketService;
-	@Inject	public CompatibilityController(SocketServiceInterface socketService) {
+
+	@Inject
+	public CompatibilityController(SocketServiceInterface socketService) {
 		System.out.println("not injecting anything");
 		this.socketService = checkNotNull(socketService);
 	}
-	
+
 	/**
 	 * store new compatibility for a pair of attributes and rating
+	 * 
 	 * @return
 	 */
 	public Result addCompatibility(long problemId) {
@@ -57,34 +61,96 @@ public class CompatibilityController extends Controller {
 		}
 
 		Map<String, Object> result = Maps.newHashMap();
-		result.put("compatibilities", retrieveCompatibilities(problemId));
+		result.put("compatibilities", getAllCompatibilities(problemId));
 		return ok(Json.toJson(result));
 	}
 
 	/**
-	 * retrieve all compatibilities for a problem that belong to the requesting client
+	 * retrieve all compatibilities for a problem that belong to the requesting
+	 * client
+	 * 
 	 * @param problemId
 	 * @return
 	 */
 	public Result getCompatibilities(long problemId) {
 
 		String userId = session().get("userId");
-		// for each attribute, if attribute has no rating, insert default
-		// rating for it
-		Rating defaultRating = Rating.find.where().eq("name", "Rate")
-				.findUnique();
-		// add user id
+		/*
+		 * if this is the first time user is in Compatibility step, no
+		 * compatibilities will be present yet. In this case, they will be
+		 * prefilled
+		 */
+		Rating defaultRating = Rating.find.where().eq("value", 0).findUnique();
 		insertInitialCompatibilities(problemId, userId, defaultRating);
 
+		// now we're ready to read compatibilities
+		List<Compatibility> compatibilities = Lists.newArrayList();
+
+		// are ALL compatibilities requested, or only for the requesting user?
+		String all = Form.form().bindFromRequest().get("all");
+
+		// yes, serve ALL
+		if (all != null) {
+			compatibilities = getAllCompatibilities(problemId);
+			// no, limit by userId
+		} else {
+			compatibilities = getUserCompatibilities(problemId, userId);
+		}
+
 		Map<String, Object> result = Maps.newHashMap();
-		result.put("compatibilities", retrieveCompatibilities(problemId));
+		result.put("compatibilities", compatibilities);
 		return ok(Json.toJson(result));
 
 	}
 
+	protected List<Compatibility> getUserCompatibilities(long problemId,
+			String userId) {
+		// filter compatibilities by user Id
+		List<Compatibility> allCompatibilities = getAllCompatibilities(problemId);
+		List<Compatibility> userCompatibilities = Lists.newArrayList();
+
+		for (Compatibility c : allCompatibilities) {
+			if (c.userId.equals(userId)) {
+				userCompatibilities.add(c);
+			}
+		}
+
+		return userCompatibilities;
+	}
+
 	/**
-	 * inserts an initial rating of 0 - "Rate" for each possible
-	 * combination of attributes for a specific problem
+	 * read all existing compatibilities from
+	 * 
+	 * @param problemId
+	 * @return
+	 */
+	protected List<Compatibility> getAllCompatibilities(long problemId) {
+		List<SqlRow> rows = Ebean
+				.createSqlQuery(
+						"SELECT c.id FROM compatibility c"
+								+ " JOIN attribute a ON c.attr1_id = a.id"
+								+ " JOIN attribute a2 ON c.attr2_id = a2.id"
+								+ " JOIN PARAMETER p ON a.parameter_id = p.id"
+								+ " JOIN PARAMETER p2 ON a2.parameter_id = p2.id"
+								+ " JOIN rating r ON c.rating_id = r.id"
+								+ " WHERE p.problem_id = :problem_id OR p2.problem_id = :problem_id")
+				.setParameter("problem_id", problemId).findList();
+
+		List<Compatibility> compatibilities = new ArrayList<Compatibility>();
+
+		// manually build return objects, because Ebean.find() doesn't join
+		// multiple tables.
+		for (SqlRow row : rows) {
+			compatibilities.add(Compatibility.find.byId(row.getLong("id")));
+		}
+
+		return compatibilities;
+	}
+
+	/**
+	 * inserts an initial rating of 0 - "Rate" for each possible combination of
+	 * attributes for a specific problem
+	 * 
 	 * @param problemId
 	 * @param defaultRating
 	 */
@@ -109,7 +175,7 @@ public class CompatibilityController extends Controller {
 							}
 						}
 						// skip creation of this pair if it either exists
-						// or if both attribtues share the same parameter
+						// or if both attributes share the same parameter
 						if (existing || p.id == p2.id) {
 							continue;
 						}
@@ -130,41 +196,14 @@ public class CompatibilityController extends Controller {
 				c.save();
 				++count;
 			} catch (PersistenceException e) {
-				Logger.info("ignoring duplicate value");
+				Logger.info("compatibility" + c.toString()
+						+ " already exists, skipping");
 			}
 		}
 		Logger.info("Total number of new configurations: " + count);
 	}
 
-	/**
-	 * read all existing compatibilities from 
-	 * @param problemId
-	 * @return
-	 */
-	private List<Compatibility> retrieveCompatibilities(long problemId) {
-		List<SqlRow> rows = Ebean
-				.createSqlQuery(
-						"SELECT c.id FROM compatibility c"
-								+ " JOIN attribute a ON c.attr1_id = a.id"
-								+ " JOIN attribute a2 ON c.attr2_id = a2.id"
-								+ " JOIN PARAMETER p ON a.parameter_id = p.id"
-								+ " JOIN PARAMETER p2 ON a2.parameter_id = p2.id"
-								+ " JOIN rating r ON c.rating_id = r.id"
-								+ " WHERE p.problem_id = :problem_id OR p2.problem_id = :problem_id")
-				.setParameter("problem_id", problemId).findList();
-
-		List<Compatibility> compatibilities = new ArrayList<Compatibility>();
-
-		// manually build return objects, because Ebean.find() doesn't join
-		// multiple tables.
-		for (SqlRow row : rows) {
-			compatibilities.add(Compatibility.find.byId(row.getLong("id")));
-		}
-
-		return compatibilities;
-	}
-
-	public class Pair {
+	private class Pair {
 		public long x;
 		public long y;
 
