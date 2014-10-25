@@ -1,5 +1,4 @@
-app.controller("CompatibilityService", ['$scope', '$http', function($scope, $http) {
-
+app.factory('CompatibilityService', ['$http', function($http) {
 
 	/**
 	 * provides hover effect for parent tds
@@ -69,6 +68,6 @@ app.controller("CompatibilityService", ['$scope', '$http', function($scope, $htt
 		getOffsets: getOffsets,
 		getAllAttributes: getAllAttributes,
 		getParameterByAttribute: getParameterByAttribute
-	}
+	};
 
 }]);

@@ -29,7 +29,10 @@
 		<tbody>
 			<!-- skip first parameter here -->
 
-			<tr ng-repeat="y in getAllAttributes()" ng-if="$index >= getOffsets()[1]" on-finish-render="rendering=false;">
+			<tr
+				ng-repeat="y in getAllAttributes()"
+				ng-if="$index >= getOffsets()[1]"
+				on-finish-render="rendering=false;">
 			
 				<!-- only show this td if the $index is a "new" parameter -->
 				<td ng-if="getOffsets().indexOf($index) >= 0"
@@ -48,7 +51,7 @@
 					ng-init="paramX = getParameterByAttribute(x.id);
 							paramY = getParameterByAttribute(y.id);
 							compatibilities = getCompatibilityRatings(x.id, y.id);
-							redundant = paramX.id >= paramY.id"
+							redundant = paramX.id >= paramY.id;"
 					ng-if="$index < getOffsets()[getOffsets().length - 2]"
 					ng-class="{
 								'success': compatibility.rating.value === 9,
@@ -61,7 +64,7 @@
 					ng-mouseleave="hover(0,0); hovered=false"
 					class="cell"
 					>
-
+					
 					<!-- redundant means that this combination of attributes WILL be rendered in the following rows -->
 					<div
 						ng-repeat="compatibility in compatibilities"
@@ -72,7 +75,7 @@
 						data-original-title="{{ paramX.name }}: {{ x.name }}<br/>{{ paramY.name }} : {{ y.name }}"
 						ng-init="rating=false"
 						ng-click="rating=true"
-						ng-if="!redundant">
+						ng-if="!redundant &amp;&amp; compatibilities.length !== 1">
 
 						<div class="rating" ng-show="rating == false">
 							{{ compatibility.rating.name }}
