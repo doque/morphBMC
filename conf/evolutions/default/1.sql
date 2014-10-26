@@ -17,6 +17,7 @@ create table compatibility (
   attr2_id                  bigint,
   user_id                   varchar(255),
   rating_id                 bigint,
+  override_comment          varchar(255),
   constraint pk_compatibility primary key (id))
 ;
 

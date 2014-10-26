@@ -44,15 +44,28 @@ public class CompatibilityController extends Controller {
 
 	/**
 	 * store new compatibility for a pair of attributes and rating
-	 * 
-	 * @return
 	 */
 	public Result addCompatibility(long problemId) {
-
+		
 		Compatibility c = Form.form(Compatibility.class).bindFromRequest()
 				.get();
+		
+		// see if this is an override request
+		String override = Form.form().bindFromRequest().get("override");
 
-		c.userId = session("userId");
+		if (override != null) {
+			// delete all other compatibilities that refer to the attributes
+			// of the this overriding compatibility
+			List<Compatibility> compats = getAllCompatibilities(problemId);
+			for (Compatibility compatibility : compats) {
+				if (compatibility.sameAttributes(c)) {
+					compatibility.delete();
+				}
+			}
+			
+		}
+
+		c.userId = session().get("userId");
 		// update existing
 		if (c.id != 0) {
 			c.update();
@@ -70,7 +83,6 @@ public class CompatibilityController extends Controller {
 	 * client
 	 * 
 	 * @param problemId
-	 * @return
 	 */
 	public Result getCompatibilities(long problemId) {
 
@@ -103,6 +115,12 @@ public class CompatibilityController extends Controller {
 
 	}
 
+	/**
+	 * retrieves a user's existing compatibilities for a problem
+	 * @param problemId
+	 * @param userId
+	 * @return a list of the user's compatibilities
+	 */
 	protected List<Compatibility> getUserCompatibilities(long problemId,
 			String userId) {
 		// filter compatibilities by user Id
@@ -119,10 +137,9 @@ public class CompatibilityController extends Controller {
 	}
 
 	/**
-	 * read all existing compatibilities from
-	 * 
+	 * retrieves all existing compatibilities for a problem
 	 * @param problemId
-	 * @return
+	 * @return a list of all compatibilities
 	 */
 	protected List<Compatibility> getAllCompatibilities(long problemId) {
 		List<SqlRow> rows = Ebean
@@ -163,7 +180,7 @@ public class CompatibilityController extends Controller {
 			for (Attribute a : p.attributes) {
 				for (Parameter p2 : params) {
 					for (Attribute a2 : p2.attributes) {
-						// create nifty pair to avoid duplicates
+						// create pair to avoid duplicates
 						long x = a.id > a2.id ? a2.id : a.id;
 						long y = x == a.id ? a2.id : a.id;
 						// let's check if this combination exists yet

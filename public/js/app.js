@@ -84,8 +84,8 @@ var app = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
  */
 }).directive('tooltip', function(){
     return {
-        link: function(scope, element, attrs){
-            $(element).hover(function(){
+        link: function(scope, element, attrs) {
+            $(element).hover(function() {
                 // on mouseenter
                 $(element).tooltip('show');
             }, function(){
@@ -122,4 +122,19 @@ var app = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
             }
         });
     };
+/*
+ * creates a popover for a designated element
+ */
+}).directive('popover', function(){
+    return {
+    	link: function(scope, element, attrs) {
+	    	// define popover for this element
+	    	$(element).popover({
+	    		html: true,
+	    		placement: "top",
+	    		// grab popover content from the next element
+	    		content: $(element).siblings(".pop-content").html()
+	    	});
+	    }
+	}
 });

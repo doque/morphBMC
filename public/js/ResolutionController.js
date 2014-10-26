@@ -3,20 +3,73 @@ app.controller("ResolutionController", ['$scope', '$http', '$filter', function($
 	$scope.adding = false;
 	$scope.compatibilities = null;
 
+	$scope.conflicts = [];
+	$scope.resolving = false;
+
 	$scope.hoverX = 0;
 	$scope.hoverY = 0;
 
 	$scope.rendering = true;
 
+
+	$scope.showPopover = function(link, attr1, attr2) {
+		//var el = $('#'+attr1+'_'+attr2);
+		$(link).popover({
+			html: true,
+			content: "fff"
+		}).popover('show')
+	}
+
+
+	$scope.getConflicts = function(attr1, attr2) {
+		var conflicts = [];
+		angular.forEach($scope.conflicts, function(c) {
+			if ((c.attr1.id === attr1 && c.attr2.id === attr2) ||
+				(c.attr1.id === attr2 && c.attr2.id === attr1)) {
+				conflicts.push(c);
+			}
+		});
+
+		return conflicts;
+	};
+
+
+	/**
+	 * calculate all conflicting compatibilities
+	 */
+	function calculateConflicts(compatibilities) {
+		var conflicts = [];
+		for (var i=0; i<compatibilities.length; i++) {
+			var c1 = compatibilities[i];
+			for (var j=0; j<compatibilities.length; j++) {
+				var c2 = compatibilities[j];
+				if (c1.id === c2.id || c1.rating.value === c2.rating.value) {
+					continue;
+				}
+
+				if ((c1.attr1.id === c2.attr1.id && c1.attr2.id === c2.attr2.id) ||
+					(c1.attr1.id === c2.attr2.id && c1.attr2.id === c2.attr1.id)) {
+					// avoid duplicates, only push one conflict.
+					conflicts.push(c1);
+				}
+
+
+			}
+		}
+
+		return conflicts;
+	}
+
 	/**
 	 * saves a compatibility
 	 * @param {compatiblity) the compatibility object
 	 */
-	$scope.addCompatibility = function(compatibility) {
+	$scope.overrideCompatibilities = function(compatibility) {
 
-		$http.post("/api/problems/" + window.PROBLEM_ID +"/compatibilities", compatibility).success(function(data) {
+		$http.post("/api/problems/" + window.PROBLEM_ID +"/compatibilities?override=yes", compatibility).success(function(data) {
 			// overwrite on success
 			$scope.compatibilities = data.compatibilities;
+			$scope.rating=false;
 		});
 
 	};
@@ -111,10 +164,13 @@ app.controller("ResolutionController", ['$scope', '$http', '$filter', function($
 		// after receiving problem id, load existing compatibilities
 		$http.get("/api/problems/" + window.PROBLEM_ID+ "/compatibilities?all=yes").success(function(data) {
 			$scope.compatibilities = data.compatibilities;
+			$scope.conflicts = calculateConflicts($scope.compatibilities);
 		});
 	});
 
 	$http.get("/api/ratings").success(function(data) {
+		// skip the first rating, which is "RATE" and change it to Force
+		data.ratings[0].name = "Force";
 		$scope.ratings = data.ratings;
 	});
 

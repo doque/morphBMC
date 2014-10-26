@@ -27,10 +27,23 @@ public class Compatibility extends Model {
 
 	public static Finder<Long, Compatibility> find = new Finder<Long, Compatibility>(
 			Long.class, Compatibility.class);
-
+	
+	public String overrideComment = "";
+	
 	@Override
 	public String toString() {
-		return "ID :" + id + ", Rating: " + rating.value;
+		return "ID :" + id + ", Rating: " + rating.value + ", Attr1: "
+				+ attr1.toString() + ", Attr2: " + attr2.toString();
+	}
+	
+	/**
+	 * compares two compatibilities to see if the pair of attributes is equal
+	 * @param c
+	 * @return
+	 */
+	public boolean sameAttributes(Compatibility c) {
+		return (c.attr1.id == attr1.id && c.attr2.id == attr2.id)
+				|| (c.attr1.id == attr2.id && c.attr2.id == attr1.id);
 	}
 
 }

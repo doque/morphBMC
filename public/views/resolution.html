@@ -2,6 +2,13 @@
 
 <div id="resolution" ng-show="!rendering">
 
+	<div
+		class="alert"
+		ng-class="{
+			'alert-success': conflicts.length === 0,
+			'alert-warning': conflicts.length > 0
+		}"
+	>{{ conflicts.length }} conflicts remaining</div>
 
 	<table ng-cloak ng-if="compatibilities !== null" class="compatibilities table table-bordered">
 		<thead>
@@ -50,55 +57,63 @@
 				<td
 					ng-init="paramX = getParameterByAttribute(x.id);
 							paramY = getParameterByAttribute(y.id);
-							compatibilities = getCompatibilityRatings(x.id, y.id);
 							redundant = paramX.id >= paramY.id;"
 					ng-if="$index < getOffsets()[getOffsets().length - 2]"
-					ng-class="{
-								'success': compatibility.rating.value === 9,
-								'warning': compatibility.rating.value === 4,
-								'danger': compatibility.rating.value === 1,
-								'disabled' : redundant
-							}"
 					ng-repeat="x in getAllAttributes()"
 					ng-mouseenter="hover(x.id, y.id, redundant); hovered=true;"	
 					ng-mouseleave="hover(0,0); hovered=false"
 					class="cell"
+					ng-class="{
+						'success': compatibility.rating.value === 9,
+						'warning': compatibility.rating.value === 4,
+						'danger': compatibility.rating.value === 1,
+						'disabled' : redundant
+					}"
 					>
 					
 					<!-- redundant means that this combination of attributes WILL be rendered in the following rows -->
+					
 					<div
-						ng-repeat="compatibility in compatibilities"
-						tooltip
-						data-toggle="tooltip"
-						data-placement="top"
-						data-html="true"
-						data-original-title="{{ paramX.name }}: {{ x.name }}<br/>{{ paramY.name }} : {{ y.name }}"
-						ng-init="rating=false"
-						ng-click="rating=true"
-						ng-if="!redundant &amp;&amp; compatibilities.length !== 1">
+						ng-if="!redundant &amp;&amp; conflicts.length > 1"
+						ng-init="conflicts = getConflicts(x.id, y.id)"
+						>
+						
+						
 
-						<div class="rating" ng-show="rating == false">
-							{{ compatibility.rating.name }}
+						<a popover href="javascript:;">
+							conflict
+						</a>
+
+						<div ng-hide="true" class="pop-content"><b>foo</b></div>
+
+						<!-- 
+
+						
+						<div ng-hide="true" class="popover-content" id="{{x.id}}_{{y.id}}">
+							<i>gay</i> <b>shit</b>
+						</div> -->
+
+						<!-- <div>There are {{ conflicts.length }} conflicting ratings for the compatibility of
+							<strong>{{ paramX.name }}</strong> and <strong>{{ paramY.name }}</strong>:
 						</div>
+ -->
 
-						<div ng-show="rating == true" class="adding-compatibility">
-
+						<div ng-show="false" class="adding-compatibility">
+							<!-- override -->
 							<input type="hidden"
 									ng-model="compatibility.attr1"
 									ng-init="compatibility.attr1 = x">
 							<input type="hidden"
 									ng-model="compatibility.attr2"
 									ng-init="compatibility.attr2 = y">
-							<input type="hidden"
-									ng-model="compatibility.id"
-									ng-init="compatibility.id = compatibility.id"/>
 									
 							<select ng-blur="rating=false;"
-									ng-change="addCompatibility(compatibility); rating=false;"
+									ng-change="overrideCompatibilities(compatibility);"
 									ng-model="compatibility.rating"
 									ng-options="rating.name for rating in ratings track by rating.id">
 							</select>
 						</div>
+						
 					</div>
 				</td>
 			</tr>

@@ -23,6 +23,11 @@ public class Attribute extends Model {
 	@JsonIgnore
 	public Parameter parameter;
 
+	@Override
+	
+	public String toString() {
+		return "[" + id + "/" + name + "]";
+	}
 	public static Finder<Long, Attribute> find = new Finder<Long, Attribute>(
 			Long.class, Attribute.class);
 

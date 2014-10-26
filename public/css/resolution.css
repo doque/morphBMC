@@ -1,0 +1,12 @@
+#resolution .compatibilities {
+	margin-top: 140px;
+}
+#resolution .rating.danger {
+	background-color: #f2dede;
+}
+#resolution .rating.success {
+	background-color: #dff0d8;
+}
+#resolution .rating.warning {
+	background-color: #fcf8e3;
+}
