@@ -125,16 +125,39 @@ var app = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
 /*
  * creates a popover for a designated element
  */
-}).directive('popover', function(){
+}).directive('popover', function($compile, $timeout){
     return {
+    	scope: true,
     	link: function(scope, element, attrs) {
-	    	// define popover for this element
-	    	$(element).popover({
-	    		html: true,
-	    		placement: "top",
-	    		// grab popover content from the next element
-	    		content: $(element).siblings(".pop-content").html()
-	    	});
+
+    		// I dont even know...
+	    	$timeout(function() {
+	    		scope.$apply(function() {
+	    			// grab template
+		    		var tpl = $(element).find('.popover-template')
+
+		    		// grab popover parts of template
+					var template = {
+						title: tpl.find('.template-title').html(),
+						content: tpl.find('.template-content').html()
+					};
+
+					// render template with angular
+					var content = $compile(template.content)(scope);
+					var title = $compile(template.title)(scope); 
+
+					// bind popover
+			    	$(element).popover({
+			    		html: true,
+			    		placement: "right",
+			    		content: content,
+			    		title: title
+			    	});
+		    	});
+
+		    }, 0);
+
 	    }
-	}
+    	
+    };
 });

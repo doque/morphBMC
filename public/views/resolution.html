@@ -74,29 +74,37 @@
 					<!-- redundant means that this combination of attributes WILL be rendered in the following rows -->
 					
 					<div
-						ng-if="!redundant &amp;&amp; conflicts.length > 1"
+						ng-if="!redundant &amp;&amp; getConflicts(x.id, y.id).length > 1"
 						ng-init="conflicts = getConflicts(x.id, y.id)"
+						popover
 						>
+							{{ conflicts.length }} conflicts
 						
-						
 
-						<a popover href="javascript:;">
-							conflict
-						</a>
+						<!-- everything inside this container will show up in the popover but stay hidden otherwise -->
+						<div ng-hide="true" class="popover-template">
+						<!--
+							http://stage.jquery.com/upgrade-guide/1.9/#jquery-htmlstring-versus-jquery-selectorstring
+		 					Starting with a new line is not considered HTML by jQuery, so we have to add additional
+		 					elements
+		 					-->
 
-						<div ng-hide="true" class="pop-content"><b>foo</b></div>
+							<div class="template-title">
+								<strong>{{ x.name }} and {{ y.name }}</strong>
+							</div>
 
-						<!-- 
+							<div class="template-content">
+								<!-- do NOT remove this div tag -->
+								<div>
+									<div ng-repeat="c in conflicts">
+									
+										<span ng-click="test()">{{ c.rating.name }}</span>
+									</div>
+								</div>
+							</div>
 
-						
-						<div ng-hide="true" class="popover-content" id="{{x.id}}_{{y.id}}">
-							<i>gay</i> <b>shit</b>
-						</div> -->
-
-						<!-- <div>There are {{ conflicts.length }} conflicting ratings for the compatibility of
-							<strong>{{ paramX.name }}</strong> and <strong>{{ paramY.name }}</strong>:
 						</div>
- -->
+
 
 						<div ng-show="false" class="adding-compatibility">
 							<!-- override -->

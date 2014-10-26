@@ -1,4 +1,4 @@
-app.controller("ResolutionController", ['$scope', '$http', '$filter', function($scope, $http) {
+app.controller("ResolutionController", ['$scope', '$http', function($scope, $http) {
 
 	$scope.adding = false;
 	$scope.compatibilities = null;
@@ -12,14 +12,9 @@ app.controller("ResolutionController", ['$scope', '$http', '$filter', function($
 	$scope.rendering = true;
 
 
-	$scope.showPopover = function(link, attr1, attr2) {
-		//var el = $('#'+attr1+'_'+attr2);
-		$(link).popover({
-			html: true,
-			content: "fff"
-		}).popover('show')
+	$scope.test = function() {
+		console.log("test");
 	}
-
 
 	$scope.getConflicts = function(attr1, attr2) {
 		var conflicts = [];
@@ -49,7 +44,8 @@ app.controller("ResolutionController", ['$scope', '$http', '$filter', function($
 
 				if ((c1.attr1.id === c2.attr1.id && c1.attr2.id === c2.attr2.id) ||
 					(c1.attr1.id === c2.attr2.id && c1.attr2.id === c2.attr1.id)) {
-					// avoid duplicates, only push one conflict.
+					// avoid duplicates, only push one conflict
+					
 					conflicts.push(c1);
 				}
 
