@@ -74,19 +74,20 @@
 					<!-- redundant means that this combination of attributes WILL be rendered in the following rows -->
 					
 					<div
-						ng-if="!redundant &amp;&amp; getConflicts(x.id, y.id).length > 1"
-						ng-init="conflicts = getConflicts(x.id, y.id)"
+						ng-init="conflicts = getConflicts(x.id, y.id);"
+						ng-show="!redundant &amp;&amp; conflicts.length > 0"
 						popover
 						>
-							{{ conflicts.length }} conflicts
+						
+						{{ conflicts.length }} conflicts
 						
 
 						<!-- everything inside this container will show up in the popover but stay hidden otherwise -->
 						<div ng-hide="true" class="popover-template">
-						<!--
-							http://stage.jquery.com/upgrade-guide/1.9/#jquery-htmlstring-versus-jquery-selectorstring
-		 					Starting with a new line is not considered HTML by jQuery, so we have to add additional
-		 					elements
+							<!--
+								http://stage.jquery.com/upgrade-guide/1.9/#jquery-htmlstring-versus-jquery-selectorstring
+			 					Starting with a new line is not considered HTML by jQuery, so we have to add additional
+			 					elements
 		 					-->
 
 							<div class="template-title">
@@ -96,9 +97,8 @@
 							<div class="template-content">
 								<!-- do NOT remove this div tag -->
 								<div>
-									<div ng-repeat="c in conflicts">
-									
-										<span ng-click="test()">{{ c.rating.name }}</span>
+									<div ng-repeat="f in [1,2,3] track by $index">
+										item {{ f }}, index {{ $index }}
 									</div>
 								</div>
 							</div>

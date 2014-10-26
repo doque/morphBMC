@@ -12,8 +12,8 @@ app.controller("ResolutionController", ['$scope', '$http', function($scope, $htt
 	$scope.rendering = true;
 
 
-	$scope.test = function() {
-		console.log("test");
+	$scope.test = function(msg) {
+		console.log(msg);
 	}
 
 	$scope.getConflicts = function(attr1, attr2) {
