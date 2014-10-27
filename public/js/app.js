@@ -180,7 +180,7 @@ var app = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
 					el.css({
 						position: "absolute",
                         left: $(element).parent().position().left + 55,
-                        top: $(element).parent().position().top - height/2 - 18,
+                        top: $(element).parent().position().top - height/2 - 25,
                         container: "body"
 					});
 				});
