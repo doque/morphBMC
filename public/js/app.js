@@ -125,37 +125,66 @@ var app = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
 /*
  * creates a popover for a designated element
  */
-}).directive('popover', function($compile, $timeout){
+}).directive('popover', ['$compile', function($compile, $timeout) {
+
+	// TODO inject some form if ID for this popover
+	var template = '<div class="popover top">'+
+				      '<div class="arrow"></div>'+
+				      '<h3 class="popover-title">{{ x.name }} and {{ y.name }}</h3>'+
+				      '<div class="popover-content">'+
+				      	'{{ conflicts.length }} were found:'+
+				        '<div ng-repeat="c in conflicts">'+
+				        	'<pre>{{c}}</pre>'+
+				        '</div>'+
+				      '</div>'+
+				    '</div>';
+
     return {
+
     	link: function(scope, element, attrs) {
+    		
+    		element.on("click", function(e) {
 
-	    	$timeout(function() {
+				scope.$apply(function() {
+					var tpl = $compile(template)(scope);
+					// grab by ID
+					// show element here
+					$(tpl).show();
+					console.log(tpl);
+				});
 
-	    		// grab template
-	    		var tpl = $(element).find('.popover-template')
+			});
 
-	    		// grab popover parts of template
-				var template = {
-					//$compile( $(element).siblings(".pop-content").contents() )(scope)
-					title: tpl.find('.template-title').contents(),
-					content: tpl.find('.template-content').contents()
-				};
 
-				// render template with angular
-				var content = $compile(template.content)(scope);
-				var title = $compile(template.title)(scope); 
+    		/*helpers*/
 
-		    	$(element).popover({
-		    		html: true,
-		    		placement: "right",
-		    		content: content,
-		    		title: title
-		    	});
+	    	function getLeftLocation(e, element) {
+                var mouseWidth = e.pageX;
+                var pageWidth = $(window).width();
+                var menuWidth = element.width();
+                
+                // opening menu would pass the side of the page
+                if (mouseWidth + menuWidth > pageWidth &&
+                    menuWidth < mouseWidth) {
+                    return mouseWidth - menuWidth;
+                } 
+                return mouseWidth;
+            }        
+            
+            function getTopLocation(e, element) {
+                var mouseHeight = e.pageY;
+                var pageHeight = $(window).height();
+                var menuHeight = element.height();
 
-		    	scope.$digest()
-		    });
+                // opening menu would pass the bottom of the page
+                if (mouseHeight + menuHeight > pageHeight &&
+                    menuHeight < mouseHeight) {
+                    return mouseHeight - menuHeight;
+                } 
+                return mouseHeight;
+            }
 
 	    }
     	
     };
-});
+}]);
