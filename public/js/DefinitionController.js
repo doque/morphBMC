@@ -20,6 +20,12 @@ app.controller("DefinitionController", ['$scope', '$http', 'SocketService', func
 		});
 	};
 
+
+	$scope.$on('test', function(event, args) {
+		console.log(args);
+	});
+
+
 	/**
 	 * send a post request to add a new parameter
 	 */

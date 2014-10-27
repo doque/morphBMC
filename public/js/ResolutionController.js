@@ -149,7 +149,9 @@ app.controller("ResolutionController", ['$scope', '$http', function($scope, $htt
 		return compats;
 	};
 
-
+	$scope.$on('test', function(event, args) {
+		console.log(args);
+	});
 
 	// grab all existing parameters to build table
 	$http.get("/api/problems/"+window.PROBLEM_ID).success(function(data) {
