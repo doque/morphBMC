@@ -1,12 +1,26 @@
 #resolution .compatibilities {
 	margin-top: 140px;
 }
-#resolution .rating.danger {
+#resolution div.conflicted-rating {
+	padding: 2px 0;
+	border-bottom: 1px solid #ccc;
+}
+#resolution div.conflicted-rating span {
+	text-align: center;
+	width: 50px;
+	margin-right: 5px;
+	display: inline-block;
+	padding: 2px 8px;
+}
+#resolution .rating.danger, #resolution .rating-bad {
 	background-color: #f2dede;
 }
-#resolution .rating.success {
+#resolution .rating.success, #resolution .rating-good {
 	background-color: #dff0d8;
 }
-#resolution .rating.warning {
+#resolution .rating.warning, #resolution .rating-ok {
 	background-color: #fcf8e3;
+}
+#resolution .cell a {
+	outline: 0;
 }

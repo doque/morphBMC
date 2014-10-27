@@ -73,6 +73,9 @@ public class CompatibilityController extends Controller {
 			c.save();
 		}
 
+		if (override != null) {
+			socketService.broadcast("conflicted ratings have been removed");
+		}
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("compatibilities", getAllCompatibilities(problemId));
 		return ok(Json.toJson(result));

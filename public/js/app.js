@@ -128,62 +128,64 @@ var app = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
 }).directive('popover', ['$compile', function($compile, $timeout) {
 
 	// TODO inject some form if ID for this popover
-	var template = '<div class="popover top">'+
-				      '<div class="arrow"></div>'+
-				      '<h3 class="popover-title">{{ x.name }} and {{ y.name }}</h3>'+
-				      '<div class="popover-content">'+
-				      	'{{ conflicts.length }} were found:'+
-				        '<div ng-repeat="c in conflicts">'+
-				        	'<pre>{{c}}</pre>'+
-				        '</div>'+
-				      '</div>'+
-				    '</div>';
+	var template = '<div class="popover right">\
+				      <div class="arrow"></div>\
+				      <h3 class="popover-title">{{ x.name }} and {{ y.name }}</h3>\
+				      <div class="popover-content">\
+				      	{{ conflicts.length }} conflicted ratings:\
+				        <div class="conflicted-rating" ng-repeat="c in conflicts">\
+				        	<span class="rating-{{ c.rating.name.toLowerCase() }}">{{c.rating.name}}</span>\
+				        	by User #{{c.userId}}\
+				        </div>\
+				        <br/>\
+				        <div ng-init="override={ attr1: {id:x.id,name:x.name}, attr2: {name: y.name,id:y.id} }">\
+				        	Choose below to override these ratings:\
+							<div class="input-group">\
+								<span class="input-group-addon">\
+									<select ng-model="override.rating"\
+											ng-options="rating.name for rating in ratings track by rating.id">\
+									</select>\
+							  	</span>\
+							  	<input type="text" class="form-control" ng-model="override.overrideComment"\
+							  		placeholder="explain your rating..."/>\
+							</div>\
+							<br/>\
+							<div>\
+								<button type="button" ng-click="overrideCompatibilities(override);" class="btn btn-sm btn-primary">\
+									Save\
+								</button>\
+							</div>\
+			        	</div>\
+				      </div>\
+				    </div>';
 
     return {
 
     	link: function(scope, element, attrs) {
-    		
+
+
     		element.on("click", function(e) {
 
 				scope.$apply(function() {
-					var tpl = $compile(template)(scope);
-					// grab by ID
-					// show element here
-					$(tpl).show();
-					console.log(tpl);
+
+					// remove all other popovers
+					$(".popover").remove();
+
+					var html = $compile(template)(scope);
+					$(element).parent().append(html);
+					var el = $(element).parent().find(".popover").show(),
+					height = el.height(),
+					width = el.width();
+
+					el.css({
+						position: "absolute",
+                        left: $(element).parent().position().left + 55,
+                        top: $(element).parent().position().top - height/2 - 18,
+                        container: "body"
+					});
 				});
 
 			});
-
-
-    		/*helpers*/
-
-	    	function getLeftLocation(e, element) {
-                var mouseWidth = e.pageX;
-                var pageWidth = $(window).width();
-                var menuWidth = element.width();
-                
-                // opening menu would pass the side of the page
-                if (mouseWidth + menuWidth > pageWidth &&
-                    menuWidth < mouseWidth) {
-                    return mouseWidth - menuWidth;
-                } 
-                return mouseWidth;
-            }        
-            
-            function getTopLocation(e, element) {
-                var mouseHeight = e.pageY;
-                var pageHeight = $(window).height();
-                var menuHeight = element.height();
-
-                // opening menu would pass the bottom of the page
-                if (mouseHeight + menuHeight > pageHeight &&
-                    menuHeight < mouseHeight) {
-                    return mouseHeight - menuHeight;
-                } 
-                return mouseHeight;
-            }
-
 	    }
     	
     };

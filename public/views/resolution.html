@@ -57,48 +57,38 @@
 				<td
 					ng-init="paramX = getParameterByAttribute(x.id);
 							paramY = getParameterByAttribute(y.id);
-							redundant = paramX.id >= paramY.id;"
+							redundant = paramX.id >= paramY.id;
+							compatibilities = getCompatibilityRatings(x.id, y.id);
+							conflicts = getConflicts(x.id, y.id);
+							noConflicts = (conflicts.length === 0);
+							good = compatibilities[0].rating.value === 9;
+							ok = compatibilities[0].rating.value === 4;
+							bad = compatibilities[0].rating.value === 1;"
 					ng-if="$index < getOffsets()[getOffsets().length - 2]"
 					ng-repeat="x in getAllAttributes()"
 					ng-mouseenter="hover(x.id, y.id, redundant); hovered=true;"	
 					ng-mouseleave="hover(0,0); hovered=false"
 					class="cell"
 					ng-class="{
-						'success': compatibility.rating.value === 9,
-						'warning': compatibility.rating.value === 4,
-						'danger': compatibility.rating.value === 1,
+						'success': 	noConflicts &amp;&amp; good,
+						'warning': 	noConflicts &amp;&amp; ok,
+						'danger': 	noConflicts &amp;&amp; bad,
 						'disabled' : redundant
 					}"
-					>
+					style="position: x;">
+<!-- 					<pre>{{compatibilities}}</pre> -->
 					
 					<!-- redundant means that this combination of attributes WILL be rendered in the following rows -->
 					
 					<div
-						ng-init="conflicts = getConflicts(x.id, y.id);"
-						ng-show="!redundant &amp;&amp; conflicts.length > 0"
-						popover
+						ng-if="!noConflicts"
+						ng-show="!redundant"
 						>
-						
-						{{ conflicts.length }} conflicts
-						
+						<a href="javascript:this.blur();" popover>{{ conflicts.length }} conflicts</a>
+					</div>
 
-
-						<div ng-show="false" class="adding-compatibility">
-							<!-- override -->
-							<input type="hidden"
-									ng-model="compatibility.attr1"
-									ng-init="compatibility.attr1 = x">
-							<input type="hidden"
-									ng-model="compatibility.attr2"
-									ng-init="compatibility.attr2 = y">
-									
-							<select ng-blur="rating=false;"
-									ng-change="overrideCompatibilities(compatibility);"
-									ng-model="compatibility.rating"
-									ng-options="rating.name for rating in ratings track by rating.id">
-							</select>
-						</div>
-						
+					<div ng-if="noConflicts">
+						 {{ compatibilities[0].rating.name }}
 					</div>
 				</td>
 			</tr>

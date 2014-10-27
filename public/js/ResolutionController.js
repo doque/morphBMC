@@ -19,7 +19,7 @@ app.controller("ResolutionController", ['$scope', '$http', function($scope, $htt
 	$scope.getConflicts = function(attr1, attr2) {
 		var conflicts = [];
 		angular.forEach($scope.conflicts, function(c) {
-			if ((c.attr1.id === attr1 && c.attr2.id === attr2) ||
+			if (c.rating.value > 0 && (c.attr1.id === attr1 && c.attr2.id === attr2) ||
 				(c.attr1.id === attr2 && c.attr2.id === attr1)) {
 				conflicts.push(c);
 			}
@@ -38,7 +38,7 @@ app.controller("ResolutionController", ['$scope', '$http', function($scope, $htt
 			var c1 = compatibilities[i];
 			for (var j=0; j<compatibilities.length; j++) {
 				var c2 = compatibilities[j];
-				if (c1.id === c2.id || c1.rating.value === c2.rating.value) {
+				if (c1.id === c2.id || c1.rating.value === 0 || c2.rating.value === 0 || c1.rating.value === c2.rating.value) {
 					continue;
 				}
 
@@ -141,7 +141,7 @@ app.controller("ResolutionController", ['$scope', '$http', function($scope, $htt
 		var compats = [];
 		angular.forEach($scope.compatibilities, function(c) {
 				// arrays should be the same
-			if ( (attr1 === c.attr1.id && attr2 === c.attr2.id) || (attr2 === c.attr1.id && attr1 === c.attr2.id) ) {
+			if ( c.rating.value > 0 && (attr1 === c.attr1.id && attr2 === c.attr2.id) || (attr2 === c.attr1.id && attr1 === c.attr2.id) ) {
 				compats.push(c);
 			}
 
@@ -165,8 +165,8 @@ app.controller("ResolutionController", ['$scope', '$http', function($scope, $htt
 	});
 
 	$http.get("/api/ratings").success(function(data) {
-		// skip the first rating, which is "RATE" and change it to Force
-		data.ratings[0].name = "Force";
+		// shift the "Rate" first rating
+		data.ratings.shift()
 		$scope.ratings = data.ratings;
 	});
 
