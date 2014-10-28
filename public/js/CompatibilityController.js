@@ -16,6 +16,7 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout', functi
 	 */
 	$scope.addCompatibility = function(compatibility) {
 		$http.post("/api/problems/" + window.PROBLEM_ID +"/compatibilities", compatibility).success(function(data) {
+			// after receiving problem id, load existing compatibilities
 			$scope.compatibilities = data.compatibilities;
 		});
 	};
@@ -39,15 +40,13 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout', functi
 		// yeah this is a hack but
 		// http://stackoverflow.com/questions/26616448/angularjs-view-doesnt-update-when-assigning-a-http-response-to-scope
 		angular.forEach($scope.compatibilities, function(c) {
-			c.rating = rating;
-			$scope.addCompatibility(c);
-			// manually reflect frontend change
-			var div = $('#compat-' + c.id);
-			div.html(rating.name);
-			var clazz = rating.value === 9 ? 'success' : (rating.value === 4 ? 'warning' : 'danger');
-			div.parent().parent().removeClass("warning success danger").addClass(clazz);
+			if (ids.indexOf(c.id) > -1) {
+				c.rating = rating;
+				$scope.addCompatibility(c);	
+			}
+			
 		});
-
+		
 	};
 
 	$scope.batchX = function() {
@@ -156,6 +155,9 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout', functi
 
 	$http.get("/api/ratings").success(function(data) {
 		$scope.ratings = data.ratings;
+		data.ratings.shift();
+		console.log(data.ratings)
+		$scope.batchRatings = data.ratings;
 	});
 
 }]);

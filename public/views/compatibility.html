@@ -2,6 +2,12 @@
 
 <div id="compatibility" ng-show="!rendering">
 
+	<div>
+		Rate {{ batch.length }} with
+			<select ng-options="rating.name for rating in batchratings track by rating.id"></select>
+			<button class="btn btn-primary">Save</button>
+
+	</div>
 
 	<table ng-cloak ng-if="compatibilities !== null" class="compatibilities table table-bordered">
 		<thead>
@@ -47,13 +53,12 @@
 				<td
 					ng-init="paramX = getParameterByAttribute(x.id);
 							paramY = getParameterByAttribute(y.id);
-							compatibility = getCompatibilityRating(x.id, y.id);
 							redundant = paramX.id >= paramY.id"
 					ng-if="$index < getOffsets()[getOffsets().length - 2]"
 					ng-class="{
-								'success': compatibility.rating.value === 9,
-								'warning': compatibility.rating.value === 4,
-								'danger': compatibility.rating.value === 1,
+								'success': getCompatibilityRating(x.id, y.id).rating.value === 9,
+								'warning': getCompatibilityRating(x.id, y.id).rating.value === 4,
+								'danger': getCompatibilityRating(x.id, y.id).rating.value === 1,
 								'disabled' : redundant
 							}"
 					ng-repeat="x in getAllAttributes()"
@@ -74,7 +79,7 @@
 						ng-if="!redundant">
 
 						<div id="compat-{{ compatibility.id }}" class="rating" ng-show="rating == false">
-							{{ compatibility.rating.name }}
+							{{ getCompatibilityRating(x.id, y.id).rating.name }}
 						</div>
 
 						<div ng-show="rating == true" class="adding-compatibility">
