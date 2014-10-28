@@ -28,7 +28,8 @@ GET     /not-authorized             							securesocial.controllers.ProviderCont
 
 # Problem
 GET		/api/problems/:id										@controllers.ProblemController.getProblemEnvironment(id: Long)
-POST	/api/problems/:id										@controllers.ProblemController.changeStage(id: Long)
+POST	/api/problems/:id/stage									@controllers.ProblemController.changeStage(id: Long)
+POST	/api/problems/:id/statement								@controllers.ProblemController.changeStatement(id: Long)
 
 # Ratings
 GET		/api/ratings											@controllers.RatingController.getRatings

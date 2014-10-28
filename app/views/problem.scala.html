@@ -7,8 +7,11 @@
 		<link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">
 		<link rel="stylesheet" href="/assets/app/bower_components/bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/assets/app/bower_components/angular-tablesort/tablesort.css">
+		<link rel="stylesheet" href="/assets/app/bower_components/textAngular/src/textAngular.css">
+		<link rel="stylesheet" href="/assets/app/bower_components/components-font-awesome/css/font-awesome.min.css">
 
 		<!-- custom stylesheets per view -->
+		<link rel="stylesheet" href="/assets/css/statement.css">
 		<link rel="stylesheet" href="/assets/css/definition.css">
 		<link rel="stylesheet" href="/assets/css/refinement.css">
 		<link rel="stylesheet" href="/assets/css/compatibility.css">
@@ -32,6 +35,10 @@
 
 			<nav class="row"> 
 				<ul class="nav nav-tabs">
+					<li ng-class="{ 'active': problem.stage === '/statement' }">
+						<a href="#/statement" ng-click="changeStage('statement')">Statement</a>
+					</li>
+
 					<li ng-class="{ 'active': problem.stage === '/definition' }">
 						<a href="#/definition" ng-click="changeStage('definition')">Definition</a>
 					</li>
@@ -68,6 +75,9 @@
 	<script src="/assets/app/bower_components/angular-route/angular-route.min.js"></script>
 	<script src="/assets/app/bower_components/angular-ui/build/angular-ui.min.js"></script>
 	<script src="/assets/app/bower_components/angular-tablesort/js/angular-tablesort.js"></script>
+
+	<script src="/assets/app/bower_components/textAngular/dist/textAngular-sanitize.min.js"></script>
+	<script src="/assets/app/bower_components/textAngular/dist/textAngular.min.js"></script>
 
 	<script src="/assets/js/app.js"></script>
 	

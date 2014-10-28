@@ -34,8 +34,9 @@ create table problem (
   user_id                   varchar(255),
   owner                     varchar(255),
   name                      varchar(255),
+  statement                 TEXT,
   stage                     integer,
-  constraint ck_problem_stage check (stage in (0,1,2,3,4,5)),
+  constraint ck_problem_stage check (stage in (0,1,2,3,4,5,6)),
   constraint pk_problem primary key (id))
 ;
 

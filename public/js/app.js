@@ -1,8 +1,14 @@
 // define my own module with required modules
-var app = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
+var app = angular.module('morphBMC', ['ngRoute', 'tableSort', 'textAngular']).config(
 	function ($routeProvider, $httpProvider) {
 		// enable strict mode for JS parser
 		'use strict';
+
+		// Route for Definition
+		$routeProvider.when('/statement', {
+			templateUrl: '/assets/views/statement.html',
+			controller: 'ProblemController',
+		});
 
 		// Route for Definition
 		$routeProvider.when('/definition', {
@@ -42,7 +48,7 @@ var app = angular.module('morphBMC', ['ngRoute', 'tableSort']).config(
 
 
 		// default route
-		$routeProvider.otherwise({redirectTo: '/definition'});
+		$routeProvider.otherwise({redirectTo: '/statement'});
 
 		// since we're working with json for data transpoert, add the appropriate content type header to all $http requests
 		$httpProvider.defaults.headers.post["Content-Type"] = "application/json";
