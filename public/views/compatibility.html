@@ -4,8 +4,13 @@
 
 	<div>
 		Rate {{ batch.length }} with
-			<select ng-options="rating.name for rating in batchratings track by rating.id"></select>
-			<button class="btn btn-primary">Save</button>
+			<select
+				ng-model="batchrating"
+				ng-options="rating.name for rating in batchRatings track by rating.id"></select>
+			<button
+				id="batchrating"
+				ng-click="rateBatch(batchrating)"
+				class="btn btn-sm btn-primary">Save</button>
 
 	</div>
 
@@ -27,7 +32,7 @@
 					class="rotate"
 				>
 					<div class="rotated">
-						<span>{{ attribute.name }}</span>
+						<span ng-click="addToBatch(attribute.id)">{{ attribute.name }}</span>
 					</div>
 				</td>
 			</tr>
@@ -48,18 +53,21 @@
 					ng-class="{
 								'highlight': y.id === hoverY
 							}"
+					ng-click="addToBatch(y.id)"
 					class="legend">{{ y.name}}</td>
 				
 				<td
 					ng-init="paramX = getParameterByAttribute(x.id);
 							paramY = getParameterByAttribute(y.id);
-							redundant = paramX.id >= paramY.id"
+							redundant = paramX.id >= paramY.id;
+							compatibility = getCompatibilityRating(x.id, y.id);"
 					ng-if="$index < getOffsets()[getOffsets().length - 2]"
 					ng-class="{
 								'success': getCompatibilityRating(x.id, y.id).rating.value === 9,
 								'warning': getCompatibilityRating(x.id, y.id).rating.value === 4,
 								'danger': getCompatibilityRating(x.id, y.id).rating.value === 1,
-								'disabled' : redundant
+								'disabled' : redundant,
+								'highlight': isInBatch(getCompatibilityRating(x.id, y.id).id)
 							}"
 					ng-repeat="x in getAllAttributes()"
 					ng-mouseenter="hover(x.id, y.id, redundant); hovered=true;"	

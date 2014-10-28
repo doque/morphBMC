@@ -26,36 +26,38 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout', functi
 	 * @param  array compatibilities the compatibiltiies
 	 * 
 	 */
-	$scope.rate = function(ids, ratingId) {
-
-		var rating;
-
-		angular.forEach($scope.ratings, function(r) {
-			if (r.id === ratingId) {
-				rating = r;
-				return;
-			}
-		});
+	$scope.rateBatch = function(batchrating) {
 
 		// yeah this is a hack but
 		// http://stackoverflow.com/questions/26616448/angularjs-view-doesnt-update-when-assigning-a-http-response-to-scope
 		angular.forEach($scope.compatibilities, function(c) {
-			if (ids.indexOf(c.id) > -1) {
-				c.rating = rating;
+			if ($scope.batch.indexOf(c.id) > -1) {
+				c.rating = batchrating;
 				$scope.addCompatibility(c);	
 			}
-			
 		});
+
+		$scope.batch = [];
+		$('#batchrating').blur();
 		
 	};
 
-	$scope.batchX = function() {
-
+	
+	$scope.addToBatch = function(id) {
+		angular.forEach($scope.compatibilities, function(c) {
+			if (c.attr1.id === id || c.attr2.id === id) {
+				if ($scope.isInBatch(c.id) === false) {
+					$scope.batch.push(c.id);
+				} else {
+					remove($scope.batch, c.id);
+				}
+			}
+		});
 	};
 
-	$scope.batchY = function() {
-
-	};
+	$scope.isInBatch = function(id) {
+		return ($scope.batch.indexOf(id) > -1);
+	}
 
 	/**
 	 * provides hover effect for parent tds
@@ -141,6 +143,20 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout', functi
 
 
 
+	/**
+	 * helper function that removes an int from an array
+	 */
+	function remove(arr, int) {
+		if (arr.indexOf(int) >= 0) {
+			if (arr.length === 1) {
+				arr.pop();
+			}
+			arr.splice(arr.indexOf(int), 1);
+		}
+		return arr;
+	}
+	
+
 	// grab all existing parameters to build table
 	$http.get("/api/problems/"+window.PROBLEM_ID+"/parameters").success(function(data) {
 		// contains problem properties and parameters with their attributes,
@@ -156,7 +172,6 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout', functi
 	$http.get("/api/ratings").success(function(data) {
 		$scope.ratings = data.ratings;
 		data.ratings.shift();
-		console.log(data.ratings)
 		$scope.batchRatings = data.ratings;
 	});
 
