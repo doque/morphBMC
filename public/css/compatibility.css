@@ -18,7 +18,7 @@
 .compatibilities tbody td[rowspan]:not(.active) {
 	background: #d9edf7; font-weight: bold; vertical-align: middle;
 }
-.compatibilities thead td:not([colspan]), .compatibilities td.warning {
+.compatibilities td.warning {
 	background: #fcf8e3; vertical-align: middle;
 }
 td.cell {
@@ -29,8 +29,9 @@ td.cell {
 td.cell > div.rating {
 	padding: 8px;
 }
-td.legend {
+td.legend, td.rotate {
 	background: rgba(240, 173, 78, 0.2);
+	cursor: pointer;
 }
 td.disabled {
 	background: #f5f5f5 !important;
@@ -40,7 +41,7 @@ td.rotate {
 	text-align: left !important;
 	padding: 0;
 	border: 0 !important; 
-	background: transparent !important;
+	xbackground: transparent !important;
 	max-height: 8px !important;
 }
 td.rotate > div.rotated {
@@ -58,11 +59,14 @@ td.rotate.first > div.rotated {
 td.rotate div.rotated span {
 	margin-left: 10px;
 }
-td.highlight {
+td.rotate:hover, td.highlight {
 	background: #428bca !important;
 }
 td.highlight:not(.rotate) {
 	color: white !important;
+}
+td.legend.highlight {
+	text-decoration: underline;
 }
 td.highlight.rotate div.rotated span {
 	font-weight: bold;

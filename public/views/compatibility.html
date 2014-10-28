@@ -30,9 +30,14 @@
 								'highlight': attribute.id === hoverX
 							}"
 					class="rotate"
+					ng-click="addToBatch(attribute.id)"
+					title="select column '{{attribute.name}}"
+					ng-mouseenter="hover(attribute.id, 0)"
 				>
 					<div class="rotated">
-						<span ng-click="addToBatch(attribute.id)">{{ attribute.name }}</span>
+						<span>
+							{{ attribute.name }}
+						</span>
 					</div>
 				</td>
 			</tr>
@@ -54,6 +59,7 @@
 								'highlight': y.id === hoverY
 							}"
 					ng-click="addToBatch(y.id)"
+					ng-mouseenter="hover(0, y.id)"
 					class="legend">{{ y.name}}</td>
 				
 				<td
@@ -67,7 +73,7 @@
 								'warning': getCompatibilityRating(x.id, y.id).rating.value === 4,
 								'danger': getCompatibilityRating(x.id, y.id).rating.value === 1,
 								'disabled' : redundant,
-								'highlight': isInBatch(getCompatibilityRating(x.id, y.id).id)
+								'highlight': isInBatch(compatibility.id)
 							}"
 					ng-repeat="x in getAllAttributes()"
 					ng-mouseenter="hover(x.id, y.id, redundant); hovered=true;"	
