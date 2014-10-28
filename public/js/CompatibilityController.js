@@ -1,7 +1,9 @@
-app.controller("CompatibilityController", ['$scope', '$http', function($scope, $http) {
+app.controller("CompatibilityController", ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
 
 	$scope.adding = false;
 	$scope.compatibilities = null;
+
+	$scope.batch = [];
 
 	$scope.hoverX = 0;
 	$scope.hoverY = 0;
@@ -13,11 +15,45 @@ app.controller("CompatibilityController", ['$scope', '$http', function($scope, $
 	 * @param {compatiblity) the compatibility object
 	 */
 	$scope.addCompatibility = function(compatibility) {
-
 		$http.post("/api/problems/" + window.PROBLEM_ID +"/compatibilities", compatibility).success(function(data) {
-			// overwrite on success
 			$scope.compatibilities = data.compatibilities;
 		});
+
+	};
+
+	/**
+	 * rates a number of compatibilities at once
+	 * @param  array compatibilities the compatibiltiies
+	 * 
+	 */
+	$scope.batchRate = function(compatibilities, ratingId) {
+		var rating;
+
+		angular.forEach($scope.ratings, function(r) {
+			if (r.id === ratingId) {
+				rating = r;
+				return;
+			}
+		});
+
+		console.log(rating);
+
+		angular.forEach($scope.compatibilities, function(c) {
+			$scope.$apply(function() {
+				c.rating = rating;
+			})
+
+			$scope.addCompatibility(c);
+
+		});
+
+	};
+
+	$scope.batchX = function() {
+
+	};
+
+	$scope.batchY = function() {
 
 	};
 
