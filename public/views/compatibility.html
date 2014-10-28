@@ -73,7 +73,7 @@
 						ng-click="rating=true"
 						ng-if="!redundant">
 
-						<div class="rating" ng-show="rating == false">
+						<div id="compat-{{ compatibility.id }}" class="rating" ng-show="rating == false">
 							{{ compatibility.rating.name }}
 						</div>
 

@@ -66,8 +66,8 @@ app.controller("DefinitionController", ['$scope', '$http', 'SocketService', func
 	};
 
 	// set up environment on load
-	$http.get("/api/problems/"+window.PROBLEM_ID).success(function(data) {
-		$scope.parameters = data.problem.parameters;
+	$http.get("/api/problems/"+window.PROBLEM_ID+"/parameters").success(function(data) {
+		$scope.parameters = data.parameters;
 	});
 }]);
 

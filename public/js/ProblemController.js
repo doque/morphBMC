@@ -21,7 +21,6 @@ app.controller("ProblemController", ['$scope', '$http', '$location', '$timeout',
 		$http.post("/api/problems/" + window.PROBLEM_ID + "/statement", {
 			statement: $scope.problem.statement
 		}).success(function() {
-			console.log($(button));
 			button.removeClass("btn-primary").addClass("btn-success").text("Saved!");
 			$timeout(function() {
 				button.removeClass("btn-success").addClass("btn-primary").text("Save");

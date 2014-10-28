@@ -66,6 +66,10 @@ public class ProblemController extends Controller {
 		}
 
 		Map<String, Object> result = Maps.newHashMap();
+		// strip parameters here, this is handled by DefinitionController
+		
+		p.parameters = null;
+		
 		result.put("problem", p);
 
 		return ok(Json.toJson(result));

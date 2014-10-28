@@ -35,6 +35,7 @@ POST	/api/problems/:id/statement								@controllers.ProblemController.changeSta
 GET		/api/ratings											@controllers.RatingController.getRatings
 
 # Definition
+GET 	/api/problems/:id/parameters							@controllers.DefinitionController.getParameters(id: Long)
 POST 	/api/problems/:id/parameters							@controllers.DefinitionController.addParameter(id: Long)
 DELETE  /api/problems/:problemId/parameters/:id					@controllers.DefinitionController.deleteParameter(problemId: Long, id: Long)
 POST	/api/problems/:problemId/parameters/:id/attributes		@controllers.DefinitionController.addAttribute(problemId: Long, id:Long)

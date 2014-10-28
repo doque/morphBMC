@@ -29,6 +29,37 @@ public class DefinitionController extends Controller {
 	@Inject	public DefinitionController(SocketServiceInterface socketService) {
 		this.socketService = checkNotNull(socketService);
 	}
+	
+	
+	public Result getParameters(long problemId) {
+		
+		Problem pr = Problem.find.byId(problemId);
+		if (pr == null) {
+			return notFound();
+		}
+		
+		// retrieve all user's parameters or only their own?
+		String override = Form.form().bindFromRequest().get("all");
+
+		// no "all", meaning only one user's parameters
+		// so strip out all others.
+		if (override == null) {
+			String userId = session().get("userId");
+			for (int i=0; i<pr.parameters.size(); i++) {
+				Parameter p = pr.parameters.get(i);
+				if (!p.userId.equals(userId)) {
+					pr.parameters.remove(i);
+				}
+			}
+			
+		}
+		
+		Map<String, Object> result = Maps.newHashMap();
+		result.put("parameters", pr.parameters);
+		
+
+		return ok(Json.toJson(result));
+	}
 
 	/**
 	 * Add a new Parameter with no attributes yet
