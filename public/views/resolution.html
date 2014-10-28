@@ -26,9 +26,12 @@
 								'highlight': attribute.id === hoverX
 							}"
 					class="rotate"
+					ng-mouseenter="hover(attribute.id, 0)"
 				>
 					<div class="rotated">
-						<span>{{ attribute.name }}</span>
+						<span>
+							{{ attribute.name }}
+						</span>
 					</div>
 				</td>
 			</tr>
@@ -52,6 +55,7 @@
 					ng-class="{
 								'highlight': y.id === hoverY
 							}"
+					ng-mouseenter="hover(0, y.id)"
 					class="legend">{{ y.name}}</td>
 				
 				<td
