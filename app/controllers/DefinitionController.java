@@ -95,6 +95,7 @@ public class DefinitionController extends Controller {
 	 * @param parameterId
 	 * @return
 	 */
+	
 	public Result deleteParameter(long problemId, long parameterId) {
 		Parameter p = Parameter.find.byId(parameterId);
 		if (p != null) {
@@ -148,4 +149,26 @@ public class DefinitionController extends Controller {
 		return ok(Json.toJson(result));
 	}
 
+	/**
+	 * 
+	 * @param problemId
+	 * @param attributeId
+	 * @return
+	 */
+	public Result reassignAttribute(long problemId, long attributeId) {
+		Attribute a = Attribute.find.byId(attributeId);
+		if (a == null) {
+			return notFound();
+		}
+		String parameterId = Form.form().bindFromRequest().get("parameterId");
+		if (parameterId != null) {
+			Parameter p = Parameter.find.byId(Long.parseLong(parameterId));
+			if (p == null) {
+				return badRequest();
+			}
+			a.parameter = p;
+			a.update();
+		}
+		return ok();
+	}
 }

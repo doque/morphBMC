@@ -134,9 +134,9 @@ app.controller("ResultsController", ['$scope', '$http', function($scope, $http) 
 	};
 
 	// set up environment on load
-	$http.get("/api/problems/"+window.PROBLEM_ID).success(function(data) {
+	$http.get("/api/problems/" + window.PROBLEM_ID + "/parameters").success(function(data) {
 
-		$scope.parameters = data.problem.parameters;
+		$scope.parameters = data.parameters;
 
 		// contains problem properties and parameters with their attributes,
 		// if present yet
@@ -154,28 +154,3 @@ app.controller("ResultsController", ['$scope', '$http', function($scope, $http) 
 
 
 }]);
-
-
-
-function Configuration(attributes) {
-	this.attributes = attributes || [];
-	this.consistencyValue = 0;
-	this.calculateConsistency();
-
-	function calculateConsistency() {
-		var consistency = 0;
-		angular.foreach(this.attributes, function(attr) {
-			var ratings = getCompatibilityRatingsForAttribute(attr.id);
-			consistency = ratings.reduce(function(attr1, attr2) {
-				return attr1 + (+attr2.value);
-			}, 0);
-		});
-		this.consistencyValue = consistency;
-	}
-
-	
-
-	return {
-		consistencyValue: consistencyValue
-	};
-}
