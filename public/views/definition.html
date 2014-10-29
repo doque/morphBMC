@@ -1,54 +1,56 @@
-<div id="definition" class="board">
-
-	<div class="parameter parameter-add">
-		<input
-			type="text input-small"
-			class="text"
-			ng-blur="addingParameter=false;"
-			autofocus="addingParameter"
-			ng-model="parameter.name" 
-			ng-show="addingParameter"
-			placeholder="Enter Name for Parameter"
-			ng-enter="addParameter(); addingParameter=false; addingAttribute=true;"
-			ng-class="{'adding': addingParameter }"
-		>
-		<h5 ng-hide="addingParameter" ng-click="addingParameter=true">
-			<span class="glyphicon glyphicon-plus-sign"></span> Add a Parameter
-		</h5>
-	</div>
-
-	<div class="parameter" ng-repeat="parameter in parameters | orderBy: 'id':true">
-		
-		<h5>{{ parameter.name }}</h5>
-
-		<div ng-click="addingAttribute=true" class="add">
+<div id="definition">
+	
+	<div class="board">
+		<div class="parameter parameter-add">
 			<input
-				type="text"
+				type="text input-small"
 				class="text"
-				placeholder="Enter Name for Attribute"
-				ng-blur="addAttribute(parameter); addingAttribute = false;"
-				ng-model="parameter.attribute.name"
-				ng-show="addingAttribute"
-				autofocus="addingAttribute"
-				ng-enter="addAttribute(parameter)"
-				>
-			<a ng-hide="addingAttribute">Add Attribute</a>	
+				ng-blur="addingParameter=false;"
+				autofocus="addingParameter"
+				ng-model="parameter.name" 
+				ng-show="addingParameter"
+				placeholder="Enter Name for Parameter"
+				ng-enter="addParameter(); addingParameter=false; addingAttribute=true;"
+				ng-class="{'adding': addingParameter }"
+			>
+			<h5 ng-hide="addingParameter" ng-click="addingParameter=true">
+				<span class="glyphicon glyphicon-plus-sign"></span> Add a Parameter
+			</h5>
 		</div>
-		<ul class="attributes">
-			<li ng-repeat="attr in parameter.attributes | orderBy:'id'">
-				<div>{{ attr.name }}</div>
-			</li>
-		</ul>
-		
-		<div class="options">
-			<span data-toggle="dropdown" class="glyphicon glyphicon-collapse-down"></span>
-			<ul class="dropdown-menu" role="menu">
-				<!-- <li><a href="#">Rename</a></li> -->
-				<li><a href="javascript:;" ng-click="removeParameter(parameter)">Remove</a></li>
-				<!--<li><a href="#">Something else here</a></li>
-				<li class="divider"></li>
-				<li><a href="#">Separated link</a></li>-->
+
+		<div class="parameter" ng-repeat="parameter in parameters | orderBy: 'id':true">
+			
+			<h5>{{ parameter.name }}</h5>
+
+			<div ng-click="addingAttribute=true" class="add">
+				<input
+					type="text"
+					class="text"
+					placeholder="Enter Name for Attribute"
+					ng-blur="addAttribute(parameter); addingAttribute = false;"
+					ng-model="parameter.attribute.name"
+					ng-show="addingAttribute"
+					autofocus="addingAttribute"
+					ng-enter="addAttribute(parameter)"
+					>
+				<a ng-hide="addingAttribute">Add Attribute</a>	
+			</div>
+			<ul class="attributes">
+				<li ng-repeat="attr in parameter.attributes | orderBy:'id'">
+					<div>{{ attr.name }}</div>
+				</li>
 			</ul>
+			
+			<div class="options">
+				<span data-toggle="dropdown" class="glyphicon glyphicon-collapse-down"></span>
+				<ul class="dropdown-menu" role="menu">
+					<!-- <li><a href="#">Rename</a></li> -->
+					<li><a href="javascript:;" ng-click="removeParameter(parameter)">Remove</a></li>
+					<!--<li><a href="#">Something else here</a></li>
+					<li class="divider"></li>
+					<li><a href="#">Separated link</a></li>-->
+				</ul>
+			</div>
 		</div>
 	</div>
 

@@ -17,7 +17,11 @@
 		</h5>
 	</div>
 
-	<div class="parameter" ng-repeat="parameter in parameters | orderBy: 'id':true">
+	<div
+		class="parameter"
+		ng-repeat="parameter in parameters | orderBy: 'id':true"
+		ng-init="notyours = !yours(parameter.id)"
+		ng-class="{ 'notyours': notyours }">
 		
 		<h5>{{ parameter.name }}</h5>
 
