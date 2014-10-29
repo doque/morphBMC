@@ -17,6 +17,18 @@ import com.google.common.collect.Maps;
  */
 public class JsonBuilder {
 
+	public enum Types {
+		/* Refinement Stages */
+		PARAMETER_ADDED,
+		ATTRIBUTE_ADDED,
+		PARAMETER_DELETED,
+		ATTRIBUTE_DELETED,
+		ATTRIBUTE_REASSIGNED,
+		
+		/* Conflict Resolution */
+		CONFLICT_RESOLVED
+	}
+	
 	/**
 	 * pushes out a compatibility object that replaces all others
 	 * with the same attr1_id and attr2_id.
@@ -28,5 +40,7 @@ public class JsonBuilder {
 			result.put("compatibility", c);
 		return Json.toJson(result);
 	}
+	
+	
 	
 }

@@ -158,13 +158,13 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout', functi
 	
 
 	// grab all existing parameters to build table
-	$http.get("/api/problems/"+window.PROBLEM_ID+"/parameters").success(function(data) {
+	$http.get("/api/problems/"+window.PROBLEM_ID+"/parameters?all=yes").success(function(data) {
 		// contains problem properties and parameters with their attributes,
 		// if present yet
 		$scope.parameters = data.parameters;
 
 		// after receiving problem id, load existing compatibilities
-		$http.get("/api/problems/" + window.PROBLEM_ID+ "/compatibilities").success(function(data) {
+		$http.get("/api/problems/" + window.PROBLEM_ID+ "/compatibilities?all=yes").success(function(data) {
 			$scope.compatibilities = data.compatibilities;
 		});
 	});

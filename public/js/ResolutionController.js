@@ -154,7 +154,7 @@ app.controller("ResolutionController", ['$scope', '$http', function($scope, $htt
 	});
 
 	// grab all existing parameters to build table
-	$http.get("/api/problems/"+window.PROBLEM_ID+"/parameters").success(function(data) {
+	$http.get("/api/problems/"+window.PROBLEM_ID+"/parameters?all=yes").success(function(data) {
 		// contains problem properties and parameters with their attributes,
 		// if present yet
 		$scope.parameters = data.parameters;
