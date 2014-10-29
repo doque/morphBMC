@@ -20,17 +20,6 @@ app.controller("RefinementController", ['$scope', '$http', 'SocketService', func
 		});
 	};
 
-	$scope.yours = function(parameterId) {
-		var yours = false;
-		angular.forEach($scope.parameters, function(p) {
-			if (p.id === parameterId && p.userId == window.USER_ID) {
-				yours = true;
-				return;
-			}
-		});
-		return yours;
-	};
-
 	// collaborative shit
 	$scope.$on('test', function(event, args) {
 		console.log(args);
@@ -75,10 +64,28 @@ app.controller("RefinementController", ['$scope', '$http', 'SocketService', func
 		});
 	};
 
+	/**
+	 * sends a DELETE request to remove an attribute
+	 * and kicks it from the $scope
+	 */
+	$scope.removeAttribute = function(parameter, attribute) {
+		$http.delete("/api/problems/" + window.PROBLEM_ID + "/parameters/attributes/" + attribute.id).success(function() {
+			// remove from scope
+			angular.forEach(parameter.attributes, function(att, index) {
+				if (att.id === attribute.id) {
+					parameter.attributes.splice(index, 1);
+					return;
+				}
+			});
+
+		});
+	};
+
 
 	// set up environment on load
 	$http.get("/api/problems/"+window.PROBLEM_ID+"/parameters?all=yes").success(function(data) {
 		$scope.parameters = data.parameters;
+		$scope.userId = window.USER_ID;
 	});
 }]);
 

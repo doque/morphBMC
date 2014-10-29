@@ -31,6 +31,11 @@ public class DefinitionController extends Controller {
 	}
 	
 	
+	/**
+	 * retrieve parameters. either ALL or just belonging to requesting user
+	 * @param problemId
+	 * @return
+	 */
 	public Result getParameters(long problemId) {
 		
 		Problem pr = Problem.find.byId(problemId);
@@ -150,7 +155,29 @@ public class DefinitionController extends Controller {
 	}
 
 	/**
-	 * 
+	 * Delete an attribute
+	 * @param problemId
+	 * @param attributeId
+	 * @return
+	 */
+	public Result deleteAttribute(long problemId, long attributeId) {
+		Attribute a = Attribute.find.byId(attributeId);
+		if (a == null) {
+			return notFound();
+		}
+		List<Compatibility> compats = Compatibility.find.all();
+		for (Compatibility c : compats) {
+			if (c.attr1.id == a.id || c.attr2.id == a.id) {
+				c.delete();
+			}
+		}
+		a.delete();
+
+		return ok();
+	}
+	
+	/**
+	 * Move an attribute between parameters
 	 * @param problemId
 	 * @param attributeId
 	 * @return

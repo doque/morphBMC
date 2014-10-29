@@ -39,6 +39,7 @@ GET 	/api/problems/:id/parameters							@controllers.DefinitionController.getPar
 POST 	/api/problems/:id/parameters							@controllers.DefinitionController.addParameter(id: Long)
 DELETE  /api/problems/:problemId/parameters/:id					@controllers.DefinitionController.deleteParameter(problemId: Long, id: Long)
 POST	/api/problems/:problemId/parameters/:id/attributes		@controllers.DefinitionController.addAttribute(problemId: Long, id:Long)
+DELETE	/api/problems/:problemId/parameters/attributes/:id		@controllers.DefinitionController.deleteAttribute(problemId: Long, id:Long)
 
 # Compatibility
 POST	/api/problems/:id/compatibilities						@controllers.CompatibilityController.addCompatibility(id: Long)

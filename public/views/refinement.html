@@ -21,7 +21,7 @@
 		class="parameter"
 		ng-repeat="parameter in parameters | orderBy: 'id':true"
 		ng-init="notyours = !yours(parameter.id)"
-		ng-class="{ 'notyours': notyours }">
+		ng-class="{ 'notyours': parameter.userId != userId }">
 		
 		<h5>{{ parameter.name }}</h5>
 
@@ -40,19 +40,23 @@
 		</div>
 		<ul class="attributes">
 			<li ng-repeat="attr in parameter.attributes | orderBy:'id'">
-				<div>{{ attr.name }}</div>
+				<div>
+					{{ attr.name }}
+					<button
+						ng-click="removeAttribute(parameter, attr)"
+						type="button" class="close">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+				</div>
 			</li>
 		</ul>
 		
 		<div class="options">
-			<span data-toggle="dropdown" class="glyphicon glyphicon-collapse-down"></span>
-			<ul class="dropdown-menu" role="menu">
-				<!-- <li><a href="#">Rename</a></li> -->
-				<li><a href="javascript:;" ng-click="removeParameter(parameter)">Remove</a></li>
-				<!--<li><a href="#">Something else here</a></li>
-				<li class="divider"></li>
-				<li><a href="#">Separated link</a></li>-->
-			</ul>
+			<button
+				ng-click="removeParameter(parameter)"
+				type="button" class="close">
+				<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+			</button>
 		</div>
 	</div>
 

@@ -20,12 +20,6 @@ app.controller("DefinitionController", ['$scope', '$http', 'SocketService', func
 		});
 	};
 
-
-	$scope.$on('test', function(event, args) {
-		console.log(args);
-	});
-
-
 	/**
 	 * send a post request to add a new parameter
 	 */
@@ -45,23 +39,6 @@ app.controller("DefinitionController", ['$scope', '$http', 'SocketService', func
 			// reset input field model
 			$scope.parameter.name = "";
 			$scope.parameters.push(data.parameter);
-		});
-	};
-
-	/**
-	 * sends a DELETE request to remove a parameter
-	 * and kicks it from the $scope
-	 */
-	$scope.removeParameter = function(parameter) {
-		$http.delete("/api/problems/" + window.PROBLEM_ID + "/parameters/" + parameter.id).success(function() {
-			// remove from scope
-			angular.forEach($scope.parameters, function(p, index) {
-				if (p.id === parameter.id) {
-					$scope.parameters.splice(index, 1);
-					return;
-				}
-			});
-
 		});
 	};
 

@@ -47,7 +47,7 @@
 	width: 260px;
 }
 .parameter.notyours {
-	background: white;
+	background: lightgoldenrodyellow;
 	border-color: #2f6f9f;
 }
 .parameter > div {
@@ -80,8 +80,8 @@
 .parameter .options {
 	cursor: pointer;
 	position: absolute;
-	top: 5px;
-	right: 5px;
+	top: 0px;
+	right: 8px;
 }
 .parameter.parameter-add {
 	opacity: 0.5;

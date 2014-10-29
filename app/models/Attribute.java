@@ -19,7 +19,7 @@ public class Attribute extends Model {
 
 	public String userId;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.DETACH)
 	@JsonIgnore
 	public Parameter parameter;
 
