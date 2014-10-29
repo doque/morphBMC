@@ -4,19 +4,13 @@ app.controller("DefinitionController", ['$scope', '$http', 'SocketService', func
 	 * send a POST request to add a new attribute
 	 * @param {[type]} parameter which parameter the attribute belongs to
 	 */
-	$scope.addAttribute = function(parameter) {
+	$scope.addAttribute = function(parameter, attribute) {
 
-		if (!parameter.attribute) return;
+		if (!attribute || !attribute.name) return;
 
-		if (parameter.attribute.name.length === 0) {
-			return;
-		}
-
-		$http.post("/api/problems/" + window.PROBLEM_ID + "/parameters/"+parameter.id+"/attributes", {
-			"name": parameter.attribute.name
-		}).success(function(data) {
+		$http.post("/api/problems/" + window.PROBLEM_ID + "/parameters/"+parameter.id+"/attributes", attribute).success(function(data) {
 			parameter.attributes.unshift(data.attribute);
-			parameter.attribute.name = "";
+			attribute.name = "";
 		});
 	};
 

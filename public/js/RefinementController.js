@@ -6,19 +6,13 @@ app.controller("RefinementController", ['$scope', '$http', 'SocketService', func
 	 * send a POST request to add a new attribute
 	 * @param {[type]} parameter which parameter the attribute belongs to
 	 */
-	$scope.addAttribute = function(parameter) {
+	$scope.addAttribute = function(parameter, attribute) {
 
-		if (!parameter.attribute) return;
+		if (!attribute || !attribute.name) return;
 
-		if (parameter.attribute.name.length === 0) {
-			return;
-		}
-
-		$http.post("/api/problems/" + window.PROBLEM_ID + "/parameters/"+parameter.id+"/attributes", {
-			"name": parameter.attribute.name
-		}).success(function(data) {
+		$http.post("/api/problems/" + window.PROBLEM_ID + "/parameters/"+parameter.id+"/attributes", attribute).success(function(data) {
 			parameter.attributes.unshift(data.attribute);
-			parameter.attribute.name = "";
+			attribute.name = "";
 		});
 	};
 
@@ -27,11 +21,21 @@ app.controller("RefinementController", ['$scope', '$http', 'SocketService', func
 		console.log(args);
 	});
 
+
+	/**
+	 * callback function for dropping a dragged parameter
+	 */
 	$scope.dropped = function(evt, ui) {
-		var draggedAttributes = angular.element(ui.draggable).scope().parameter.attributes;
-		var target = angular.element(evt.target).scope().parameter.id;
-		console.log(draggedAttributes, target)
-		
+		var oldParam = angular.element(ui.draggable).scope().parameter;
+		var draggedAttributes = oldParam.attributes;
+		var target = angular.element(evt.target).scope().parameter;
+		angular.forEach(draggedAttributes, function (attr) {
+			$scope.addAttribute(target, attr);
+		});
+
+		// ui stuff
+		$scope.removeParameter(oldParam);
+
 	};
 
 	/**

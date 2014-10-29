@@ -143,11 +143,27 @@ public class DefinitionController extends Controller {
 		}
 
 		Attribute attr = Form.form(Attribute.class).bindFromRequest().get();
-		attr.userId = session("userId");
-		p.attributes.add(attr);
-		p.save();
-		attr.parameter = p;
-		attr.save();
+		// attribute already exists, in this case it was dragdropped into another parameter
+		if (attr.id != 0) {
+			p.attributes.add(attr);
+			p.update();
+			attr.parameter = p;
+			attr.update();
+			// strip from old parameter
+			/*for (int i=0; i<attr.parameter.attributes.size(); i++) {
+				if (attr.parameter.attributes.get(i).id == attr.id){
+					attr.parameter.attributes.remove(i);
+				}
+			}*/
+		} else {
+			// create new attribute
+			attr.userId = session("userId");
+			p.attributes.add(attr);
+			p.update();
+			attr.parameter = p;
+			attr.save();
+		}
+		
 
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("attribute", attr);
@@ -173,29 +189,6 @@ public class DefinitionController extends Controller {
 		}
 		a.delete();
 
-		return ok();
-	}
-	
-	/**
-	 * Move an attribute between parameters
-	 * @param problemId
-	 * @param attributeId
-	 * @return
-	 */
-	public Result reassignAttribute(long problemId, long attributeId) {
-		Attribute a = Attribute.find.byId(attributeId);
-		if (a == null) {
-			return notFound();
-		}
-		String parameterId = Form.form().bindFromRequest().get("parameterId");
-		if (parameterId != null) {
-			Parameter p = Parameter.find.byId(Long.parseLong(parameterId));
-			if (p == null) {
-				return badRequest();
-			}
-			a.parameter = p;
-			a.update();
-		}
 		return ok();
 	}
 }

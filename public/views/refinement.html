@@ -39,11 +39,11 @@
 				type="text"
 				class="text"
 				placeholder="Enter Name for Attribute"
-				ng-blur="addAttribute(parameter); addingAttribute = false;"
-				ng-model="parameter.attribute.name"
+				ng-blur="addingAttribute=false;"
+				ng-model="attribute.name"
 				ng-show="addingAttribute"
 				autofocus="addingAttribute"
-				ng-enter="addAttribute(parameter)"
+				ng-enter="addAttribute(parameter, attribute);"
 				>
 			<a ng-hide="addingAttribute">Add Attribute</a>	
 		</div>
