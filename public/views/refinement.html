@@ -17,11 +17,20 @@
 		</h5>
 	</div>
 
+	<div>{{ draggedParameter }}</div>
+
 	<div
 		class="parameter"
 		ng-repeat="parameter in parameters | orderBy: 'id':true"
 		ng-init="notyours = !yours(parameter.id)"
-		ng-class="{ 'notyours': parameter.userId != userId }">
+		ng-class="{ 'notyours': parameter.userId != userId }"
+		data-drag="true"
+		data-drop="true"
+		jqyoui-draggable="{ animate: true }"
+		jqyoui-droppable="{ onDrop: 'dropped' }"
+		data-jqyoui-options="{ revert: 'invalid' }"
+		ng-model="draggedParameter"
+		>
 		
 		<h5>{{ parameter.name }}</h5>
 

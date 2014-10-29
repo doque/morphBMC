@@ -1,5 +1,7 @@
 app.controller("RefinementController", ['$scope', '$http', 'SocketService', function($scope, $http, SocketsService) {
 
+	$scope.draggedParameter = null;
+
 	/**
 	 * send a POST request to add a new attribute
 	 * @param {[type]} parameter which parameter the attribute belongs to
@@ -24,6 +26,13 @@ app.controller("RefinementController", ['$scope', '$http', 'SocketService', func
 	$scope.$on('test', function(event, args) {
 		console.log(args);
 	});
+
+	$scope.dropped = function(evt, ui) {
+		var draggedAttributes = angular.element(ui.draggable).scope().parameter.attributes;
+		var target = angular.element(evt.target).scope().parameter.id;
+		console.log(draggedAttributes, target)
+		
+	};
 
 	/**
 	 * send a post request to add a new parameter

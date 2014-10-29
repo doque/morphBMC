@@ -1,5 +1,5 @@
 // define my own module with required modules
-var app = angular.module('morphBMC', ['ngRoute', 'tableSort', 'textAngular']).config(
+var app = angular.module('morphBMC', ['ngRoute', 'tableSort', 'textAngular', 'ngDragDrop']).config(
 	function ($routeProvider, $httpProvider) {
 		// enable strict mode for JS parser
 		'use strict';
@@ -195,4 +195,5 @@ var app = angular.module('morphBMC', ['ngRoute', 'tableSort', 'textAngular']).co
 	    }
     	
     };
+
 }]);
