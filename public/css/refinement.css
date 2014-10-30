@@ -1,0 +1,6 @@
+#refinement .parameter h5 {
+	cursor: move;
+}
+#refinement .parameter.drophover {
+	border: 10px solid #d6e9c6;
+}

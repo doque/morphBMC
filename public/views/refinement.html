@@ -26,9 +26,9 @@
 		ng-class="{ 'notyours': parameter.userId != userId }"
 		data-drag="true"
 		data-drop="true"
-		jqyoui-draggable="{ animate: true }"
+		jqyoui-draggable="{ animate: false }"
 		jqyoui-droppable="{ onDrop: 'dropped' }"
-		data-jqyoui-options="{ revert: 'invalid' }"
+		data-jqyoui-options="dragOptions"
 		ng-model="draggedParameter"
 		>
 		

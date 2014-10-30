@@ -1,6 +1,13 @@
 app.controller("RefinementController", ['$scope', '$http', 'SocketService', function($scope, $http, SocketsService) {
 
-	$scope.draggedParameter = null;
+	$scope.dragOptions = {
+		handle: 'h5',
+		hoverClass: 'drophover',
+		opacity: .5,
+		revert: true
+	};
+
+
 
 	/**
 	 * send a POST request to add a new attribute
@@ -29,6 +36,7 @@ app.controller("RefinementController", ['$scope', '$http', 'SocketService', func
 	 * callback function for dropping a dragged parameter
 	 */
 	$scope.dropped = function(evt, ui) {
+		angular.element(ui.draggable).hide();
 		var oldParam = angular.element(ui.draggable).scope().parameter;
 		var draggedAttributes = oldParam.attributes;
 		var target = angular.element(evt.target).scope().parameter;
