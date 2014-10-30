@@ -136,7 +136,14 @@ var app = angular.module('morphBMC', ['ngRoute', 'tableSort', 'textAngular', 'ng
 	// TODO inject some form if ID for this popover
 	var template = '<div class="popover right">\
 				      <div class="arrow"></div>\
-				      <h3 class="popover-title">{{ x.name }} and {{ y.name }}</h3>\
+				      <h3 class="popover-title">\
+				      	{{ x.name }} and {{ y.name }}\
+				      	<button\
+							onclick="$(\'.popover\').remove()"\
+							type="button" class="close">\
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>\
+					</button>\
+				      </h3>\
 				      <div class="popover-content">\
 				      	{{ conflicts.length }} conflicted ratings:\
 				        <div class="conflicted-rating" ng-repeat="c in conflicts">\
