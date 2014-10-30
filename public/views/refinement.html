@@ -34,18 +34,18 @@
 		
 		<h5>{{ parameter.name }}</h5>
 
-		<div ng-click="addingAttribute=true" class="add">
+		<div ng-click="parameter.addingAttribute=true" class="add">
 			<input
 				type="text"
 				class="text"
 				placeholder="Enter Name for Attribute"
-				ng-blur="addingAttribute=false;"
+				ng-blur="aparameter.ddingAttribute=false;"
 				ng-model="attribute.name"
-				ng-show="addingAttribute"
-				autofocus="addingAttribute"
+				ng-show="parameter.addingAttribute"
+				autofocus="parameter.addingAttribute"
 				ng-enter="addAttribute(parameter, attribute);"
 				>
-			<a ng-hide="addingAttribute">Add Attribute</a>	
+			<a ng-hide="parameter.addingAttribute">Add Attribute</a>	
 		</div>
 		<ul class="attributes">
 			<li ng-repeat="attr in parameter.attributes | orderBy:'id'">

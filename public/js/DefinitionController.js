@@ -32,6 +32,7 @@ app.controller("DefinitionController", ['$scope', '$http', 'SocketService', func
 			$scope.addingParameter = false;
 			// reset input field model
 			$scope.parameter.name = "";
+			data.parameter.addingAttribute = true;
 			$scope.parameters.push(data.parameter);
 		});
 	};
