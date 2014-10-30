@@ -152,18 +152,16 @@ public class DefinitionController extends Controller {
 		// attribute already exists, in this case it was dragdropped into
 		// another parameter
 		if (attr.id != 0) {
-			p.attributes.add(attr);
-			p.update();
 			attr.parameter = p;
 			attr.update();
 		} else {
 			// create new attribute
 			attr.userId = userId;
-			p.attributes.add(attr);
-			p.update();
 			attr.parameter = p;
 			attr.save();
 		}
+		p.attributes.add(attr);
+		p.update();
 
 		socketService.broadcastExcept(userId, "updated");
 
