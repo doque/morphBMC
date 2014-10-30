@@ -17,8 +17,11 @@ app.controller("RefinementController", ['$scope', '$http', 'SocketService', func
 	};
 
 	// collaborative shit
-	$scope.$on('test', function(event, args) {
-		console.log(args);
+	$scope.$on('updated', function(event, args) {
+		console.log("lol");
+		$http.get("/api/problems/"+window.PROBLEM_ID+"/parameters?all=yes").success(function(data) {
+			$scope.parameters = data.parameters;
+		});
 	});
 
 
@@ -100,5 +103,5 @@ app.controller("RefinementController", ['$scope', '$http', 'SocketService', func
 		$scope.parameters = data.parameters;
 		$scope.userId = window.USER_ID;
 	});
-}]);
 
+}]);

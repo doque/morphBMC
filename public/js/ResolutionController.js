@@ -1,4 +1,4 @@
-app.controller("ResolutionController", ['$scope', '$http', function($scope, $http) {
+app.controller("ResolutionController", ['$scope', '$http', 'SocketService', function($scope, $http, SocketService) {
 
 	$scope.adding = false;
 	$scope.compatibilities = null;

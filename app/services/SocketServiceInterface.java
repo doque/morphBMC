@@ -42,6 +42,14 @@ public interface SocketServiceInterface {
 	void broadcast(String message);
 
 	/**
+	 * Broadcast to all clients except one specified
+	 * 
+	 * @param message
+	 *            Message
+	 */
+	void broadcastExcept(String userId, String message);
+	
+	/**
 	 * Remove last message from queue. No state-recover necessary anymore
 	 * 
 	 * @param userId

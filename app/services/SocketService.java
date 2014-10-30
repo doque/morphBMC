@@ -51,6 +51,16 @@ public class SocketService implements SocketServiceInterface {
 			clients.get(client).getOut().write(message);
 		}
 	}
+	
+	@Override
+	public void broadcastExcept(String userId, String message) {
+		for (String client : clients.keySet()) {
+			if (client.equals(userId)) {
+				continue;
+			}
+			clients.get(client).getOut().write(message);
+		}
+	}
 
 	@Override
 	public void flush(String userId) {

@@ -2,13 +2,6 @@ package util;
 
 import play.libs.Json;
 
-import java.util.Map;
-
-import models.Compatibility;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.google.common.collect.Maps;
-
 
 /**
  * builds various JSON-formatted files to be broadcasted to clients
@@ -35,10 +28,10 @@ public class JsonBuilder {
 	 * @param c
 	 * @return
 	 */
-	public static JsonNode conflictResolved(Compatibility c) {
-			Map<String, Object> result = Maps.newHashMap();
-			result.put("compatibility", c);
-		return Json.toJson(result);
+	public static String conflictResolved() {
+			//Map<String, Object> result = Maps.newHashMap();
+			//result.put("compatibility", c);
+		return Json.toJson(Types.CONFLICT_RESOLVED).toString();
 	}
 	
 	

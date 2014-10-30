@@ -9,6 +9,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import services.SocketServiceInterface;
+import util.JsonBuilder;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -75,7 +76,7 @@ public class CompatibilityController extends Controller {
 			c.save();
 		}
 		if (override != null) {
-			socketService.broadcast("conflicted ratings have been removed");
+			socketService.broadcast(JsonBuilder.conflictResolved());
 		}
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("compatibilities", getUserCompatibilities(problemId, userId));

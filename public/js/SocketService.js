@@ -57,7 +57,8 @@ app.factory('SocketService', ['$q', '$rootScope', '$location', function($q, $roo
         var type = data.type;
         var message = data.message;
         var args = data;*/
-        $rootScope.$broadcast("test", incoming.data);
+        console.log(incoming.data);
+        $rootScope.$broadcast(incoming.data);
     };
 
     var send = function(message) {
