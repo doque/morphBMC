@@ -33,6 +33,7 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout', functi
 		angular.forEach($scope.compatibilities, function(c) {
 			if ($scope.batch.indexOf(c.id) > -1) {
 				c.rating = batchrating;
+				c.userId = $scope.userI
 				$scope.addCompatibility(c);	
 			}
 		});
@@ -164,7 +165,7 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout', functi
 		$scope.parameters = data.parameters;
 
 		// after receiving problem id, load existing compatibilities
-		$http.get("/api/problems/" + window.PROBLEM_ID+ "/compatibilities?all=yes").success(function(data) {
+		$http.get("/api/problems/" + window.PROBLEM_ID+ "/compatibilities").success(function(data) {
 			$scope.compatibilities = data.compatibilities;
 		});
 	});

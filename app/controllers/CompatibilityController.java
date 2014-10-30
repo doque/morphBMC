@@ -65,19 +65,20 @@ public class CompatibilityController extends Controller {
 			
 		}
 
-		c.userId = session().get("userId");
+		String userId = session().get("userId");
+		c.userId = userId;
+		
 		// update existing
 		if (c.id != 0) {
 			c.update();
 		} else {
 			c.save();
 		}
-
 		if (override != null) {
 			socketService.broadcast("conflicted ratings have been removed");
 		}
 		Map<String, Object> result = Maps.newHashMap();
-		result.put("compatibilities", getAllCompatibilities(problemId));
+		result.put("compatibilities", getUserCompatibilities(problemId, userId));
 		return ok(Json.toJson(result));
 	}
 
@@ -96,7 +97,11 @@ public class CompatibilityController extends Controller {
 		 * prefilled
 		 */
 		Rating defaultRating = Rating.find.where().eq("value", 0).findUnique();
-		insertInitialCompatibilities(problemId, userId, defaultRating);
+		
+		// if the user has no rated compatibiltiy yet, we have to insert some dummies for him
+		if (Compatibility.find.where().eq("user_id", userId).findRowCount() == 0) {
+			insertInitialCompatibilities(problemId, userId, defaultRating);
+		}
 
 		// now we're ready to read compatibilities
 		List<Compatibility> compatibilities = Lists.newArrayList();
