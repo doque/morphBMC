@@ -12,6 +12,10 @@ import models.Rating;
 import com.google.common.collect.Maps;
 
 public class RatingController extends Controller {
+	/**
+	 * serves all ratings in the database
+	 * @return
+	 */
 	public Result getRatings() {
 
 		List<Rating> ratings = Rating.find.all();

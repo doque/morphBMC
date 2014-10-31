@@ -7,6 +7,8 @@ app.controller("ExplorationController", ['$scope', '$http', '$filter', function(
 	$scope.ok = [];
 	$scope.bad = [];
 
+	$scope.rendering = true;
+
 	$scope.compatibilities = [];
 
 	/**
@@ -215,6 +217,7 @@ app.controller("ExplorationController", ['$scope', '$http', '$filter', function(
 
 		$http.get("/api/problems/" + window.PROBLEM_ID+ "/compatibilities").success(function(data) {
 			$scope.compatibilities = data.compatibilities;
+			$scope.rendering = false;
 		});
 	});
 

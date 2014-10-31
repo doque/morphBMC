@@ -2,7 +2,6 @@ package controllers;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import play.Logger;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -16,8 +15,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.persistence.PersistenceException;
 
 import models.Attribute;
 import models.Compatibility;
@@ -39,7 +36,6 @@ public class CompatibilityController extends Controller {
 
 	@Inject
 	public CompatibilityController(SocketServiceInterface socketService) {
-		System.out.println("not injecting anything");
 		this.socketService = checkNotNull(socketService);
 	}
 
@@ -101,9 +97,7 @@ public class CompatibilityController extends Controller {
 
 		// if the user has no rated compatibiltiy yet, we have to insert some
 		// dummies for him
-		//if (Compatibility.find.where().eq("user_id", userId).findRowCount() == 0) {
-			insertInitialCompatibilities(problemId, userId, defaultRating);
-		//}
+		insertInitialCompatibilities(problemId, userId, defaultRating);
 
 		// now we're ready to read compatibilities
 		List<Compatibility> compatibilities = Lists.newArrayList();
@@ -229,23 +223,20 @@ public class CompatibilityController extends Controller {
 			
 			List<Compatibility> allCompats = getAllCompatibilities(problemId);
 			for (Compatibility existingCompat : allCompats) {
-				if (existingCompat.sameAttributes(c)) {
+				// this user has already either created a compatibility for this attribute pair
+				// or he has had a dummy one inserted before.
+				if (existingCompat.sameAttributes(c) && c.userId.equals(existingCompat.userId)) {
 					// skip creation of this attribute
 					continue outerloop;
 				}
 			}
-			
-			try {
-				c.save();
-				++count;
-			} catch (PersistenceException e) {
-				Logger.info("compatibility" + c.toString()
-						+ " already exists, skipping");
-			}
+			c.save();
 		}
-		Logger.info("Total number of new configurations: " + count);
 	}
 
+	/**
+	 * Used to hold a pair of attributes
+	 */
 	private class Pair {
 		public long x;
 		public long y;

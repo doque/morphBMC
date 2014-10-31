@@ -7,6 +7,8 @@ GET     /                           							controllers.Application.index()
 # Angular root
 GET		/problem/:id											controllers.Application.viewProblem(id: Long)
 
+# Problem Creation
+POST 	/api/problems											@controllers.ProblemController.createProblem
 
 #################
 # SecureSocial

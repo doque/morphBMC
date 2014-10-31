@@ -38,7 +38,7 @@ public class Compatibility extends Model {
 	
 	/**
 	 * compares two compatibilities to see if the pair of attributes is equal
-	 * @param c
+	 * @param c the other compatibility
 	 * @return
 	 */
 	public boolean sameAttributes(Compatibility c) {

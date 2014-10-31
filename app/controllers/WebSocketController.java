@@ -22,8 +22,7 @@ public class WebSocketController extends Controller {
 
 	/**
 	 * Opens a new WebSocket connection if a userId is present
-	 * 
-	 * @return
+	 * and binds the in/out to the SocketService
 	 */
 	public WebSocket<String> open(final long problemId, final String userId) {
 
@@ -32,19 +31,16 @@ public class WebSocketController extends Controller {
 			// Called when the Websocket Handshake is done.
 			public void onReady(WebSocket.In<String> in,
 					WebSocket.Out<String> out) {
-
+				
+				// socketService manages all clients connections
 				socketService.registerClient(userId, in, out);
 
 				// When the socket is closed.
 				in.onClose(new Callback0() {
 					public void invoke() {
-						//socketService.broadcast("client " + userId + " has left.");
 						socketService.removeClient(userId);
 					}
 				});
-
-				// Send a single 'Hello!' message
-				//out.write("Hello! You are connected.");
 			}
 
 		};

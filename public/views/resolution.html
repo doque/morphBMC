@@ -75,7 +75,7 @@
 						'success': 	(getConflicts(x.id, y.id).length === 0  &amp;&amp; getCompatibilityRatings(x.id, y.id)[0].rating.value === 9),
 						'warning': 	(getConflicts(x.id, y.id).length === 0  &amp;&amp; getCompatibilityRatings(x.id, y.id)[0].rating.value === 4),
 						'danger': 	(getConflicts(x.id, y.id).length === 0  &amp;&amp; getCompatibilityRatings(x.id, y.id)[0].rating.value === 1),
-						'override': getCompatibilityRatings(x.id, y.id)[0].overrideComment !== '',
+						'override': getCompatibilityRatings(x.id, y.id)[0].overrideComment.length > 0,
 						'disabled' : redundant
 					}">
 					
@@ -87,7 +87,7 @@
 					</div>
 
 					<div
-						ng-if="getConflicts(x.id, y.id).length === 0"
+						ng-if="!redundant &amp;&amp; getConflicts(x.id, y.id).length === 0"
 						tooltip
 						data-toggle="tooltip"
 						data-placement="top"

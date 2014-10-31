@@ -1,61 +1,65 @@
 package controllers;
 
+import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
+import play.libs.Yaml;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import securesocial.core.Identity;
+import securesocial.core.java.SecureSocial;
+import securesocial.core.java.SecureSocial.SecuredAction;
+
+import java.util.List;
 import java.util.Map;
 
+import models.Parameter;
 import models.Problem;
 import models.Problem.Stage;
 
 import com.google.common.collect.Maps;
 
 public class ProblemController extends Controller {
+	
+	@SecuredAction
+	public Result createProblem() {
+		DynamicForm form = Form.form().bindFromRequest();
+		String name = form.get("name");
+		
+		// grab user
+		Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
+		String userId = (String) (user.email().isDefined() ? user.email().get() : user.identityId().userId());
+		
+		Problem p = new Problem();
+		p.name = name;
+		// twitter does not expose email addresses.
+		p.owner = p.userId = userId;
+		
+		// BMC problem
+		if (form.get("bmc") != null) {
+			// read BMC terminology
+			@SuppressWarnings("unchecked")
+			Map<String, List<Object>> all = (Map<String, List<Object>>) Yaml
+					.load("bmc.yml");
 
-	/**
-	 * create a new problem in the database
-	 * 
-	 * @param userId
-	 *            - the creating user's userId. Name will be stored in the owner
-	 *            field
-	 * @return the new problem
-	 * 
-	 *         public static Problem createProblem(String userId) {
-	 * 
-	 *         Problem p = new models.Problem(); p.userId = userId;
-	 * 
-	 *         // get the user identities InMemoryUserService service =
-	 *         (InMemoryUserService) Play.application()
-	 *         .plugin(BaseUserService.class);
-	 * 
-	 *         p.save();
-	 * 
-	 *         return p; } create a new problem based on BMC terminology
-	 * 
-	 * @return
-	 * 
-	 *         public static Problem createBMC(String userId) { Problem p = new
-	 *         models.Problem(); p.userId = userId;
-	 * 
-	 *         // read BMC terminology
-	 * @SuppressWarnings("unchecked") Map<String, List<Object>> all =
-	 *                                (Map<String, List<Object>>) Yaml
-	 *                                .load("bmc.yml");
-	 * 
-	 *                                // insert parameters to problem for
-	 *                                (Object o : all.get("parameters")) {
-	 *                                Parameter param = (Parameter) o;
-	 *                                p.parameters.add(param); }
-	 * 
-	 *                                p.save(); return p; }
-	 */
+			// insert parameters to problem for
+			for (Object o : all.get("parameters")) {
+				Parameter param = (Parameter) o;
+				param.userId = userId;
+				p.parameters.add(param);
+			}
 
+		}
+
+		p.save();
+		
+		return redirect("/problem/" + p.id);
+	}
+
+	        
 	/**
 	 * return detailed info about a problem.
-	 * 
-	 * @return
 	 */
 	// @SecuredAction(ajaxCall = true)
 	public Result getProblemEnvironment(long id) {
@@ -66,8 +70,8 @@ public class ProblemController extends Controller {
 		}
 
 		Map<String, Object> result = Maps.newHashMap();
-		// strip parameters here, this is handled by DefinitionController
 		
+		// strip parameters here, this is handled by DefinitionController
 		p.parameters = null;
 		
 		result.put("problem", p);
