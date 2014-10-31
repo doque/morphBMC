@@ -47,7 +47,7 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout', functi
 	$scope.addToBatch = function(id) {
 		angular.forEach($scope.compatibilities, function(c) {
 			if (c.attr1.id === id || c.attr2.id === id) {
-				if ($scope.isInBatch(c.id) === false) {
+				if ($scope.isInBatch(c.id) === false && c.rating.value === 0) {
 					$scope.batch.push(c.id);
 				} else {
 					remove($scope.batch, c.id);

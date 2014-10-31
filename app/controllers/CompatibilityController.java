@@ -47,10 +47,10 @@ public class CompatibilityController extends Controller {
 	 * store new compatibility for a pair of attributes and rating
 	 */
 	public Result addCompatibility(long problemId) {
-		
+
 		Compatibility c = Form.form(Compatibility.class).bindFromRequest()
 				.get();
-		
+
 		// see if this is an override request
 		String override = Form.form().bindFromRequest().get("override");
 
@@ -63,12 +63,12 @@ public class CompatibilityController extends Controller {
 					compatibility.delete();
 				}
 			}
-			
+
 		}
 
 		String userId = session().get("userId");
 		c.userId = userId;
-		
+
 		// update existing
 		if (c.id != 0) {
 			c.update();
@@ -98,11 +98,12 @@ public class CompatibilityController extends Controller {
 		 * prefilled
 		 */
 		Rating defaultRating = Rating.find.where().eq("value", 0).findUnique();
-		
-		// if the user has no rated compatibiltiy yet, we have to insert some dummies for him
-		if (Compatibility.find.where().eq("user_id", userId).findRowCount() == 0) {
+
+		// if the user has no rated compatibiltiy yet, we have to insert some
+		// dummies for him
+		//if (Compatibility.find.where().eq("user_id", userId).findRowCount() == 0) {
 			insertInitialCompatibilities(problemId, userId, defaultRating);
-		}
+		//}
 
 		// now we're ready to read compatibilities
 		List<Compatibility> compatibilities = Lists.newArrayList();
@@ -126,6 +127,7 @@ public class CompatibilityController extends Controller {
 
 	/**
 	 * retrieves a user's existing compatibilities for a problem
+	 * 
 	 * @param problemId
 	 * @param userId
 	 * @return a list of the user's compatibilities
@@ -147,6 +149,7 @@ public class CompatibilityController extends Controller {
 
 	/**
 	 * retrieves all existing compatibilities for a problem
+	 * 
 	 * @param problemId
 	 * @return a list of all compatibilities
 	 */
@@ -212,12 +215,26 @@ public class CompatibilityController extends Controller {
 		}
 		int count = 0;
 		// now create default rating for all these pairs
+		outerloop:
 		for (Pair pair : attributeIds) {
+			// check if this compatibility already exists, and only create it if
+			// thats not the case  
+			
+			
 			Compatibility c = new Compatibility();
 			c.attr1 = Attribute.find.byId(pair.x);
 			c.attr2 = Attribute.find.byId(pair.y);
 			c.rating = defaultRating;
 			c.userId = userId;
+			
+			List<Compatibility> allCompats = getAllCompatibilities(problemId);
+			for (Compatibility existingCompat : allCompats) {
+				if (existingCompat.sameAttributes(c)) {
+					// skip creation of this attribute
+					continue outerloop;
+				}
+			}
+			
 			try {
 				c.save();
 				++count;
