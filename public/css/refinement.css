@@ -1,4 +1,4 @@
-#refinement .parameter h5 {
+#refinement .parameter:not(.parameter-add) h5 {
 	cursor: move;
 }
 #refinement .parameter.drophover {
