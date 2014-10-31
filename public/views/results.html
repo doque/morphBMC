@@ -3,7 +3,7 @@
 <div id="results" ng-show="!rendering">
 	
 	<div class="alert alert-success">
-		There are <code>{{configurations.length }}</code> possible configurations,
+		There are <code>{{configurations.length }}</code> possible solutions,
 		<code>{{ betterThanMedium}}</code> of which have a higher consistency value
 		than the average of <code>{{ mediumConsistency.toFixed(3)}}</code>.
 	</div>
@@ -14,7 +14,7 @@
 				<th>Rank</th>
 				<th ts-default="descending" ts-criteria="consistencyValue">Consistency Value</th>
 				<th ts-criteria="{{ p.name }} | lowercase" ng-repeat="p in parameters | orderBy: 'name'">
-					{{ p.name }}
+					{{ p.name.replace('_', ' ') }}
 				</th>
 			</tr>
 		</thead>

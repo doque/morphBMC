@@ -141,6 +141,8 @@ app.controller("ResultsController", ['$scope', '$http', function($scope, $http) 
 		// contains problem properties and parameters with their attributes,
 		// if present yet
 		angular.forEach($scope.parameters, function(p) {
+			p.name = p.name.replace(' ', '_');
+			// this is needed so tablesort doesn't fuck up
 			$scope.attributes.push(p.attributes);
 		});
 

@@ -97,6 +97,23 @@ public class ProblemController extends Controller {
 	}
 	
 	/**
+	 * Updates a problem statement
+	 */
+	public Result changeName(long id) {
+		Problem p = Problem.find.byId(id);
+		if (p == null) {
+			return notFound();
+		}
+		String name = Form.form().bindFromRequest().get("name");
+		if (name != null) {
+			p.name = name;
+			p.save();
+		}
+		
+		return ok();
+	}
+	
+	/**
 	 * changes the Stage that a problem is currently in can be done within any
 	 * stage and affects all users
 	 * 

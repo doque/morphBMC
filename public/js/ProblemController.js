@@ -2,6 +2,9 @@ app.controller("ProblemController", ['$scope', '$http', '$location', '$timeout',
 
 	$scope.problem = {};
 
+	/**
+	 * changes the stage of a problem
+	 */
 	$scope.changeStage = function(stage) {
 
 		$scope.problem.stage = '/' + stage;
@@ -14,6 +17,25 @@ app.controller("ProblemController", ['$scope', '$http', '$location', '$timeout',
 		}
 	}
 
+	/**
+	 * edits the name of a problem
+	 */
+	$scope.editName = function() {
+		var name = $scope.problem.name;
+		if (name.length === 0) {
+			$scope.editingName = false;
+			return;
+		}
+		$http.post("/api/problems/"+window.PROBLEM_ID+"/name", {
+			name: $scope.problem.name
+		}).success(function() {
+			$scope.editingName = false;
+		})
+	}
+
+	/**
+	 * saves a problem statement
+	 */
 	$scope.saveStatement = function(e) {
 
 		var button = $(e.target);
