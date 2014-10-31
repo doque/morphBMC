@@ -24,7 +24,7 @@ app.controller("RefinementController", ['$scope', '$http', 'SocketService', func
 	};
 
 	// collaborative shit
-	$scope.$on('updated', function(event, args) {
+	$scope.$on('UPDATE', function(event, args) {
 		console.log("lol");
 		$http.get("/api/problems/"+window.PROBLEM_ID+"/parameters?all=yes").success(function(data) {
 			$scope.parameters = data.parameters;

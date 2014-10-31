@@ -76,7 +76,7 @@ public class CompatibilityController extends Controller {
 			c.save();
 		}
 		if (override != null) {
-			socketService.broadcast(JsonBuilder.conflictResolved());
+			socketService.broadcast(JsonBuilder.conflictResolved(c));
 		}
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("compatibilities", getUserCompatibilities(problemId, userId));

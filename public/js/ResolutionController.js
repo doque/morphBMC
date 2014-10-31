@@ -12,10 +12,25 @@ app.controller("ResolutionController", ['$scope', '$http', 'SocketService', func
 	$scope.rendering = true;
 
 
-	$scope.test = function(msg) {
-		console.log(msg);
-	}
+	/**
+	 * Collaboration callback. Will be fired when another user has resolved a conflict.
+	 * @param  {[type]} event         not used
+	 * @param  {[type]} compatibility the overriding compatibility
+	 */
+	$scope.$on("CONFLICT_RESOLVED", function(event, compatibility) {
+		//console.log("received", compatibility);
+		// after receiving problem id, load existing compatibilities
+		$http.get("/api/problems/" + window.PROBLEM_ID+ "/compatibilities?all=yes").success(function(data) {
+			$scope.compatibilities = data.compatibilities;
+			$scope.conflicts = calculateConflicts($scope.compatibilities);
+		});
+	});
 
+
+
+	/**
+	 * calculates all existing conflicts for a pair of attributes
+	 */
 	$scope.getConflicts = function(attr1, attr2) {
 		var conflicts = [];
 		angular.forEach($scope.conflicts, function(c) {
@@ -30,7 +45,7 @@ app.controller("ResolutionController", ['$scope', '$http', 'SocketService', func
 
 
 	/**
-	 * calculate all conflicting compatibilities
+	 * find confliciting compatibilities in a list of compatibilities
 	 */
 	function calculateConflicts(compatibilities) {
 		var conflicts = [];
@@ -58,7 +73,6 @@ app.controller("ResolutionController", ['$scope', '$http', 'SocketService', func
 
 	/**
 	 * saves a compatibility
-	 * @param {compatiblity) the compatibility object
 	 */
 	$scope.overrideCompatibilities = function(compatibility) {
 
@@ -117,7 +131,6 @@ app.controller("ResolutionController", ['$scope', '$http', 'SocketService', func
 
 	/**
 	 * returns the parameter that a single attribute belongs to
-	 * @param id - the attribute id
 	 */
 	$scope.getParameterByAttribute = function(id) {
 		// walk through parameters
@@ -148,10 +161,6 @@ app.controller("ResolutionController", ['$scope', '$http', 'SocketService', func
 		});
 		return compats;
 	};
-
-	$scope.$on('test', function(event, args) {
-		console.log(args);
-	});
 
 	// grab all existing parameters to build table
 	$http.get("/api/problems/"+window.PROBLEM_ID+"/parameters?all=yes").success(function(data) {

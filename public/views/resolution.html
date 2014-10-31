@@ -62,9 +62,7 @@
 					ng-init="paramX = getParameterByAttribute(x.id);
 							paramY = getParameterByAttribute(y.id);
 							redundant = paramX.id >= paramY.id;
-							compatibilities = getCompatibilityRatings(x.id, y.id);
 							conflicts = getConflicts(x.id, y.id);
-							noConflicts = (conflicts.length === 0);
 							good = compatibilities[0].rating.value === 9;
 							ok = compatibilities[0].rating.value === 4;
 							bad = compatibilities[0].rating.value === 1;"
@@ -74,24 +72,27 @@
 					ng-mouseleave="hover(0,0); hovered=false"
 					class="cell"
 					ng-class="{
-						'success': 	noConflicts &amp;&amp; good,
-						'warning': 	noConflicts &amp;&amp; ok,
-						'danger': 	noConflicts &amp;&amp; bad,
+						'success': 	(getConflicts(x.id, y.id).length === 0  &amp;&amp; getCompatibilityRatings(x.id, y.id)[0].rating.value === 9),
+						'warning': 	(getConflicts(x.id, y.id).length === 0  &amp;&amp; getCompatibilityRatings(x.id, y.id)[0].rating.value === 4),
+						'danger': 	(getConflicts(x.id, y.id).length === 0  &amp;&amp; getCompatibilityRatings(x.id, y.id)[0].rating.value === 1),
+						'override': getCompatibilityRatings(x.id, y.id)[0].overrideComment !== '',
 						'disabled' : redundant
 					}">
-<!-- 					<pre>{{compatibilities}}</pre> -->
-					
-					<!-- redundant means that this combination of attributes WILL be rendered in the following rows -->
 					
 					<div
-						ng-if="!noConflicts"
+						ng-if="getConflicts(x.id, y.id).length > 0"
 						ng-show="!redundant"
 						>
-						<a href="javascript:this.blur();" popover>{{ conflicts.length }} conflicts</a>
+						<a href="javascript:this.blur();" popover>{{ getConflicts(x.id, y.id).length }} conflicts</a>
 					</div>
 
-					<div ng-if="noConflicts">
-						 {{ compatibilities[0].rating.name }}
+					<div
+						ng-if="getConflicts(x.id, y.id).length === 0"
+						tooltip
+						data-toggle="tooltip"
+						data-placement="top"
+						data-original-title="{{ getCompatibilityRatings(x.id, y.id)[0].overrideComment }}">
+						 {{ getCompatibilityRatings(x.id, y.id)[0].rating.name }}
 					</div>
 				</td>
 			</tr>

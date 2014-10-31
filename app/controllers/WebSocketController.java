@@ -38,13 +38,13 @@ public class WebSocketController extends Controller {
 				// When the socket is closed.
 				in.onClose(new Callback0() {
 					public void invoke() {
-						socketService.broadcast("client " + userId + " has left.");
+						//socketService.broadcast("client " + userId + " has left.");
 						socketService.removeClient(userId);
 					}
 				});
 
 				// Send a single 'Hello!' message
-				out.write("Hello! You are connected.");
+				//out.write("Hello! You are connected.");
 			}
 
 		};

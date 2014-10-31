@@ -49,16 +49,14 @@ app.factory('SocketService', ['$q', '$rootScope', '$location', function($q, $roo
     
     function notifyAll(incoming) {
         // If data is not parsable (i.e. empty response to getLastMessage) don't do anything
-       /* try {
+        try {
             var data = JSON.parse(incoming.data);    
         } catch (TypeError) {
             console.log("malformed json")
         }
         var type = data.type;
-        var message = data.message;
-        var args = data;*/
-        console.log(incoming.data);
-        $rootScope.$broadcast(incoming.data);
+        var data = data.data;
+        $rootScope.$broadcast(type, data);
     };
 
     var send = function(message) {

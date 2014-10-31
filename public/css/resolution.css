@@ -24,3 +24,13 @@
 #resolution .cell a {
 	outline: 0;
 }
+.override {
+	cursor: help;
+	font-weight: bold !important;
+	text-decoration: underline !important;
+}
+#resolution div.tooltip-inner {
+    white-space: pre-wrap;
+  	max-height: 500px;
+  	xword-break: break-word;
+}

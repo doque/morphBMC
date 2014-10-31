@@ -8,6 +8,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import services.SocketServiceInterface;
+import util.JsonBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -91,7 +92,7 @@ public class DefinitionController extends Controller {
 		result.put("parameter", p);
 
 		// and broadcast to others
-		socketService.broadcastExcept(userId, "updated");
+		socketService.broadcastExcept(userId, JsonBuilder.update());
 
 		return ok(Json.toJson(result));
 	}
@@ -129,7 +130,7 @@ public class DefinitionController extends Controller {
 			p.delete();
 		}
 
-		socketService.broadcastExcept(userId, "updated");
+		socketService.broadcastExcept(userId, JsonBuilder.update());
 		return ok();
 	}
 
@@ -163,7 +164,7 @@ public class DefinitionController extends Controller {
 		p.attributes.add(attr);
 		p.update();
 
-		socketService.broadcastExcept(userId, "updated");
+		socketService.broadcastExcept(userId, JsonBuilder.update());
 
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("attribute", attr);
@@ -191,7 +192,7 @@ public class DefinitionController extends Controller {
 		}
 		a.delete();
 
-		socketService.broadcastExcept(userId, "updated");
+		socketService.broadcastExcept(userId, JsonBuilder.update());
 		return ok();
 	}
 }
