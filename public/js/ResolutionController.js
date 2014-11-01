@@ -21,9 +21,11 @@ app.controller("ResolutionController", ['$scope', '$http', 'SocketService',
 		$scope.$on("CONFLICT_RESOLVED", function(event, compatibility) {
 			//console.log("received", compatibility);
 			// after receiving problem id, load existing compatibilities
+			$scope.rendering = true;
 			$http.get("/api/problems/" + window.PROBLEM_ID + "/compatibilities?all=yes").success(function(data) {
 				$scope.compatibilities = data.compatibilities;
 				$scope.conflicts = calculateConflicts($scope.compatibilities);
+				$scope.rendering = false;
 			});
 		});
 
