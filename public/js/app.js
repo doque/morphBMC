@@ -122,7 +122,7 @@ var app = angular.module('morphBMC', ['ngRoute', 'tableSort', 'textAngular', 'ng
         element.bind("keydown keypress", function (event) {
             if(event.which === 27) {
                 scope.$apply(function (){
-                    scope.$eval(attrs.ngEnter);
+                    scope.$eval(attrs.ngEsc);
                 });
                 event.preventDefault();
             }
