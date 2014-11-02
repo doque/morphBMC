@@ -1,5 +1,7 @@
 package controllers;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
@@ -10,6 +12,8 @@ import play.mvc.Result;
 import securesocial.core.Identity;
 import securesocial.core.java.SecureSocial;
 import securesocial.core.java.SecureSocial.SecuredAction;
+import services.SocketServiceInterface;
+import util.JsonBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -19,8 +23,20 @@ import models.Problem;
 import models.Problem.Stage;
 
 import com.google.common.collect.Maps;
+import com.google.inject.Inject;
 
 public class ProblemController extends Controller {
+	
+	/**
+	 * Dependency Injection to make sure all clients get the same SocketService
+	 */
+	private SocketServiceInterface socketService;
+
+	@Inject
+	public ProblemController(SocketServiceInterface socketService) {
+		this.socketService = checkNotNull(socketService);
+	}
+	
 	
 	@SecuredAction
 	public Result createProblem() {
@@ -92,6 +108,7 @@ public class ProblemController extends Controller {
 			p.statement = statement;
 			p.save();
 		}
+		socketService.broadcast(JsonBuilder.problemUpdated());
 		
 		return ok();
 	}
@@ -109,7 +126,7 @@ public class ProblemController extends Controller {
 			p.name = name;
 			p.save();
 		}
-		
+		socketService.broadcast(JsonBuilder.problemUpdated());
 		return ok();
 	}
 	

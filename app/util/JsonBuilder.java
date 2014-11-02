@@ -18,14 +18,15 @@ public class JsonBuilder {
 
 	public enum Types {
 		/* Refinement Stages */
-		UPDATE,
+		DEFINITION_UPDATED,
 		/* Conflict Resolution */
-		CONFLICT_RESOLVED
+		CONFLICT_RESOLVED,
+		/* Problem Propertes */
+		PROBLEM_UPDATED
 	}
 	
 	/**
-	 * pushes out a compatibility object that replaces all others
-	 * with the same attr1_id and attr2_id.
+	 * compatibility conflict has been resolved
 	 * @param c - the resolving compatibility
 	 * @return
 	 */
@@ -37,13 +38,22 @@ public class JsonBuilder {
 	}
 	
 	/**
-	 * pushes an update request to clients, causing them to refresh
-	 * $scope by polling from REST endpoints
+	 * problem definition has been updated
 	 */
-	public static String update() {
+	public static String definitionUpdated() {
 		Map<String, Object> result = Maps.newHashMap();
-		result.put("type", Types.UPDATE);
+		result.put("type", Types.DEFINITION_UPDATED);
 		return Json.toJson(result).toString();
 	}
+	
+	/**
+	 * problem statement has been updated
+	 */
+	public static String problemUpdated() {
+		Map<String, Object> result = Maps.newHashMap();
+		result.put("type", Types.PROBLEM_UPDATED);
+		return Json.toJson(result).toString();
+	}
+	
 	
 }

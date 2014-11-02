@@ -1,7 +1,17 @@
-app.controller("ProblemController", ['$scope', '$http', '$location', '$timeout',
-	function($scope, $http, $location, $timeout) {
+app.controller("ProblemController", ['$scope', '$http', '$location', 'SocketService',
+	function($scope, $http, $location, SocketService) {
 
 		$scope.problem = {};
+
+		// react updated problem
+		$scope.$on('PROBLEM_UPDATED', function(event, args) {
+			$http.get("/api/problems/" + window.PROBLEM_ID).success(function(data) {
+				// refresh this
+				$scope.problem.name = data.problem.name;
+				$scope.problem.statement = data.problem.statement;
+			});
+		});
+
 
 		/**
 		 * changes the stage of a problem

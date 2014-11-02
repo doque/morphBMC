@@ -19,9 +19,11 @@ app.controller("ResolutionController", ['$scope', '$http', 'SocketService',
 		 * @param  {[type]} compatibility the overriding compatibility
 		 */
 		$scope.$on("CONFLICT_RESOLVED", function(event, compatibility) {
-			//console.log("received", compatibility);
-			// after receiving problem id, load existing compatibilities
+
+			// this takes a while, show the spinner
 			$scope.rendering = true;
+			
+			// refresh compatibilities
 			$http.get("/api/problems/" + window.PROBLEM_ID + "/compatibilities?all=yes").success(function(data) {
 				$scope.compatibilities = data.compatibilities;
 				$scope.conflicts = calculateConflicts($scope.compatibilities);

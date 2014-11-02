@@ -92,7 +92,7 @@ public class DefinitionController extends Controller {
 		result.put("parameter", p);
 
 		// and broadcast to others
-		socketService.broadcastExcept(userId, JsonBuilder.update());
+		socketService.broadcastExcept(userId, JsonBuilder.definitionUpdated());
 
 		return ok(Json.toJson(result));
 	}
@@ -130,7 +130,7 @@ public class DefinitionController extends Controller {
 			p.delete();
 		}
 
-		socketService.broadcastExcept(userId, JsonBuilder.update());
+		socketService.broadcastExcept(userId, JsonBuilder.definitionUpdated());
 		return ok();
 	}
 
@@ -164,7 +164,7 @@ public class DefinitionController extends Controller {
 		p.attributes.add(attr);
 		p.update();
 
-		socketService.broadcastExcept(userId, JsonBuilder.update());
+		socketService.broadcastExcept(userId, JsonBuilder.definitionUpdated());
 
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("attribute", attr);
@@ -192,7 +192,7 @@ public class DefinitionController extends Controller {
 		}
 		a.delete();
 
-		socketService.broadcastExcept(userId, JsonBuilder.update());
+		socketService.broadcastExcept(userId, JsonBuilder.definitionUpdated());
 		return ok();
 	}
 }
