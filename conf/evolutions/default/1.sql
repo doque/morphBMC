@@ -53,38 +53,34 @@ create sequence compatibility_seq;
 
 create sequence parameter_seq;
 
-create sequence problem_seq;
+create sequence problem_idproblem_seq;
 
 create sequence rating_seq;
 
-alter table attribute add constraint fk_attribute_parameter_1 foreign key (parameter_id) references parameter (id) on delete restrict on update restrict;
+alter table attribute add constraint fk_attribute_parameter_1 foreign key (parameter_id) references parameter (id);
 create index ix_attribute_parameter_1 on attribute (parameter_id);
-alter table compatibility add constraint fk_compatibility_attr1_2 foreign key (attr1_id) references attribute (id) on delete restrict on update restrict;
+alter table compatibility add constraint fk_compatibility_attr1_2 foreign key (attr1_id) references attribute (id);
 create index ix_compatibility_attr1_2 on compatibility (attr1_id);
-alter table compatibility add constraint fk_compatibility_attr2_3 foreign key (attr2_id) references attribute (id) on delete restrict on update restrict;
+alter table compatibility add constraint fk_compatibility_attr2_3 foreign key (attr2_id) references attribute (id);
 create index ix_compatibility_attr2_3 on compatibility (attr2_id);
-alter table compatibility add constraint fk_compatibility_rating_4 foreign key (rating_id) references rating (id) on delete restrict on update restrict;
+alter table compatibility add constraint fk_compatibility_rating_4 foreign key (rating_id) references rating (id);
 create index ix_compatibility_rating_4 on compatibility (rating_id);
-alter table parameter add constraint fk_parameter_problem_5 foreign key (problem_id) references problem (id) on delete restrict on update restrict;
+alter table parameter add constraint fk_parameter_problem_5 foreign key (problem_id) references problem (id);
 create index ix_parameter_problem_5 on parameter (problem_id);
 
 
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+drop table if exists attribute cascade;
 
-drop table if exists attribute;
+drop table if exists compatibility cascade;
 
-drop table if exists compatibility;
+drop table if exists parameter cascade;
 
-drop table if exists parameter;
+drop table if exists problem cascade;
 
-drop table if exists problem;
-
-drop table if exists rating;
-
-SET REFERENTIAL_INTEGRITY TRUE;
+drop table if exists rating cascade;
 
 drop sequence if exists attribute_seq;
 
@@ -92,7 +88,7 @@ drop sequence if exists compatibility_seq;
 
 drop sequence if exists parameter_seq;
 
-drop sequence if exists problem_seq;
+drop sequence if exists problem_idproblem_seq;
 
 drop sequence if exists rating_seq;
 

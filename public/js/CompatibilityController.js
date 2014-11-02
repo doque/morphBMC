@@ -11,6 +11,8 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout',
 
 		$scope.rendering = true;
 
+		$scope.renderedCompatibilities = [];
+
 		/**
 		 * saves a compatibility
 		 * @param {compatiblity) the compatibility object
@@ -28,7 +30,6 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout',
 		 *
 		 */
 		$scope.rateBatch = function(batchrating) {
-
 			// yeah this is a hack but
 			// http://stackoverflow.com/questions/26616448/angularjs-view-doesnt-update-when-assigning-a-http-response-to-scope
 			angular.forEach($scope.compatibilities, function(c) {
@@ -48,15 +49,19 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout',
 		 * adds a compatiblity to the batch
 		 * if it is already present  it will be ignored
 		 */
-		$scope.addToBatch = function(id) {
+		$scope.addToBatch = function(id, xOrY) {
 			angular.forEach($scope.compatibilities, function(c) {
-				if (c.attr1.id === id || c.attr2.id === id) {
+				
+				var attr = xOrY === 'x' ? c.attr2 : c.attr1;
+
+				if (attr.id === id) {
+
 					if ($scope.isInBatch(c.id) === false && c.rating.value === 0) {
 						$scope.batch.push(c.id);
-					} else {
-						// check for overlapping params here
-						remove($scope.batch, c.id);
+
 					}
+				} else {
+					remove($scope.batch, c.id);
 				}
 			});
 		};
@@ -149,7 +154,6 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout',
 			});
 			return _c;
 		};
-
 
 		/**
 		 * helper function that removes an int from an array

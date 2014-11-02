@@ -14,39 +14,39 @@ ratings:
 
 
 # Problems
-problems:
-    - !!models.Problem
-        userId:     212249140
-        owner:      Dominique Busser
-        name:       Urlaubsplanung
-        stage:      DEFINITION
-        parameters:
-          - !!models.Parameter
-            userId: 212249140
-            name: Reisezeit
-            attributes:
-              - !!models.Attribute
-                name: "< 2h"
-                userId: 212249140
-              - !!models.Attribute
-                name: 2 - 5h
-                userId: 212249140
-              - !!models.Attribute
-                name: "> 5h"
-                userId: 212249140
-          - !!models.Parameter
-            name: Kosten
-            userId: 212249140
-            attributes:
-              - !!models.Attribute
-                name: "< 500 EUR"
-                userId: 212249140
-              - !!models.Attribute
-                name: 500 - 1000 EUR
-                userId: 212249140
-              - !!models.Attribute
-                name: "> 1000 EUR"
-                userId: 212249140
+#problems:
+    #- !!models.Problem
+        #userId:     212249140
+        #owner:      Dominique Busser
+        #name:       Urlaubsplanung
+        #stage:      DEFINITION
+        #parameters:
+          #- !!models.Parameter
+            #userId: 212249140
+            #name: Reisezeit
+            #attributes:
+              #- !!models.Attribute
+                #name: "< 2h"
+                #userId: 212249140
+              #- !!models.Attribute
+                #name: 2 - 5h
+                #userId: 212249140
+              #- !!models.Attribute
+                #name: "> 5h"
+                #userId: 212249140
+          #- !!models.Parameter
+            #name: Kosten
+            #userId: 212249140
+            #attributes:
+              #- !!models.Attribute
+                #name: "< 500 EUR"
+                #userId: 212249140
+              #- !!models.Attribute
+                #name: 500 - 1000 EUR
+                #userId: 212249140
+              #- !!models.Attribute
+                #name: "> 1000 EUR"
+                #userId: 212249140
 #          - !!models.Parameter
 #            name: Distanz
 #            userId: 1
