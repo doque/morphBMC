@@ -17,10 +17,12 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout',
 		 * saves a compatibility
 		 * @param {compatiblity) the compatibility object
 		 */
-		$scope.addCompatibility = function(compatibility) {
+		$scope.addCompatibility = function(compatibility, reload) {
 			$http.post("/api/problems/" + window.PROBLEM_ID + "/compatibilities", compatibility).success(function(data) {
 				// after receiving problem id, load existing compatibilities
-				$scope.compatibilities = data.compatibilities;
+				if (reload !== false) {
+					$scope.compatibilities = data.compatibilities;
+				}
 			});
 		};
 
@@ -36,8 +38,12 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout',
 				if ($scope.batch.indexOf(c.id) > -1) {
 					c.rating = batchrating;
 					c.userId = $scope.userI
-					$scope.addCompatibility(c);
+					$scope.addCompatibility(c, false);
 				}
+			});
+
+			$http.get("/api/problems/" + window.PROBLEM_ID + "/compatibilities").success(function(data) {
+				$scope.compatibilities = data.compatibilities;
 			});
 
 			$scope.batch = [];

@@ -9,7 +9,6 @@ import services.SocketServiceInterface;
 import java.util.List;
 import java.util.Map;
 
-import models.Problem;
 import models.Rating;
 
 import com.avaje.ebean.Ebean;
@@ -51,9 +50,9 @@ public class Global extends GlobalSettings {
 		}
 
 		// insert problems
-		if (Problem.find.findRowCount() == 0) {
-			Ebean.save(all.get("problems"));
-		}
+		//if (Problem.find.findRowCount() == 0) {
+			//Ebean.save(all.get("problems"));
+		//}
 
 		// save associations, top down
 		/*
