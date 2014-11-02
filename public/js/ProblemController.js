@@ -23,7 +23,7 @@ app.controller("ProblemController", ['$scope', '$http', '$location', '$timeout',
 		 */
 		$scope.editName = function() {
 			var name = $scope.problem.name;
-			if (name.length === 0) {
+			if (!name || name.length === 0) {
 				$scope.editingName = false;
 				return;
 			}

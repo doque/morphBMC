@@ -207,7 +207,7 @@ app.controller("ExplorationController", ['$scope', '$http', '$filter',
 
 
 		// set up environment on load
-		$http.get("/api/problems/" + window.PROBLEM_ID + "/parameters").success(function(data) {
+		$http.get("/api/problems/" + window.PROBLEM_ID + "/parameters?all=yes").success(function(data) {
 			// contains problem properties and parameters with their attributes,
 			// if present yet
 			$scope.parameters = data.parameters;
@@ -217,7 +217,7 @@ app.controller("ExplorationController", ['$scope', '$http', '$filter',
 				});
 			});
 
-			$http.get("/api/problems/" + window.PROBLEM_ID + "/compatibilities").success(function(data) {
+			$http.get("/api/problems/" + window.PROBLEM_ID + "/compatibilities?all=yes").success(function(data) {
 				$scope.compatibilities = data.compatibilities;
 				$scope.rendering = false;
 			});

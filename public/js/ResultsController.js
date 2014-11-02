@@ -136,7 +136,7 @@ app.controller("ResultsController", ['$scope', '$http',
 		};
 
 		// set up environment on load
-		$http.get("/api/problems/" + window.PROBLEM_ID + "/parameters").success(function(data) {
+		$http.get("/api/problems/" + window.PROBLEM_ID + "/parameters?all=yes").success(function(data) {
 
 			$scope.parameters = data.parameters;
 
@@ -148,7 +148,7 @@ app.controller("ResultsController", ['$scope', '$http',
 				$scope.attributes.push(p.attributes);
 			});
 
-			$http.get("/api/problems/" + window.PROBLEM_ID + "/compatibilities").success(function(data) {
+			$http.get("/api/problems/" + window.PROBLEM_ID + "/compatibilities?all=yes").success(function(data) {
 				$scope.compatibilities = data.compatibilities;
 				$scope.allPossible();
 			});

@@ -30,7 +30,7 @@
 	<body>
 		<div class="container" style="margin-top: 20px;">
 
-			<header id="problem" class="row">
+			<header id="problem" class="row" ng-cloak>
 				<h4 class="pull-left" ng-init="editingName = false">
 					<strong 
 						title="Click to edit problem name"
@@ -44,7 +44,7 @@
 						autofocus="editingName"
 						/>
 				</h4>
-				<h5 class="pull-right">created by {{ problem.owner }}</h4>
+				<h5 class="pull-right">created by {{ problem.owner }}</h5>
 			</header>
 
 			<nav class="row"> 
