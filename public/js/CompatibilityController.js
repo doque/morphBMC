@@ -16,6 +16,7 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout',
 		/**
 		 * saves a compatibility
 		 * @param {compatiblity) the compatibility object
+		 * @param reload whether the http response should be applied to $scope immediately. only used for single adding
 		 */
 		$scope.addCompatibility = function(compatibility, reload) {
 			$http.post("/api/problems/" + window.PROBLEM_ID + "/compatibilities", compatibility).success(function(data) {
@@ -38,6 +39,7 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout',
 				if ($scope.batch.indexOf(c.id) > -1) {
 					c.rating = batchrating;
 					c.userId = $scope.userI
+					// dont bind rest response here, do it below and only once.
 					$scope.addCompatibility(c, false);
 				}
 			});
