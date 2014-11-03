@@ -23,8 +23,8 @@
 					ng-repeat="attribute in getAllAttributes()"
 					data-attrid="{{attribute.id}}"
 					ng-class="{
-								'highlight': attribute.id === hoverX
-							}"
+						'highlight': attribute.id === hoverX
+					}"
 					class="rotate"
 					ng-mouseenter="hover(attribute.id, 0)"
 				>
@@ -53,8 +53,8 @@
 				<td 
 					data-attrid ="{{ y.id }}"
 					ng-class="{
-								'highlight': y.id === hoverY
-							}"
+						'highlight': y.id === hoverY
+					}"
 					ng-mouseenter="hover(0, y.id)"
 					class="legend">{{ y.name}}</td>
 				
@@ -78,7 +78,7 @@
 						'override': getCompatibilityRatings(x.id, y.id)[0].overrideComment.length > 0,
 						'disabled' : redundant
 					}">
-					
+
 					<div
 						ng-if="getConflicts(x.id, y.id).length > 0"
 						ng-show="!redundant"
@@ -87,7 +87,11 @@
 					</div>
 
 					<div
-						ng-if="!redundant &amp;&amp; getConflicts(x.id, y.id).length === 0"
+						tooltip
+						data-toggle="tooltip"
+						data-placement="top"
+						data-original-title="{{ getCompatibilityRatings(x.id, y.id)[0].overrideComment }}"
+						ng-if="!redundant &amp;&amp; getConflicts(x.id, y.id).length === 0">
 						 {{ getCompatibilityRatings(x.id, y.id)[0].rating.name }}
 					</div>
 				</td>

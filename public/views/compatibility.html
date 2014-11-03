@@ -27,8 +27,8 @@
 					ng-repeat="attribute in getAllAttributes()"
 					data-attrid="{{attribute.id}}"
 					ng-class="{
-								'highlight': attribute.id === hoverX
-							}"
+						'highlight': attribute.id === hoverX
+					}"
 					class="rotate"
 					ng-click="addToBatch(attribute.id, 'y')"
 					title="select column '{{attribute.name}}"
@@ -56,8 +56,8 @@
 				<td 
 					data-attrid ="{{ y.id }}"
 					ng-class="{
-								'highlight': y.id === hoverY
-							}"
+						'highlight': y.id === hoverY
+					}"
 					ng-click="addToBatch(y.id, 'x')"
 					ng-mouseenter="hover(0, y.id)"
 					class="legend">{{ y.name}}</td>
@@ -69,12 +69,12 @@
 							compatibility = getCompatibilityRating(x.id, y.id);"
 					ng-if="$index < getOffsets()[getOffsets().length - 2]"
 					ng-class="{
-								'success': getCompatibilityRating(x.id, y.id).rating.value === 9,
-								'warning': getCompatibilityRating(x.id, y.id).rating.value === 4,
-								'danger': getCompatibilityRating(x.id, y.id).rating.value === 1,
-								'disabled' : redundant,
-								'highlight': !redundant &amp;&amp; isInBatch(compatibility.id)
-							}"
+						'success': getCompatibilityRating(x.id, y.id).rating.value === 9,
+						'warning': getCompatibilityRating(x.id, y.id).rating.value === 4,
+						'danger': getCompatibilityRating(x.id, y.id).rating.value === 1,
+						'disabled' : redundant,
+						'highlight': !redundant &amp;&amp; isInBatch(compatibility.id)
+					}"
 					ng-repeat="x in getAllAttributes()"
 					ng-mouseenter="hover(x.id, y.id, redundant); hovered=true;"	
 					ng-mouseleave="hover(0,0); hovered=false"
