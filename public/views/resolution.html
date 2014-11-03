@@ -88,10 +88,6 @@
 
 					<div
 						ng-if="!redundant &amp;&amp; getConflicts(x.id, y.id).length === 0"
-						tooltip
-						data-toggle="tooltip"
-						data-placement="top"
-						data-original-title="{{ getCompatibilityRatings(x.id, y.id)[0].overrideComment }}">
 						 {{ getCompatibilityRatings(x.id, y.id)[0].rating.name }}
 					</div>
 				</td>

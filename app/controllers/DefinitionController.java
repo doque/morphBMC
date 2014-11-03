@@ -154,15 +154,16 @@ public class DefinitionController extends Controller {
 		// another parameter
 		if (attr.id != 0) {
 			attr.parameter = p;
-			attr.update();
+			attr.save();
 		} else {
 			// create new attribute
 			attr.userId = userId;
 			attr.parameter = p;
 			attr.save();
 		}
+
 		p.attributes.add(attr);
-		p.update();
+		p.save();
 
 		socketService.broadcastExcept(userId, JsonBuilder.definitionUpdated());
 
