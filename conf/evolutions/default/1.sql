@@ -8,6 +8,7 @@ create table attribute (
   name                      varchar(255),
   user_id                   varchar(255),
   parameter_id              bigint,
+  version                   bigint,
   constraint pk_attribute primary key (id))
 ;
 
