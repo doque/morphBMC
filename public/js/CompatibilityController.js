@@ -10,15 +10,30 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout',
 		$scope.hoverY = 0;
 
 		$scope.rendering = true;
-
-		
-		$scope.remaining = 0;
+		$scope.remaining = [];
 
 		
 		$scope.$on('REMAINING_COMPATIBILITIES', function(event, remaining) {
 			$scope.remaining = remaining;
 		});
 
+		/**
+		 * calculates compatibility pairs that haven't been rated yet by anyone.
+		 * @param  {[type]}  a1 [description]
+		 * @param  {[type]}  a2 [description]
+		 * @return {Boolean}    [description]
+		 */
+		$scope.isRemaining = function(a1, a2) {
+			var is = false;
+			angular.forEach($scope.remaining, function(arr) {
+				if (arr.indexOf(a1) > -1 && arr.indexOf(a2) > -1) {
+					is = true;
+					return;
+				}
+			});
+
+			return is;
+		};
 
 		/**
 		 * saves a compatibility

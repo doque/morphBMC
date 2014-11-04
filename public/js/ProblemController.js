@@ -1,5 +1,5 @@
-app.controller("ProblemController", ['$scope', '$http', '$location', 'SocketService',
-	function($scope, $http, $location, SocketService) {
+app.controller("ProblemController", ['$scope', '$http', '$location', '$timeout', 'SocketService',
+	function($scope, $http, $location, $timeout, SocketService) {
 
 		$scope.problem = {};
 

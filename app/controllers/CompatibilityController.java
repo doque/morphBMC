@@ -42,7 +42,7 @@ public class CompatibilityController extends Controller {
 	/**
 	 * store new compatibility for a pair of attributes and rating
 	 */
-	public Result addCompatibility(long problemId) {
+	public synchronized Result addCompatibility(long problemId) {
 
 		Compatibility c = Form.form(Compatibility.class).bindFromRequest()
 				.get();
@@ -76,7 +76,7 @@ public class CompatibilityController extends Controller {
 		
 		// notify user how many remaining compatibilities are left to be rated
 		Rating defaultRating = Rating.find.where().eq("value", 0).findUnique();
-		int remaining = getRemainingCompatibilities(problemId, defaultRating.id);
+		List<Long[]> remaining = getRemainingCompatibilities(problemId, defaultRating.id);
 		socketService.broadcast(JsonBuilder.remainingCapabilities(remaining));
 		
 		Map<String, Object> result = Maps.newHashMap();
@@ -119,7 +119,7 @@ public class CompatibilityController extends Controller {
 		}
 
 		// notify user how many remaining compatibilities are left to be rated
-		int remaining = getRemainingCompatibilities(problemId, defaultRating.id);
+		List<Long[]> remaining = getRemainingCompatibilities(problemId, defaultRating.id);
 		socketService.broadcast(JsonBuilder.remainingCapabilities(remaining));
 		
 		Map<String, Object> result = Maps.newHashMap();
@@ -134,28 +134,34 @@ public class CompatibilityController extends Controller {
 	 * and only counts them once
 	 * @return
 	 */
-	protected int getRemainingCompatibilities(long problemId, long ratingId) {
-		SqlRow row = Ebean
+	protected List<Long[]> getRemainingCompatibilities(long problemId, long ratingId) {
+		List<SqlRow> rows = Ebean
 				.createSqlQuery(
-						"SELECT count(*)"
-								+ " FROM"
-								+ "  (SELECT least(attr1_id, attr2_id) AS a1,"
-								+ "          greatest(attr1_id, attr2_id) AS a2,"
-								+ "          min(rating_id) AS minri,"
-								+ "          max(rating_id) AS maxri"
-								+ "   FROM compatibility c"
-								+ "   JOIN attribute a ON c.attr1_id = a.id"
-								+ "   JOIN PARAMETER pa ON a.parameter_id = pa.id"
-								+ "   JOIN problem p ON pa.problem_id = p.id"
-								+ "   WHERE p.id = :problem_id"
-								+ "   GROUP BY least(attr1_id, attr2_id),"
-								+ "            greatest(attr1_id, attr2_id) HAVING min(rating_id) = :rating_id"
-								+ "   AND max(rating_id) = :rating_id) c")
+						"SELECT c.*" + 
+						" FROM" + 
+						"  (SELECT DISTINCT(c.attr1_id, c.attr2_id)," + 
+						"          least(attr1_id, attr2_id) AS a1," + 
+						"                  greatest(attr1_id, attr2_id) AS a2," + 
+						"                  min(rating_id) AS minri," + 
+						"                  max(rating_id) AS maxri" + 
+						"   FROM compatibility c" + 
+						"   JOIN attribute a ON c.attr1_id = a.id" + 
+						"   JOIN PARAMETER pa ON a.parameter_id = pa.id" + 
+						"   JOIN problem p ON pa.problem_id = p.id" + 
+						"   WHERE p.id = :problem_id" + 
+						"   GROUP BY c.attr1_id, c.attr2_id," + 
+						"            least(attr1_id, attr2_id)," + 
+						"            greatest(attr1_id, attr2_id) HAVING min(rating_id) = :rating_id" + 
+						"   AND max(rating_id) = :rating_id) c")
 				.setParameter("problem_id", problemId)
-				.setParameter("rating_id", ratingId).findUnique();
-		int count = row.getInteger("count");
+				.setParameter("rating_id", ratingId).findList();
 		
-		return count;
+		List<Long[]> ids = Lists.newArrayList();
+		for (SqlRow row : rows) {
+			ids.add(new Long[] { row.getLong("a1"), row.getLong("a2") });
+		}
+		
+		return ids;
 
 	}
 

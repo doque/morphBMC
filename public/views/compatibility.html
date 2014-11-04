@@ -5,10 +5,10 @@
 	<div
 		class="alert"
 		ng-class="{
-			'alert-success': remaining === 0,
-			'alert-warning': remaining > 0
+			'alert-success': remaining.length === 0,
+			'alert-warning': remaining.length > 0
 		}"
-	>{{ remaining }} compatibilities are not yet rated</div>
+	>{{ remaining.length }} compatibilities are not yet rated</div>
 
 	<div>
 		Rate {{ batch.length }} with
@@ -81,6 +81,7 @@
 						'warning': getCompatibilityRating(x.id, y.id).rating.value === 4,
 						'danger': getCompatibilityRating(x.id, y.id).rating.value === 1,
 						'disabled' : redundant,
+						'remaining': isRemaining(x.id, y.id),
 						'highlight': !redundant &amp;&amp; isInBatch(compatibility.id)
 					}"
 					ng-repeat="x in getAllAttributes()"

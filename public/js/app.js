@@ -148,7 +148,7 @@ var app = angular.module('morphBMC', ['ngRoute', 'tableSort', 'textAngular', 'ng
 				      	{{ conflicts.length }} conflicted ratings:\
 				        <div class="conflicted-rating" ng-repeat="c in conflicts">\
 				        	<span class="rating-{{ c.rating.name.toLowerCase() }}">{{c.rating.name}}</span>\
-				        	by User #{{c.userId}}\
+				        	by #{{c.userId}}\
 				        </div>\
 				        <br/>\
 				        <div ng-init="override={ attr1: {id:x.id,name:x.name}, attr2: {name: y.name,id:y.id} }">\

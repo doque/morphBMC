@@ -26,6 +26,10 @@ td.cell {
 	width: 60px;
 	vertical-align: middle !important
 }
+td.cell.remaining div.rating {
+	font-weight: bold;
+	text-decoration: underline;
+}
 td.cell > div.rating {
 	padding: 8px;
 }

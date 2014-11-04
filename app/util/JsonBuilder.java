@@ -2,6 +2,7 @@ package util;
 
 import play.libs.Json;
 
+import java.util.List;
 import java.util.Map;
 
 import models.Compatibility;
@@ -57,7 +58,7 @@ public class JsonBuilder {
 		return Json.toJson(result).toString();
 	}
 	
-	public static String remainingCapabilities(int remaining) {
+	public static String remainingCapabilities(List<Long[]> remaining) {
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("type", Types.REMAINING_COMPATIBILITIES);
 		result.put("data", remaining);
