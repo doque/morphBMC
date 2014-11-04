@@ -3,6 +3,7 @@
 <div id="compatibility" ng-show="!rendering">
 
 	<div
+		ng-if="remaining.length > 0"
 		class="alert"
 		ng-class="{
 			'alert-success': remaining.length === 0,

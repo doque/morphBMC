@@ -45,7 +45,9 @@ public class ProblemController extends Controller {
 		
 		// grab user
 		Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
-		String userId = (String) (user.email().isDefined() ? user.email().get() : user.identityId().userId());
+		String userId = (String) (user.email().isDefined()
+							? user.email().get()
+							: user.fullName().isEmpty() ? user.identityId().userId() : user.fullName());
 		
 		Problem p = new Problem();
 		p.name = name;
