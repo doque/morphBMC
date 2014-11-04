@@ -59,7 +59,6 @@ public class CompatibilityController extends Controller {
 					compatibility.delete();
 				}
 			}
-
 		}
 
 		String userId = session().get("userId");
@@ -74,6 +73,12 @@ public class CompatibilityController extends Controller {
 		if (override != null) {
 			socketService.broadcast(JsonBuilder.conflictResolved(c));
 		}
+		
+		// notify user how many remaining compatibilities are left to be rated
+		Rating defaultRating = Rating.find.where().eq("value", 0).findUnique();
+		int remaining = getRemainingCompatibilities(problemId, defaultRating.id);
+		socketService.broadcast(JsonBuilder.remainingCapabilities(remaining));
+		
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("compatibilities", getUserCompatibilities(problemId, userId));
 		return ok(Json.toJson(result));
@@ -113,9 +118,44 @@ public class CompatibilityController extends Controller {
 			compatibilities = getUserCompatibilities(problemId, userId);
 		}
 
+		// notify user how many remaining compatibilities are left to be rated
+		int remaining = getRemainingCompatibilities(problemId, defaultRating.id);
+		socketService.broadcast(JsonBuilder.remainingCapabilities(remaining));
+		
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("compatibilities", compatibilities);
 		return ok(Json.toJson(result));
+
+	}
+
+	/**
+	 * returns the remaining (unrated) compatibilites' count for a problem
+	 * only includes compatibilities that haven't been rated by anyone yet
+	 * and only counts them once
+	 * @return
+	 */
+	protected int getRemainingCompatibilities(long problemId, long ratingId) {
+		SqlRow row = Ebean
+				.createSqlQuery(
+						"SELECT count(*)"
+								+ " FROM"
+								+ "  (SELECT least(attr1_id, attr2_id) AS a1,"
+								+ "          greatest(attr1_id, attr2_id) AS a2,"
+								+ "          min(rating_id) AS minri,"
+								+ "          max(rating_id) AS maxri"
+								+ "   FROM compatibility c"
+								+ "   JOIN attribute a ON c.attr1_id = a.id"
+								+ "   JOIN PARAMETER pa ON a.parameter_id = pa.id"
+								+ "   JOIN problem p ON pa.problem_id = p.id"
+								+ "   WHERE p.id = :problem_id"
+								+ "   GROUP BY least(attr1_id, attr2_id),"
+								+ "            greatest(attr1_id, attr2_id) HAVING min(rating_id) = :rating_id"
+								+ "   AND max(rating_id) = :rating_id) c")
+				.setParameter("problem_id", problemId)
+				.setParameter("rating_id", ratingId).findUnique();
+		int count = row.getInteger("count");
+		
+		return count;
 
 	}
 
@@ -207,7 +247,7 @@ public class CompatibilityController extends Controller {
 				}
 			}
 		}
-		int count = 0;
+		
 		// now create default rating for all these pairs
 		outerloop:
 		for (Pair pair : attributeIds) {
@@ -233,7 +273,7 @@ public class CompatibilityController extends Controller {
 			c.save();
 		}
 	}
-
+	
 	/**
 	 * Used to hold a pair of attributes
 	 */

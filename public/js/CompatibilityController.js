@@ -11,7 +11,14 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout',
 
 		$scope.rendering = true;
 
-		$scope.renderedCompatibilities = [];
+		
+		$scope.remaining = 0;
+
+		
+		$scope.$on('REMAINING_COMPATIBILITIES', function(event, remaining) {
+			$scope.remaining = remaining;
+		});
+
 
 		/**
 		 * saves a compatibility

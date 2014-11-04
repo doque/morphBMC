@@ -141,7 +141,7 @@ public class DefinitionController extends Controller {
 	 * @param parameterId
 	 * @return
 	 */
-	public Result addAttribute(long problemId, long parameterId) {
+	public synchronized Result addAttribute(long problemId, long parameterId) {
 
 		Parameter p = Parameter.find.byId(parameterId);
 		String userId = session().get("userId");
@@ -154,16 +154,16 @@ public class DefinitionController extends Controller {
 		// another parameter
 		if (attr.id != 0) {
 			attr.parameter = p;
-			attr.save();
+			attr.update();
 		} else {
 			// create new attribute
 			attr.userId = userId;
 			attr.parameter = p;
 			attr.save();
 		}
-
 		p.attributes.add(attr);
 		p.save();
+
 
 		socketService.broadcastExcept(userId, JsonBuilder.definitionUpdated());
 

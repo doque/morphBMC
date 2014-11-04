@@ -2,6 +2,14 @@
 
 <div id="compatibility" ng-show="!rendering">
 
+	<div
+		class="alert"
+		ng-class="{
+			'alert-success': remaining === 0,
+			'alert-warning': remaining > 0
+		}"
+	>{{ remaining }} compatibilities are not yet rated</div>
+
 	<div>
 		Rate {{ batch.length }} with
 			<select
@@ -93,7 +101,7 @@
 						ng-if="!redundant">
 
 						<div id="compat-{{ compatibility.id }}" class="rating" ng-show="rating == false">
-							{{ compatibility.rating.name}}
+							{{ getCompatibilityRating(x.id, y.id).rating.name}}
 						</div>
 
 						<div ng-show="rating == true" class="adding-compatibility">

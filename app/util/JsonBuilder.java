@@ -19,6 +19,8 @@ public class JsonBuilder {
 	public enum Types {
 		/* Refinement Stages */
 		DEFINITION_UPDATED,
+		/* Compatibility */
+		REMAINING_COMPATIBILITIES,
 		/* Conflict Resolution */
 		CONFLICT_RESOLVED,
 		/* Problem Propertes */
@@ -52,6 +54,13 @@ public class JsonBuilder {
 	public static String problemUpdated() {
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("type", Types.PROBLEM_UPDATED);
+		return Json.toJson(result).toString();
+	}
+	
+	public static String remainingCapabilities(int remaining) {
+		Map<String, Object> result = Maps.newHashMap();
+		result.put("type", Types.REMAINING_COMPATIBILITIES);
+		result.put("data", remaining);
 		return Json.toJson(result).toString();
 	}
 	
