@@ -141,7 +141,7 @@ public class DefinitionController extends Controller {
 	 * @param parameterId
 	 * @return
 	 */
-	public synchronized Result addAttribute(long problemId, long parameterId) {
+	public Result addAttribute(long problemId, long parameterId) {
 
 		Parameter p = Parameter.find.byId(parameterId);
 		String userId = session().get("userId");
@@ -152,17 +152,20 @@ public class DefinitionController extends Controller {
 		Attribute attr = Form.form(Attribute.class).bindFromRequest().get();
 		// attribute already exists, in this case it was dragdropped into
 		// another parameter
-		if (attr.id != 0) {
-			attr.parameter = p;
-			attr.update();
-		} else {
-			// create new attribute
-			attr.userId = userId;
-			attr.parameter = p;
-			attr.save();
+		synchronized (p) {
+			if (attr.id != 0) {
+				attr.parameter = p;
+				attr.update();
+			} else {
+				// create new attribute
+				attr.userId = userId;
+				attr.parameter = p;
+				attr.save();
+			}
+			p.attributes.add(attr);
+			p.save();
 		}
-		p.attributes.add(attr);
-		p.save();
+		
 
 
 		socketService.broadcastExcept(userId, JsonBuilder.definitionUpdated());

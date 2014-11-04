@@ -2,11 +2,13 @@ package models;
 
 import play.db.ebean.Model;
 
+import java.sql.Timestamp;
+
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,12 +22,12 @@ public class Attribute extends Model {
 
 	public String userId;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.DETACH)
 	@JsonIgnore
 	public Parameter parameter;
 
-	@Column(name = "version")
-	public long version = System.currentTimeMillis();
+	@Version
+	private Timestamp version;// = System.currentTimeMillis();
 	
 	
 	@Override
