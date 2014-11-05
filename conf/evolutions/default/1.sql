@@ -27,6 +27,7 @@ create table parameter (
   name                      varchar(255),
   user_id                   varchar(255),
   problem_id                bigint,
+  created                   bigint,
   constraint pk_parameter primary key (id))
 ;
 

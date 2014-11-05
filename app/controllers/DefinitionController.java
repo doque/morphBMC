@@ -84,6 +84,7 @@ public class DefinitionController extends Controller {
 		Parameter p = Form.form(Parameter.class).bindFromRequest().get();
 
 		String userId = session().get("userId");
+		p.created = System.currentTimeMillis();
 		p.userId = userId;
 		p.problem = pr;
 		p.save();

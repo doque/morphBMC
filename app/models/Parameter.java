@@ -36,6 +36,8 @@ public class Parameter extends Model {
 	@OneToMany(cascade = CascadeType.ALL)
 	@OrderBy("parameter DESC")
 	public List<Attribute> attributes = new ArrayList<Attribute>();
+	
+	public Long created;
 
 	public static Finder<Long, Parameter> find = new Finder<Long, Parameter>(
 			Long.class, Parameter.class);
