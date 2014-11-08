@@ -3,9 +3,9 @@
 #################
 
 # Home Page
-GET     /                           							controllers.Application.index()
+GET     /                           							@controllers.ProblemController.index()
 # Angular root
-GET		/problem/:id											controllers.Application.viewProblem(id: Long)
+GET		/problem/:id											@controllers.ProblemController.viewProblem(id: Long)
 
 # Problem Creation
 POST 	/api/problems											@controllers.ProblemController.createProblem
