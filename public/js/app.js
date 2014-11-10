@@ -4,19 +4,19 @@ var app = angular.module('morphBMC', ['ngRoute', 'tableSort', 'textAngular', 'ng
 		// enable strict mode for JS parser
 		'use strict';
 
-		// Route for Definition
+		// Problem Statement
 		$routeProvider.when('/statement', {
 			templateUrl: '/assets/views/statement.html',
 			controller: 'ProblemController',
 		});
 
-		// Route for Definition
+		// Definition
 		$routeProvider.when('/definition', {
 			templateUrl: '/assets/views/definition.html',
 			controller: 'DefinitionController',
 		});
 
-		// Route for Refinement
+		// Refinement
 		$routeProvider.when('/refinement', {
 			templateUrl: '/assets/views/refinement.html',
 			controller: 'RefinementController',
@@ -28,7 +28,7 @@ var app = angular.module('morphBMC', ['ngRoute', 'tableSort', 'textAngular', 'ng
 			controller: 'CompatibilityController'
 		});
 
-		// Route for Conflict Resolution
+		// Conflict Resolution
 		$routeProvider.when('/resolution', {
 			templateUrl: '/assets/views/resolution.html',
 			controller: 'ResolutionController',
@@ -46,15 +46,15 @@ var app = angular.module('morphBMC', ['ngRoute', 'tableSort', 'textAngular', 'ng
 			controller: 'ResultsController'
 		})
 
-
 		// default route
 		$routeProvider.otherwise({redirectTo: '/statement'});
 
-		// since we're working with json for data transpoert, add the appropriate content type header to all $http requests
+		// since we're working with json for data transport,
+		// add the appropriate content type header to all $http requests
 		$httpProvider.defaults.headers.post["Content-Type"] = "application/json";
 	},
 	{
-		// dependency injection
+		// dependency injection into Controllers
 		$inject: ['$routeProvider', '$httpProvider']
 	}
 /**
@@ -203,4 +203,6 @@ var app = angular.module('morphBMC', ['ngRoute', 'tableSort', 'textAngular', 'ng
     	
     };
 
-}]);
+}]);/**
+ * 
+ */
