@@ -26,7 +26,7 @@ td.cell {
 	width: 60px;
 	vertical-align: middle !important
 }
-td.cell.remaining div.rating {
+td.cell.remaining:not(.success):not(.warning):not(.danger) div.rating {
 	font-weight: bold;
 	text-decoration: underline;
 }

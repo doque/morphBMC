@@ -53,7 +53,8 @@ public class DefinitionController extends Controller {
 		// so strip out all others.
 		if (override == null) {
 			String userId = session().get("userId");
-			for (int i = 0; i < pr.parameters.size(); i++) {
+			int k = pr.parameters.size();
+			for (int i = 0; i < k; i++) {
 				Parameter p = pr.parameters.get(i);
 				if (!p.userId.equals(userId)) {
 					pr.parameters.remove(i);

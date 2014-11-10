@@ -90,13 +90,15 @@ public class ProblemController extends Controller {
 		// grab user
 		Identity user = (Identity) ctx().args.get(SecureSocial.USER_KEY);
 		String userId = (String) (user.email().isDefined()
-							? user.email().get()
-							: user.fullName().isEmpty() ? user.identityId().userId() : user.fullName());
+							? user.email().get() : user.identityId().userId());
+		
+		String owner = user.fullName().isEmpty() ? user.identityId().userId() : user.fullName();
 		
 		Problem p = new Problem();
 		p.name = name;
 		// twitter does not expose email addresses.
-		p.owner = p.userId = userId;
+		p.owner = owner; 
+		p.userId = userId;
 		
 		// BMC problem
 		if (form.get("bmc") != null) {
@@ -106,9 +108,11 @@ public class ProblemController extends Controller {
 					.load("bmc.yml");
 
 			// insert parameters to problem for
+			int count = 0;
 			for (Object o : all.get("parameters")) {
 				Parameter param = (Parameter) o;
 				param.userId = userId;
+				param.created = System.currentTimeMillis() + (count++)*1000;
 				p.parameters.add(param);
 			}
 
