@@ -136,23 +136,14 @@ public class CompatibilityController extends Controller {
 	 */
 	protected List<Long[]> getRemainingCompatibilities(long problemId, long ratingId) {
 		List<SqlRow> rows = Ebean
-				.createSqlQuery(
-						"SELECT c.*" + 
-						" FROM" + 
-						"  (SELECT DISTINCT(c.attr1_id, c.attr2_id)," + 
-						"          least(attr1_id, attr2_id) AS a1," + 
-						"                  greatest(attr1_id, attr2_id) AS a2," + 
-						"                  min(rating_id) AS minri," + 
-						"                  max(rating_id) AS maxri" + 
-						"   FROM compatibility c" + 
-						"   JOIN attribute a ON c.attr1_id = a.id" + 
-						"   JOIN PARAMETER pa ON a.parameter_id = pa.id" + 
-						"   JOIN problem p ON pa.problem_id = p.id" + 
-						"   WHERE p.id = :problem_id" + 
-						"   GROUP BY c.attr1_id, c.attr2_id," + 
-						"            least(attr1_id, attr2_id)," + 
-						"            greatest(attr1_id, attr2_id) HAVING min(rating_id) = :rating_id" + 
-						"   AND max(rating_id) = :rating_id) c")
+				.createSqlQuery("select least(attr1_id, attr2_id) as a1, greatest(attr1_id, attr2_id) as a2" + 
+						" from compatibility c" + 
+						"	JOIN attribute a ON c.attr1_id = a.id" + 
+						"	JOIN PARAMETER pa ON a.parameter_id = pa.id" + 
+						"	JOIN problem p ON pa.problem_id = p.id" + 
+						"	WHERE p.id = :problem_id" + 
+						" group by least(attr1_id, attr2_id), greatest(attr1_id, attr2_id) " + 
+						" having bool_and(rating_id = :rating_id)")
 				.setParameter("problem_id", problemId)
 				.setParameter("rating_id", ratingId).findList();
 		

@@ -3,7 +3,6 @@
 <div id="compatibility" ng-show="!rendering">
 
 	<div
-		ng-if="remaining.length > 0"
 		class="alert"
 		ng-class="{
 			'alert-success': remaining.length === 0,
@@ -74,7 +73,7 @@
 				<td
 					ng-init="paramX = getParameterByAttribute(x.id);
 							paramY = getParameterByAttribute(y.id);
-							redundant = paramX.created >= paramY.created;
+							redundant = paramX.id >= paramY.id;
 							compatibility = getCompatibilityRating(x.id, y.id);"
 					ng-if="$index < getOffsets()[getOffsets().length - 2]"
 					ng-class="{

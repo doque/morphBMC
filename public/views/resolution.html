@@ -61,7 +61,7 @@
 				<td
 					ng-init="paramX = getParameterByAttribute(x.id);
 							paramY = getParameterByAttribute(y.id);
-							redundant = paramX.created >= paramY.created;
+							redundant = paramX.id >= paramY.id;
 							conflicts = getConflicts(x.id, y.id);
 							good = compatibilities[0].rating.value === 9;
 							ok = compatibilities[0].rating.value === 4;

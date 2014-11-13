@@ -10,6 +10,7 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout',
 		$scope.hoverY = 0;
 
 		$scope.rendering = true;
+		$scope.remaining = [];
 
 		
 		$scope.$on('REMAINING_COMPATIBILITIES', function(event, remaining) {

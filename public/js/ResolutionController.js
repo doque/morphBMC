@@ -159,7 +159,8 @@ app.controller("ResolutionController", ['$scope', '$http', 'SocketService',
 			var compats = [];
 			angular.forEach($scope.compatibilities, function(c) {
 				// arrays should be the same
-				if (c.rating.value > 0 && (attr1 === c.attr1.id && attr2 === c.attr2.id) || (attr2 === c.attr1.id && attr1 === c.attr2.id)) {
+				if (c.rating.value > 0 && ( (attr1 === c.attr1.id && attr2 === c.attr2.id)
+						|| (attr2 === c.attr1.id && attr1 === c.attr2.id)) ) {
 					compats.push(c);
 				}
 
