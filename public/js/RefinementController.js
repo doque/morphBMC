@@ -24,7 +24,12 @@ app.controller("RefinementController", ['$scope', '$http', 'SocketService',
 			});
 		};
 
-		
+		$scope.mergeAttributes = function(from, to) {
+			$http.post("/api/problems/" + window.PROBLEM_ID + "/parameters/merge", { "from": from, "to": to }).success(function() {
+				// meh
+			});
+		};
+
 		// listen for incoming socket events, refresh definitions
 		$scope.$on('DEFINITION_UPDATED', function(event, args) {
 			$http.get("/api/problems/" + window.PROBLEM_ID + "/parameters?all=yes").success(function(data) {
@@ -39,15 +44,8 @@ app.controller("RefinementController", ['$scope', '$http', 'SocketService',
 		$scope.dropped = function(evt, ui) {
 			angular.element(ui.draggable).hide();
 			var oldParam = angular.element(ui.draggable).scope().parameter;
-			var draggedAttributes = oldParam.attributes;
 			var target = angular.element(evt.target).scope().parameter;
-			angular.forEach(draggedAttributes, function(attr) {
-				$scope.addAttribute(target, attr);
-			});
-
-			// ui stuff
-			$scope.removeParameter(oldParam);
-
+			$scope.mergeAttributes(oldParam.id, target.id);
 		};
 
 		/**

@@ -40,6 +40,7 @@ GET		/api/ratings											@controllers.RatingController.getRatings
 # Definition
 GET 	/api/problems/:id/parameters							@controllers.DefinitionController.getParameters(id: Long)
 POST 	/api/problems/:id/parameters							@controllers.DefinitionController.addParameter(id: Long)
+POST 	/api/problems/:id/parameters/merge						@controllers.DefinitionController.mergeParameters(id: Long)
 DELETE  /api/problems/:problemId/parameters/:id					@controllers.DefinitionController.deleteParameter(problemId: Long, id: Long)
 POST	/api/problems/:problemId/parameters/:id/attributes		@controllers.DefinitionController.addAttribute(problemId: Long, id:Long)
 DELETE	/api/problems/:problemId/parameters/attributes/:id		@controllers.DefinitionController.deleteAttribute(problemId: Long, id:Long)

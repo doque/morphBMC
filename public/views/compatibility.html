@@ -73,7 +73,7 @@
 				<td
 					ng-init="paramX = getParameterByAttribute(x.id);
 							paramY = getParameterByAttribute(y.id);
-							redundant = paramX.id >= paramY.id;
+							redundant = paramX.created >= paramY.created;
 							compatibility = getCompatibilityRating(x.id, y.id);"
 					ng-if="$index < getOffsets()[getOffsets().length - 2]"
 					ng-class="{

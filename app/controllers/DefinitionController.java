@@ -10,6 +10,7 @@ import play.mvc.Result;
 import services.SocketServiceInterface;
 import util.JsonBuilder;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,9 @@ import models.Compatibility;
 import models.Parameter;
 import models.Problem;
 
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.SqlUpdate;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 
@@ -51,20 +55,21 @@ public class DefinitionController extends Controller {
 
 		// no "all", meaning only one user's parameters
 		// so strip out all others.
+		List<Parameter> params = Lists.newArrayList();
 		if (override == null) {
 			String userId = session().get("userId");
-			int k = pr.parameters.size();
-			for (int i = 0; i < k; i++) {
-				Parameter p = pr.parameters.get(i);
-				if (!p.userId.equals(userId)) {
-					pr.parameters.remove(i);
+			for (Iterator<Parameter> iterator = pr.parameters.iterator(); iterator.hasNext();) {
+				Parameter p = (Parameter) iterator.next();
+				if (p.userId.equals(userId)) {
+					params.add(p);
 				}
 			}
-
+		} else {
+			params = pr.parameters;
 		}
 
 		Map<String, Object> result = Maps.newHashMap();
-		result.put("parameters", pr.parameters);
+		result.put("parameters", params);
 
 		return ok(Json.toJson(result));
 	}
@@ -152,24 +157,14 @@ public class DefinitionController extends Controller {
 		}
 
 		Attribute attr = Form.form(Attribute.class).bindFromRequest().get();
-		// attribute already exists, in this case it was dragdropped into
-		// another parameter
-		synchronized (p) {
-			if (attr.id != 0) {
-				attr.parameter = p;
-				attr.update();
-			} else {
-				// create new attribute
-				attr.userId = userId;
-				attr.parameter = p;
-				attr.save();
-			}
-			p.attributes.add(attr);
-			p.save();
-		}
+		// create new attribute
+		attr.userId = userId;
+		attr.parameter = p;
+		attr.save();
 		
-
-
+		p.attributes.add(attr);
+		p.save();
+		
 		socketService.broadcastExcept(userId, JsonBuilder.definitionUpdated());
 
 		Map<String, Object> result = Maps.newHashMap();
@@ -177,6 +172,23 @@ public class DefinitionController extends Controller {
 		return ok(Json.toJson(result));
 	}
 
+	public Result mergeParameters(long problemId) {
+	
+		Long from = Long.parseLong(Form.form().bindFromRequest().get("from"));
+		Long to = Long.parseLong(Form.form().bindFromRequest().get("to"));
+		
+		SqlUpdate update = Ebean.createSqlUpdate("UPDATE attribute SET parameter_id = :to WHERE parameter_id = :from");
+		update.setParameter("to", to).setParameter("from", from);
+		update.execute();
+		
+		// kill old param
+		Parameter.find.byId(from).delete();
+		
+		socketService.broadcast(JsonBuilder.definitionUpdated());
+		
+		return ok();
+	}
+	
 	/**
 	 * Delete an attribute
 	 * 
