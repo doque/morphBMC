@@ -89,10 +89,10 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout',
 					if ($scope.isInBatch(c.id) === false && c.rating.value === 0) {
 						$scope.batch.push(c.id);
 
+					} else {
+						remove($scope.batch, c.id);
 					}
-				} else {
-					remove($scope.batch, c.id);
-				}
+				} 
 			});
 		};
 
@@ -100,7 +100,7 @@ app.controller("CompatibilityController", ['$scope', '$http', '$timeout',
 		 * determines if a compatibility is in the batch
 		 */
 		$scope.isInBatch = function(id) {
-			return !!~$scope.batch.indexOf(id);
+			return $scope.batch.indexOf(id) > -1;
 		}
 
 		/**

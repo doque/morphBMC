@@ -44,7 +44,8 @@
 				>
 					<div class="rotated">
 						<span>
-							{{ attribute.name }}
+							{{ getParameterByAttribute(attribute.id).name }}:
+							<strong>{{ attribute.name }}</strong>
 						</span>
 					</div>
 				</td>

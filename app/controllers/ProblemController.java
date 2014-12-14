@@ -113,7 +113,7 @@ public class ProblemController extends Controller {
 				Parameter param = (Parameter) o;
 				param.userId = userId;
 				// since the ID is only guaranteed to be unique but not smaller/larger than any other ids, use this
-				param.created = System.currentTimeMillis() + (count++) * 1000000;
+				param.created = System.currentTimeMillis() + (count++);
 				p.parameters.add(param);
 			}
 
